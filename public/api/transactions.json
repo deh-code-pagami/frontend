@@ -1,0 +1,11 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "fromUser": "Piero",
+      "toUser": "Paolo",
+      "amount": 12,
+      "date": "2023-10-20@12:30"
+    }
+  ]
+}
