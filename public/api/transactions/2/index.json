@@ -1,0 +1,11 @@
+{
+    "data": {
+        "id": 2,
+        "userDebtor": "Paolo",
+        "userCreditor": "Piero",
+        "amount": 12,
+        "date": "2023-10-20@12:30",
+        "title": "Ramen Istantaneo",
+        "description": "20 pacchi di ramen istantaneo da amazon"
+      }
+  }

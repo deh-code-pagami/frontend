@@ -5,10 +5,10 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import './index.css';
-import transactionsLoader from './loaders/transaction';
+import transactionsLoader, { transactionDetailLoader } from './loaders/transaction';
 import ErrorPage from './pages/error-page';
 import Root from './pages/root';
-import TransactionsPage from './pages/transaction';
+import TransactionsPage, { TransactionDetailPage } from './pages/transaction';
 
 import CssBaseline from '@mui/material/CssBaseline';
 
@@ -29,7 +29,12 @@ const router = createBrowserRouter([
       {
         path: 'transactions',
         element: <TransactionsPage/>,
-        loader: transactionsLoader
+        loader: transactionsLoader,
+      },
+      {
+        path: 'transactions/:transactionId',
+        element: <TransactionDetailPage/>,
+        loader: transactionDetailLoader
       },
       {
         path: 'groups',

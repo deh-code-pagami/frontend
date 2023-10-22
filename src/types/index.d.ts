@@ -3,10 +3,12 @@ export {}
 declare global {
   interface Transaction {
     id: number,
-    fromUser: string,
-    toUser: string,
+    userDebtor: string,
+    userCreditor: string,
     amount: number,
-    date: string
+    date: string,
+    title?: string,
+    description?: string
   }
 
   interface User {
@@ -15,8 +17,8 @@ declare global {
     surname: string,
     username: string,
     email: string,
-    password?: string,
-    enabled?: string,
+    password: string,
+    enabled: boolean,
     role: Role,
   }
 
