@@ -1,11 +1,16 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Getting Started
+This project utilizes the pnpm package manager, it can be installed by running `npm i -g pnpm`, one pnpm is installed run:
 
-Currently, two official plugins are available:
+`pnpm install`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+`pnpm run dev`
+
+to start a development server.
+
+## Typing
+Global types and interfaces are available in `src/types/index.d.ts`.
 
 ## Expanding the ESLint configuration
 
