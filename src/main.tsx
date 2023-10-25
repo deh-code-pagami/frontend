@@ -5,10 +5,6 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import './index.css';
-import transactionsLoader, { transactionDetailLoader } from './loaders/transaction';
-import ErrorPage from './pages/error-page';
-import Root from './pages/root';
-import TransactionsPage, { TransactionDetailPage } from './pages/transaction';
 
 import CssBaseline from '@mui/material/CssBaseline';
 
@@ -18,6 +14,10 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import GroupsPage from './pages/group';
 import ProfilePage from './pages/profile';
+import ErrorPage from './pages/error-page';
+import Root from './pages/root';
+import TransactionsPage, { transactionsLoader } from './pages/transaction/transaction';
+import TransactionDetailPage, { transactionDetailLoader } from './pages/transaction/transaction-detail';
 
 
 const router = createBrowserRouter([

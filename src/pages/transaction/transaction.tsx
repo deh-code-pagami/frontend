@@ -1,6 +1,15 @@
-import { Container, Grid, List, ListItem, Typography } from "@mui/material";
+import { Grid, List, ListItem } from "@mui/material";
+import { Container } from "@mui/system";
 import { useLoaderData } from "react-router-dom";
-import TransactionCard from "../components/transaction/transaction";
+import TransactionCard from "../../components/transaction/transaction-card";
+
+export async function transactionsLoader() {
+  const response = await fetch('/api/transactions/index.json');
+  const data = await response.json();
+  const transactions = data.data;
+
+  return { transactions };
+}
 
 export default function TransactionsPage() {
   const { transactions } = useLoaderData() as { transactions: Array<Transaction> };
@@ -23,19 +32,6 @@ export default function TransactionsPage() {
           </List>
         </Grid>
       </Grid>
-    </Container>
-  )
-}
-
-export function TransactionDetailPage() {
-  const { transaction } = useLoaderData() as { transaction: Transaction };
-
-  return (
-    <Container>
-      <h1>{transaction.title || ''}</h1>
-      <Typography>
-        {transaction.description || ''}
-      </Typography>
     </Container>
   )
 }
