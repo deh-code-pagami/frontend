@@ -12,7 +12,7 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import GroupsPage from './pages/group';
+import GroupsPage, { groupsLoader } from './pages/group/group';
 import ProfilePage from './pages/profile';
 import ErrorPage from './pages/error-page';
 import Root from './pages/root';
@@ -41,6 +41,7 @@ const router = createBrowserRouter([
       {
         path: 'groups',
         element: <GroupsPage/>,
+        loader: groupsLoader
       },
       {
         path: 'profile',

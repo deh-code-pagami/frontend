@@ -11,6 +11,11 @@ declare global {
     description?: string
   }
 
+  interface Group {
+    id: number,
+    name: string,
+  }
+
   interface User {
     id: number,
     name: string,

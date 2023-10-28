@@ -3,6 +3,7 @@ import { Container } from "@mui/system";
 import { useLoaderData } from "react-router-dom";
 import TransactionCard from "../../components/transaction/transaction-card";
 import TransactionFilters from "../../components/transaction/transaction-filters";
+import { visuallyHidden } from '@mui/utils';
 
 export async function transactionsLoader({ request } : any) {
   const url = new URL(request.url);
@@ -19,10 +20,10 @@ export default function TransactionsPage() {
 
   return (
     <Container>
-      <h1>
+      <Typography sx={visuallyHidden} variant="h2">
         Transactions Page
-      </h1>
-      <Grid container spacing={2}>
+      </Typography>
+      <Grid mt={4} container spacing={2}>
         <Grid item xs={12} md={4}>
           <Typography variant="h5" component="h2" sx={{marginBottom: '1rem'}}>Filters</Typography>
           <TransactionFilters></TransactionFilters>

@@ -1,9 +1,9 @@
 import { Button, Grid, Slider, Stack, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { ChangeEvent, useRef, useState } from "react";
-import dayjs, { Dayjs } from 'dayjs';
+import React, { useState } from "react";
+import { Dayjs } from 'dayjs';
 import { Form } from "react-router-dom";
-import { DatePicker, DateValidationError, PickerChangeHandlerContext } from '@mui/x-date-pickers';
+import { DatePicker } from '@mui/x-date-pickers';
 
 const minDistance = 1;
 const minAmountValue = 0;
@@ -17,9 +17,9 @@ export default function TransactionFilters() {
   const [description, setDescription] = useState<string>('');
   const [amount, setAmount] = useState<number[]>([minAmountValue, maxAmountValue]);
   const [date, setDate] = useState<string[]>(['', '']);
-  const [dateDisplay, setDateDisplay] = useState<(Dayjs|null)[]>([null, null])
+  const [dateDisplay, setDateDisplay] = useState<(Dayjs | null)[]>([null, null])
 
-  const onAmountSliderChange = (event: Event, newValue: number | number[], activeThumb: number) => {
+  const onAmountSliderChange = (_event: Event, newValue: number | number[], activeThumb: number) => {
     if (!Array.isArray(newValue)) {
       return;
     }
@@ -55,16 +55,34 @@ export default function TransactionFilters() {
       <Form>
         <Stack spacing={4}>
           <Box>
-            <TextField value={description} id="description" name="description" label="Description" variant="outlined" onChange={(e) => setDescription(e.target.value)} />
+            <TextField
+              value={description}
+              id="description"
+              name="description"
+              label="Description"
+              variant="outlined"
+              onChange={(e) => setDescription(e.target.value)} />
           </Box>
           <Box>
             <Typography sx={{ mb: 1.5 }}>Amount:</Typography>
-            <Grid container >
-              <Grid item xs={12} md={6} sx={{ paddingRight: '8px' }} >
-                <TextField id="amount_min" value={amount[0]} name="amount_min" label="Min" variant="outlined" onChange={onAmountMinChange} />
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={6}  >
+                <TextField 
+                  id="amount_min" 
+                  value={amount[0]} 
+                  name="amount_min" 
+                  label="Min" 
+                  variant="outlined" 
+                  onChange={onAmountMinChange} />
               </Grid>
-              <Grid item xs={12} md={6} sx={{ paddingLeft: '8px' }}>
-                <TextField id="amount_max" value={amount[1]} name="amount_max" label="Max" variant="outlined" onChange={onAmountMaxChange} />
+              <Grid item xs={12} md={6} >
+                <TextField 
+                  id="amount_max" 
+                  value={amount[1]} 
+                  name="amount_max" 
+                  label="Max" 
+                  variant="outlined" 
+                  onChange={onAmountMaxChange} />
               </Grid>
             </Grid>
             <Slider
@@ -97,28 +115,42 @@ export default function TransactionFilters() {
           </Box>
           <Box>
             <Typography sx={{ mb: 1.5 }}>Date:</Typography>
-            <Grid container >
-              <Grid item xs={12} md={6} sx={{ paddingRight: '8px' }} >
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={6} >
                 <DatePicker
-                  value={dateDisplay[0]} 
-                  onChange={(v: any) => { setDate([v.format('YYYY-MM-DD'), date[1]]); setDateDisplay([v, dateDisplay[1]])} } />
-                <input type="hidden" name="from_date" value={date[0]} />
+                  value={dateDisplay[0]}
+                  onChange={(v: any) => { setDate([v.format('YYYY-MM-DD'), date[1]]); setDateDisplay([v, dateDisplay[1]]) }} />
+                <input 
+                  type="hidden" 
+                  name="from_date" 
+                  value={date[0]} />
               </Grid>
-              <Grid item xs={12} md={6} sx={{ paddingLeft: '8px' }}>
+              <Grid item xs={12} md={6} >
                 <DatePicker
                   value={dateDisplay[1]}
-                  onChange={(v: any) => {setDate([date[0], v.format('YYYY-MM-DD')]); setDateDisplay([dateDisplay[0], v]); }} />
-                <input type="hidden" name="to_date" value={date[1]} />
+                  onChange={(v: any) => { setDate([date[0], v.format('YYYY-MM-DD')]); setDateDisplay([dateDisplay[0], v]); }} />
+                <input 
+                  type="hidden" 
+                  name="to_date" 
+                  value={date[1]} />
               </Grid>
             </Grid>
           </Box>
-          <Box>
-            <Grid container spacing={3}>
+          <Box >
+            <Grid mt={2} container spacing={3}>
               <Grid item xs={6}>
-                <Button type="button" onClick={resetFilters} variant="outlined" color='error' sx={{ padding: '16px 32px', alignSelf: 'center', width: '100%' }}>Reset</Button>
+                <Button 
+                  type="button" 
+                  onClick={resetFilters} 
+                  variant="outlined" 
+                  color='error' 
+                  sx={{ padding: '16px 32px', alignSelf: 'center', width: '100%' }}>Reset</Button>
               </Grid>
               <Grid item xs={6}>
-                <Button type="submit" variant="outlined" sx={{ padding: '16px 32px', alignSelf: 'center', width: '100%' }}>Apply</Button>
+                <Button 
+                  type="submit" 
+                  variant="outlined" 
+                  sx={{ padding: '16px 32px', alignSelf: 'center', width: '100%' }}>Apply</Button>
               </Grid>
             </Grid>
           </Box>
