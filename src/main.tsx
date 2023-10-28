@@ -18,6 +18,8 @@ import ErrorPage from './pages/error-page';
 import Root from './pages/root';
 import TransactionsPage, { transactionsLoader } from './pages/transaction/transaction';
 import TransactionDetailPage, { transactionDetailLoader } from './pages/transaction/transaction-detail';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 
 const router = createBrowserRouter([
@@ -50,8 +52,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
     <CssBaseline>
       <RouterProvider router={router}></RouterProvider>
     </CssBaseline>
+    </LocalizationProvider>
   </React.StrictMode>
 )

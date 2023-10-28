@@ -6,7 +6,6 @@ import TransactionFilters from "../../components/transaction/transaction-filters
 
 export async function transactionsLoader({ request } : any) {
   const url = new URL(request.url);
-  console.log(url.search);
   const response = await fetch(`/api/transactions/index.json${url.search}`);
   const data = await response.json();
   const transactions = data.data;
