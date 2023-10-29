@@ -5,9 +5,10 @@ import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import routes from '../../data/routes';
 
-export default function TransactionCard(props: { transaction: Transaction, subject: 'userDebtor' | 'userCreditor' }) {
+export default function TransactionCard(props: { transaction: Transaction, subject: string }) {
   const { transaction, subject } = props
-  const isDebtor = subject == 'userDebtor'
+  const isDebtor = subject == transaction.userDebtor;
+  const otherSubject = isDebtor ? 'userCreditor' : 'userDebtor';
 
   return (
     <Card sx={{ width: '100%' }}>
@@ -17,7 +18,7 @@ export default function TransactionCard(props: { transaction: Transaction, subje
             {transaction.date}
           </Typography>
           <Typography variant="h5" component="div" sx={{display: 'flex', alignItems: 'baseline'}}>
-            <Box component="span">{transaction[subject]}</Box>
+            <Box component="span">{transaction[otherSubject]}</Box>
             <Box component="span" sx={{marginX: '16px', fontSize: '1.25rem', color: 'text.secondary', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>{transaction.description || ''}</Box>
             <Box sx={{marginRight: '16px', marginLeft: 'auto', color:(isDebtor ? 'success.main' : 'error.main'), fontWeight: "bold"}} component="span" >{isDebtor ? '' : '-'}${transaction.amount}</Box>
           </Typography>

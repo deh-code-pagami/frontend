@@ -4,6 +4,7 @@ import { useLoaderData } from "react-router-dom";
 import TransactionCard from "../../components/transaction/transaction-card";
 import TransactionFilters from "../../components/transaction/transaction-filters";
 import { visuallyHidden } from '@mui/utils';
+import TransactionList from "../../components/transaction/transaction-list";
 
 export async function transactionsLoader({ request } : any) {
   const url = new URL(request.url);
@@ -16,7 +17,6 @@ export async function transactionsLoader({ request } : any) {
 
 export default function TransactionsPage() {
   const { transactions } = useLoaderData() as { transactions: Array<Transaction> };
-  const me = 'Paolo';
 
   return (
     <Container>
@@ -29,11 +29,8 @@ export default function TransactionsPage() {
           <TransactionFilters></TransactionFilters>
         </Grid>
         <Grid item xs={12} md={8}>
-          <List>
-            {transactions.map(transaction => <ListItem key={transaction.id}>
-              <TransactionCard transaction={transaction} subject={me == transaction.userCreditor ? 'userDebtor' : 'userCreditor'}></TransactionCard>
-            </ListItem>)}
-          </List>
+          {/* TODO get subject from logged in username */}
+          <TransactionList transactions={transactions} subject="Piero"></TransactionList>
         </Grid>
       </Grid>
     </Container>
