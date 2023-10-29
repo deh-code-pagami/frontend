@@ -1,7 +1,7 @@
 # Pagami Frontend
 
 ## Getting Started
-This project utilizes the pnpm package manager, it can be installed by running `npm i -g pnpm`, one pnpm is installed run:
+This project utilizes the pnpm package manager, it can be installed by running `npm i -g pnpm`, once pnpm is installed run:
 
 `pnpm install`
 

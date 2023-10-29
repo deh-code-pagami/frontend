@@ -5,22 +5,6 @@ import { useLoaderData } from "react-router-dom";
 import TransactionFilters from "../../components/transaction/transaction-filters";
 import TransactionList from "../../components/transaction/transaction-list";
 
-function TransactionTabPanel(props: {transactions: Array<Transaction>}) {
-  const { transactions } = props;
-
-  return (
-    <Grid mt={4} container spacing={2}>
-      <Grid item xs={12} md={4}>
-        <Typography variant="h5" component="h2" sx={{ marginBottom: '1rem' }}>Filters</Typography>
-        <TransactionFilters></TransactionFilters>
-      </Grid>
-      <Grid item xs={12} md={8}>
-        {/* TODO get subject from logged in username */}
-        <TransactionList transactions={transactions} subject="Piero"></TransactionList>
-      </Grid>
-    </Grid>
-  )
-}
 
 export async function groupDetailLoader({ params }: any) {
   let response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/groups/${params.groupId}/index.json`);
@@ -36,6 +20,40 @@ export async function groupDetailLoader({ params }: any) {
   return { group, transactions };
 }
 
+function TransactionsTabPanel(props: {transactions: Array<Transaction>}) {
+  const { transactions } = props;
+
+  return (
+    <Grid mt={2} container spacing={2}>
+      <Grid item xs={12} md={4}>
+        <Typography variant="h5" component="h2" sx={{ marginBottom: '1rem' }}>Filters</Typography>
+        <TransactionFilters></TransactionFilters>
+      </Grid>
+      <Grid item xs={12} md={8}>
+        {/* TODO get subject from logged in username */}
+        <TransactionList transactions={transactions} subject="Piero"></TransactionList>
+      </Grid>
+    </Grid>
+  )
+}
+
+// TODO
+function SummaryTabPanel() {
+  return (
+    <Box pt={2}>
+      Group Summary
+    </Box>
+  )
+}
+
+function MembersTabPabel() {
+  return (
+    <Box pt={2}>
+      Group Members
+    </Box>
+  )
+}
+
 export default function GroupDetailPage() {
   const { group, transactions } = useLoaderData() as { group: Group, transactions: Array<Transaction> };
   const [tabIndex, setTabIndex] = useState(0);
@@ -43,21 +61,21 @@ export default function GroupDetailPage() {
   const tabPanels = [
     {
       name: 'Summary',
-      component: TransactionTabPanel
+      component: SummaryTabPanel
     },
     {
       name: 'Transactions',
-      component: TransactionTabPanel
+      component: TransactionsTabPanel
     },
     {
       name: 'Members',
-      component: TransactionTabPanel
+      component: MembersTabPabel
     },
   ]
 
   return (
     <Box>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <Box>
         <Tabs value={tabIndex} onChange={(_e: any, v: number) => setTabIndex(v)} aria-label="basic tabs example">
           {tabPanels.map((panel, index) => (
             <Tab label={panel.name} id={`tab-group-${index}`} aria-controls={`tabpanel-group-${index}`} />))
