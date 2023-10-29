@@ -20,6 +20,7 @@ import TransactionsPage, { transactionsLoader } from './pages/transaction/transa
 import TransactionDetailPage, { transactionDetailLoader } from './pages/transaction/transaction-detail';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import GroupDetailPage, { groupDetailLoader } from './pages/group/group-detail';
 
 
 const router = createBrowserRouter([
@@ -41,7 +42,14 @@ const router = createBrowserRouter([
       {
         path: 'groups',
         element: <GroupsPage/>,
-        loader: groupsLoader
+        loader: groupsLoader,
+        children: [
+          {
+            path: ':groupId',
+            element: <GroupDetailPage/>,
+            loader: groupDetailLoader
+          }
+        ]
       },
       {
         path: 'profile',

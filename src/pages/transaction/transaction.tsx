@@ -7,7 +7,7 @@ import { visuallyHidden } from '@mui/utils';
 
 export async function transactionsLoader({ request } : any) {
   const url = new URL(request.url);
-  const response = await fetch(`/api/transactions/index.json${url.search}`);
+  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/transactions/index.json${url.search}`);
   const data = await response.json();
   const transactions = data.data;
 
