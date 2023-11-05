@@ -23,45 +23,47 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import GroupDetailPage, { groupDetailLoader } from './pages/group/group-detail';
 import LoginPage from './pages/login';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Provider } from 'react-redux'
+import store from './app/store'
 
 
 const router = createBrowserRouter([
   {
     path: 'login',
-    element: <LoginPage/>,
-    errorElement: <ErrorPage/>,
+    element: <LoginPage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: "/",
-    element: <Root/>,
-    errorElement: <ErrorPage/>,
+    element: <Root />,
+    errorElement: <ErrorPage />,
     loader: rootLoader,
     children: [
       {
         path: 'transactions',
-        element: <TransactionsPage/>,
+        element: <TransactionsPage />,
         loader: transactionsLoader,
       },
       {
         path: 'transactions/:transactionId',
-        element: <TransactionDetailPage/>,
+        element: <TransactionDetailPage />,
         loader: transactionDetailLoader
       },
       {
         path: 'groups',
-        element: <GroupsPage/>,
+        element: <GroupsPage />,
         loader: groupsLoader,
         children: [
           {
             path: ':groupId',
-            element: <GroupDetailPage/>,
+            element: <GroupDetailPage />,
             loader: groupDetailLoader
           }
         ]
       },
       {
         path: 'profile',
-        element: <ProfilePage/>,
+        element: <ProfilePage />,
       }
     ],
   }
@@ -82,12 +84,14 @@ const theme = createTheme({
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-    <CssBaseline>
-    <ThemeProvider theme={theme}>
-      <RouterProvider router={router}></RouterProvider>
-    </ThemeProvider>
-    </CssBaseline>
-    </LocalizationProvider>
+    <Provider store={store}>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <CssBaseline>
+          <ThemeProvider theme={theme}>
+            <RouterProvider router={router}></RouterProvider>
+          </ThemeProvider>
+        </CssBaseline>
+      </LocalizationProvider>
+    </Provider>
   </React.StrictMode>
 )
