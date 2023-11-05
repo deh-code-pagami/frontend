@@ -1,7 +1,6 @@
-import { Grid, List, ListItem, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import { useLoaderData } from "react-router-dom";
-import TransactionCard from "../../components/transaction/transaction-card";
 import TransactionFilters from "../../components/transaction/transaction-filters";
 import { visuallyHidden } from '@mui/utils';
 import TransactionList from "../../components/transaction/transaction-list";
@@ -20,7 +19,7 @@ export default function TransactionsPage() {
 
   return (
     <Container>
-      <Typography sx={visuallyHidden} variant="h2">
+      <Typography sx={visuallyHidden} variant="h1">
         Transactions Page
       </Typography>
       <Grid mt={4} container spacing={2}>

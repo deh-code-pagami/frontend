@@ -15,19 +15,27 @@ import '@fontsource/roboto/700.css';
 import GroupsPage, { groupsLoader } from './pages/group/group';
 import ProfilePage from './pages/profile';
 import ErrorPage from './pages/error-page';
-import Root from './pages/root';
+import Root, { rootLoader } from './pages/root';
 import TransactionsPage, { transactionsLoader } from './pages/transaction/transaction';
 import TransactionDetailPage, { transactionDetailLoader } from './pages/transaction/transaction-detail';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import GroupDetailPage, { groupDetailLoader } from './pages/group/group-detail';
+import LoginPage from './pages/login';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 
 const router = createBrowserRouter([
   {
+    path: 'login',
+    element: <LoginPage/>,
+    errorElement: <ErrorPage/>,
+  },
+  {
     path: "/",
     element: <Root/>,
     errorElement: <ErrorPage/>,
+    loader: rootLoader,
     children: [
       {
         path: 'transactions',
@@ -55,15 +63,30 @@ const router = createBrowserRouter([
         path: 'profile',
         element: <ProfilePage/>,
       }
-    ]
-  },
+    ],
+  }
 ]);
+
+const theme = createTheme({
+  components: {
+    MuiButton: {
+      defaultProps: {
+        style: {
+          padding: '12px 38px'
+        }
+      },
+    },
+  },
+});
+
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <LocalizationProvider dateAdapter={AdapterDayjs}>
     <CssBaseline>
+    <ThemeProvider theme={theme}>
       <RouterProvider router={router}></RouterProvider>
+    </ThemeProvider>
     </CssBaseline>
     </LocalizationProvider>
   </React.StrictMode>

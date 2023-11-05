@@ -144,13 +144,13 @@ export default function TransactionFilters() {
                   onClick={resetFilters} 
                   variant="outlined" 
                   color='error' 
-                  sx={{ padding: '16px 32px', alignSelf: 'center', width: '100%' }}>Reset</Button>
+                  sx={{ alignSelf: 'center', width: '100%' }}>Reset</Button>
               </Grid>
               <Grid item xs={6}>
                 <Button 
                   type="submit" 
-                  variant="outlined" 
-                  sx={{ padding: '16px 32px', alignSelf: 'center', width: '100%' }}>Apply</Button>
+                  variant="outlined"
+                  sx={{alignSelf: 'center', width: '100%' }}>Apply</Button>
               </Grid>
             </Grid>
           </Box>

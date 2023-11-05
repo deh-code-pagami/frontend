@@ -1,3 +1,4 @@
+import { Container } from "@mui/system";
 import { useRouteError } from "react-router-dom";
 
 interface RouterError {
@@ -10,12 +11,14 @@ export default function ErrorPage() {
   console.error(error);
 
   return (
-    <div id="error-page">
-      <h1>Oops!</h1>
-      <p>Sorry, an unexpected error has occurred.</p>
-      <p>
-        <i>{error.statusText || error.message}</i>
-      </p>
-    </div>
+    <main id="error-page">
+      <Container>
+        <h1>Oops!</h1>
+        <p>Sorry, an unexpected error has occurred.</p>
+        <p>
+          <i>{error.statusText || error.message}</i>
+        </p>
+      </Container>
+    </main>
   );
 }

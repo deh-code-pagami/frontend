@@ -22,8 +22,8 @@ declare global {
     surname: string,
     username: string,
     email: string,
-    password: string,
-    enabled: boolean,
+    password?: string,
+    enabled?: boolean,
     role: Role,
   }
 
