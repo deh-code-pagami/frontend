@@ -19,6 +19,8 @@ const groupUsers = [
   {username: 'Piero', id: 2}
 ]
 
+const me = 3;
+
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement<any, any>;
@@ -31,8 +33,8 @@ const Transition = React.forwardRef(function Transition(
 export default function TransactionDialog() {
   const [open, setOpen] = React.useState(false);
   const [description, setDescription] = React.useState('');
-  const [amount, setAmount] = React.useState('');
-  const [users, setUsers] = React.useState([] as { username: string; id: number; }[]);
+  const [amount, setAmount] = React.useState('0');
+  const [users, setUsers] = React.useState([] as number[]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -61,9 +63,10 @@ export default function TransactionDialog() {
         onClose={handleClose}
         aria-describedby="transaction-dialog"
       >
+        <Form>
         <DialogTitle id="transaction-dialog">Add new transaction</DialogTitle>
         <DialogContent>
-          <Form>
+          
             <Stack spacing={4}>
               <Box>
                 <TextField
@@ -93,8 +96,7 @@ export default function TransactionDialog() {
               <Box>
                 <Autocomplete
                   multiple
-                  value={users}
-                  onChange={(_e, newValue) => { setUsers(newValue) }}
+                  onChange={(_e, newValue) => { setUsers(newValue.map( el => el.id)) }}
                   id="checkboxes-tags-demo"
                   options={groupUsers}
                   disableCloseOnSelect
@@ -117,12 +119,15 @@ export default function TransactionDialog() {
                 />
               </Box>
             </Stack>
-          </Form>
         </DialogContent>
         <DialogActions>
           <Button onClick={reset}>Cancel</Button>
-          <Button type='submit'>Add</Button>
+          <Button onClick={handleClose} type='submit'>Add</Button>  
         </DialogActions>
+
+        <input type='hidden' name='userCreditor' value={parseFloat(amount) < 0 ? JSON.stringify(users) : me}/>
+        <input type='hidden' name='userDebtor' value={parseFloat(amount) > 0 ? JSON.stringify(users) : me}/>
+        </Form>
       </Dialog>
     </React.Fragment>
   );
