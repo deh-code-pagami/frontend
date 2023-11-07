@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import TransactionFilters from "../../components/transaction/transaction-filters";
 import TransactionList from "../../components/transaction/transaction-list";
+import TransactionDialog from "../../components/transaction/transaction-dialog";
 
 
 export async function groupDetailLoader({ params }: any) {
@@ -41,7 +42,7 @@ function TransactionsTabPanel(props: {transactions: Array<Transaction>}) {
 function SummaryTabPanel() {
   return (
     <Box pt={2}>
-      Group Summary
+      <TransactionDialog/>
     </Box>
   )
 }

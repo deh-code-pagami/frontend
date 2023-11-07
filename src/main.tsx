@@ -72,8 +72,8 @@ const router = createBrowserRouter([
 const theme = createTheme({
   components: {
     MuiButton: {
-      defaultProps: {
-        style: {
+      styleOverrides: {
+        root: {
           padding: '12px 38px'
         }
       },
