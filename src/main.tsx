@@ -24,7 +24,7 @@ import GroupDetailPage, { groupDetailLoader } from './pages/group/group-detail';
 import LoginPage from './pages/login';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Provider } from 'react-redux'
-import store from './app/store'
+import { store } from './app/store'
 
 
 const router = createBrowserRouter([
