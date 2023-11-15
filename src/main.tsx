@@ -21,7 +21,7 @@ import TransactionDetailPage, { transactionDetailLoader } from './pages/transact
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import GroupDetailPage, { groupDetailLoader } from './pages/group/group-detail';
-import LoginPage from './pages/login';
+import LoginPage, { loginAction } from './pages/login';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Provider } from 'react-redux'
 import { store } from './app/store'
@@ -32,6 +32,7 @@ const router = createBrowserRouter([
     path: 'login',
     element: <LoginPage />,
     errorElement: <ErrorPage />,
+    action: loginAction
   },
   {
     path: "/",

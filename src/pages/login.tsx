@@ -4,6 +4,11 @@ import { Form } from "react-router-dom"
 export async function loginAction({ _params, request }: any) {
   let formData = await request.formData();
   console.log(formData);
+  const res = await fetch('/api/login/', {
+    method: 'POST'
+  });
+  const data = await res.json();
+  console.log(data)
   return {};
 }
 
@@ -23,7 +28,7 @@ export default function LoginPage() {
             </Box>
             <Divider sx={{ mt: 2, mb: 4 }} />
             <Box>
-              <Form method="post" >
+              <Form method="post">
                 <Stack spacing={3}>
                   <Box>
                     <TextField
