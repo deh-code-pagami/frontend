@@ -6,7 +6,7 @@ import routes from "../../data/routes";
 
 export async function groupsLoader({ request }: any) {
   const url = new URL(request.url);
-  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/groups/index.json${url.search}`);
+  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/groups/${url.search}`);
   const data = await response.json();
   const groups = data.data;
 

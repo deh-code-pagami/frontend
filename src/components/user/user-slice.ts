@@ -8,10 +8,10 @@ export interface UserState {
 const initialState: UserState = {};
 
 export const userSlice = createSlice({
-  name: 'user',
+  name: 'userState',
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<User>) => {
+    setUser: (state, action: PayloadAction<User | undefined>) => {
       state.user = action.payload;
     }
   },

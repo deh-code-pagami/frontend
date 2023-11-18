@@ -1,5 +1,10 @@
-{
-  "data": [
+export const GET = (req, res, next) => {
+  res.json({
+    data: transactions
+  });
+}
+
+export const transactions = [
     {
       "id": 1,
       "userDebtor": "Piero",
@@ -16,5 +21,4 @@
       "date": "2023-10-20@12:30",
       "description": "20 pacchi di ramen piccante istantaneo da amazon e un testo descrittivo molto molto lungo"
     }
-  ]
-}
+]

@@ -1,18 +1,38 @@
-import { Box, Button, Card, CardContent, CardHeader, Container, Divider, Stack, TextField, Typography } from "@mui/material"
-import { Form } from "react-router-dom"
+import { Box, Button, Card, CardContent, Container, Divider, Stack, TextField, Typography } from "@mui/material"
+import { Form, redirect, useActionData } from "react-router-dom"
+import { setUser } from "../components/user/user-slice";
+import { store } from "../app/store";
 
-export async function loginAction({ _params, request }: any) {
-  let formData = await request.formData();
-  console.log(formData);
+export async function loginAction({ request }: any) {
+  let formData: FormData = await request.formData();
+  new URLSearchParams()
   const res = await fetch('/api/login/', {
-    method: 'POST'
+    method: 'POST',
+    body: JSON.stringify({
+      email: formData.get('email'),
+      password: formData.get('password')
+    }),
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
   });
+
   const data = await res.json();
-  console.log(data)
-  return {};
+
+  if (!res.ok) {
+    return data;
+  }
+
+  const user = data.data;
+  
+  store.dispatch(setUser(user));
+
+  return redirect('/');
 }
 
 export default function LoginPage() {
+  const { error } = ( useActionData() || {}) as { error?: string };
+
   return (
     <main>
       <Container sx={{ py: 2 }}>
@@ -48,6 +68,7 @@ export default function LoginPage() {
                       type="password"
                       fullWidth />
                   </Box>
+                  {error ? <Typography fontSize="1.125rem" color="error.main" mb={2}>{error}</Typography> : ''}
                   <Box mt={2}>
                     <Button type="submit"
                       variant="outlined" >

@@ -1,5 +1,10 @@
-{
-  "data": [
+export const GET = (req, res, next) => {
+  res.json({
+    data: groups
+  });
+}
+
+export const groups = [
     {
       "id": 0,
       "name": "Vantage"
@@ -29,4 +34,3 @@
       "name": "Balooba"
     }
   ]
-}
