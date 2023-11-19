@@ -9,7 +9,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
     react()
   ]
 
-  if(true || mode == 'development') {
+  if(mode == 'development') {
     plugins.push([pluginAPI({})]);
   }
 

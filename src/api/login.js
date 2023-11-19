@@ -1,11 +1,14 @@
+import db from "../db/db";
+
 /**
  * 
  * @param {Express.Request} req 
  * @param {Express.Response} res 
  * @param {*} next 
  */
-export const POST = (req, res, next) => {
+export const POST = async (req, res, next) => {
   const {email, password} = req.body;
+  const users = await db.load('user');
 
   const user = users[email];
 
@@ -21,15 +24,3 @@ export const POST = (req, res, next) => {
     data: user
   });
 };
-
-const users = {
-  "ruben.fileti.3@gmail.com": {
-    id: 0,
-    name: "Ruben",
-    surname: "Fileti",
-    username: "R",
-    password: "test",
-    enabled: true,
-    role: "admin",
-  }
-}

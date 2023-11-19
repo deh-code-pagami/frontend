@@ -1,6 +1,8 @@
 import { groups, transactions } from ".."
+import db from "../../../db/db";
 
-export const GET = (req, res, next) => {
+export const GET = async (req, res, next) => {
+  const groups = await db.load('group');
   const group = groups.find(el => (el.id == req.params.id));
 
   if (!group) {

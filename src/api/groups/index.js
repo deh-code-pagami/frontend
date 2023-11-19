@@ -1,36 +1,21 @@
-export const GET = (req, res, next) => {
+import db from "../../db/db";
+
+export const GET = async (req, res, next) => {
+  const groups = await db.load('group');
   res.json({
     data: groups
   });
 }
 
-export const groups = [
-    {
-      "id": 0,
-      "name": "Vantage"
-    },
-    {
-      "id": 1,
-      "name": "Pasturia"
-    },
-    {
-      "id": 2,
-      "name": "Pearlessa"
-    },
-    {
-      "id": 3,
-      "name": "Xurban"
-    },
-    {
-      "id": 4,
-      "name": "Wazzu"
-    },
-    {
-      "id": 5,
-      "name": "Lunchpad"
-    },
-    {
-      "id": 6,
-      "name": "Balooba"
-    }
-  ]
+export const POST = async (req, res, next) => {
+  const groups = await db.load('group');
+
+  groups.push({
+    ...(req.body),
+    id: groups.length + 1
+  });
+
+  res.status(201).json({
+    data: groups
+  });
+}

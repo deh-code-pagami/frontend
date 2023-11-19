@@ -1,6 +1,7 @@
-import { transactions } from ".."
+import db from "../../../db/db";
 
 export const GET = (req, res, next) => {
+  const transactions = db.load('transaction');
   const transaction = transactions.find(el => (el.id == req.params.id));
 
   if (!transaction) {

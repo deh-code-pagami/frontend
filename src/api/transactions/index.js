@@ -1,24 +1,9 @@
-export const GET = (req, res, next) => {
+import db from "../../db/db";
+
+export const GET = async (req, res, next) => {
+  const transactions = await db.load('transaction');
+
   res.json({
     data: transactions
   });
 }
-
-export const transactions = [
-    {
-      "id": 1,
-      "userDebtor": "Piero",
-      "userCreditor": "Paolo",
-      "amount": 12,
-      "date": "2023-10-20@12:30",
-      "description": "Aperitivo in piazza della pera"
-    },
-    {
-      "id": 2,
-      "userDebtor": "Paolo",
-      "userCreditor": "Piero",
-      "amount": 12,
-      "date": "2023-10-20@12:30",
-      "description": "20 pacchi di ramen piccante istantaneo da amazon e un testo descrittivo molto molto lungo"
-    }
-]
