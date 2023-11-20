@@ -15,6 +15,8 @@ export const POST = async (req, res, next) => {
     id: groups.length + 1
   });
 
+  db.save('group', groups);
+
   res.status(201).json({
     data: groups
   });

@@ -3,6 +3,7 @@ import { visuallyHidden } from "@mui/utils";
 import { Outlet, useLoaderData, useNavigate } from "react-router-dom";
 import { Box } from "@mui/system";
 import routes from "../../data/routes";
+import GroupDialog from "../../components/group/group-dialog";
 
 export async function groupsLoader({ request }: any) {
   const url = new URL(request.url);
@@ -22,6 +23,7 @@ export default function GroupsPage() {
       <Typography sx={visuallyHidden} variant="h1">
         Groups Page
       </Typography>
+      <GroupDialog></GroupDialog>
       <Box mt={4}>
         <Autocomplete
           disablePortal

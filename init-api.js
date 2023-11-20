@@ -19,7 +19,7 @@ export default function init() {
 }
 
 const users = {
-  "ruben.fileti.3@gmail.com": {
+  "admin@gmail.com": {
     id: 0,
     name: "Ruben",
     surname: "Fileti",
@@ -27,6 +27,24 @@ const users = {
     password: "test",
     enabled: true,
     role: "admin",
+  },
+  "eve@gmail.com": {
+    id: 0,
+    name: "Eve",
+    surname: "Bianchi",
+    username: "EB",
+    password: "test",
+    enabled: true,
+    role: "user",
+  },
+  "adam@gmail.com": {
+    id: 0,
+    name: "Adam",
+    surname: "Rossi",
+    username: "AR",
+    password: "test",
+    enabled: true,
+    role: "user",
   }
 }
 

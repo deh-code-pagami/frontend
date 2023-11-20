@@ -2,10 +2,11 @@ import { DialogTitle, DialogContent, TextField, Autocomplete, Checkbox, DialogAc
 import { Stack, Box } from "@mui/system";
 import { Form } from "react-router-dom";
 import Dialog from "../dialog/dialog";
-import React from "react";
+import React, { FormEventHandler } from "react";
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+
 
 // TODO get users from current group users
 const groupUsers = [
@@ -16,26 +17,53 @@ const groupUsers = [
 const me = 3;
 
 
-export default function TransactionDialog() {
+export default function GroupDialog() {
+  const [loading, setLoading] = React.useState(false);
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
-  const [description, setDescription] = React.useState('');
-  const [amount, setAmount] = React.useState('0');
-  const [users, setUsers] = React.useState([] as number[]);
   
-  const reset = () => {
-    setDescription('');
-    setAmount('');
-    setUsers([]);
-    handleClose();
-  }
-
   const handleClose = () => {
     setOpen(false);
   };
+
+  const [name, setName] = React.useState('');
+  const [users, setUsers] = React.useState([] as number[]);
+  
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+
+    if (loading) {
+      return;
+    }
+
+    (async () => {
+      setLoading(true);
+      
+      const res = await fetch('/api/groups', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name,
+          users: users
+        })
+      })
+
+      const data = await res.json();
+
+      setLoading(false)
+    })()
+  }
+
+  const reset = () => {
+    setName('');
+    setUsers([]);
+    handleClose();
+  }
 
   return (
     <>
@@ -43,35 +71,18 @@ export default function TransactionDialog() {
       <PlaylistAddIcon />
     </Button>
     <Dialog open={open} handleClose={handleClose} >
-      <Form>
+      <Form onSubmit={handleSubmit} >
         <DialogTitle id="transaction-dialog">Add new transaction</DialogTitle>
         <DialogContent>
-
           <Stack spacing={4}>
             <Box>
               <TextField
-                id="description"
-                name="description"
-                label="Description"
+                id="name"
+                name="name"
+                label="Name"
                 variant="outlined"
-                value={description}
-                onChange={(e) => { setDescription(e.target.value) }} />
-            </Box>
-            <Box>
-              <TextField
-                label="Amount"
-                name="amount"
-                type='number'
-                value={amount}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                onChange={(e) => {
-                  const v = parseFloat(e.target.value);
-                  if (isNaN(v)) return;
-                  setAmount(v.toString())
-                }}
-              />
+                value={name}
+                onChange={(e) => { setName(e.target.value) }} />
             </Box>
             <Box>
               <Autocomplete
@@ -102,11 +113,8 @@ export default function TransactionDialog() {
         </DialogContent>
         <DialogActions>
           <Button onClick={reset}>Cancel</Button>
-          <Button onClick={handleClose} type='submit'>Add</Button>
+          <Button type='submit'>Add</Button>
         </DialogActions>
-
-        <input type='hidden' name='userCreditor' value={parseFloat(amount) < 0 ? JSON.stringify(users) : me} />
-        <input type='hidden' name='userDebtor' value={parseFloat(amount) > 0 ? JSON.stringify(users) : me} />
       </Form>
     </Dialog>
     </>
