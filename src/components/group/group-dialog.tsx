@@ -4,7 +4,6 @@ import { Form } from "react-router-dom";
 import Dialog from "../dialog/dialog";
 import React, { FormEventHandler } from "react";
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
 
@@ -14,20 +13,9 @@ const groupUsers = [
   { username: 'Piero', id: 2 }
 ]
 
-const me = 3;
 
-
-export default function GroupDialog() {
+export default function GroupDialog({ children, open, handleClose }: { children: React.ReactNode, open: boolean, handleClose: () => void}) {
   const [loading, setLoading] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const [name, setName] = React.useState('');
   const [users, setUsers] = React.useState([] as number[]);
@@ -54,6 +42,7 @@ export default function GroupDialog() {
       })
 
       const data = await res.json();
+      console.log(data);
 
       setLoading(false)
     })()
@@ -67,9 +56,7 @@ export default function GroupDialog() {
 
   return (
     <>
-    <Button variant="outlined" onClick={handleClickOpen} sx={{ px: 1 }}>
-      <PlaylistAddIcon />
-    </Button>
+    {children}
     <Dialog open={open} handleClose={handleClose} >
       <Form onSubmit={handleSubmit} >
         <DialogTitle id="transaction-dialog">Add new transaction</DialogTitle>

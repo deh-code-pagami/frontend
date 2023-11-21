@@ -1,13 +1,13 @@
 
 // Imports
-import * as _0_0 from "//home/rbnflt/documents/pagami-frontend/src/api/groups/index.js";
-import * as _0_1 from "//home/rbnflt/documents/pagami-frontend/src/api/groups/:id/index.js";
-import * as _0_2 from "//home/rbnflt/documents/pagami-frontend/src/api/groups/:id/transactions/index.js";
-import * as _0_3 from "//home/rbnflt/documents/pagami-frontend/src/api/login.js";
-import * as _0_4 from "//home/rbnflt/documents/pagami-frontend/src/api/test.js";
-import * as _0_5 from "//home/rbnflt/documents/pagami-frontend/src/api/transactions/index.js";
-import * as _0_6 from "//home/rbnflt/documents/pagami-frontend/src/api/transactions/:id/index.js";
-import * as _0_7 from "//home/rbnflt/documents/pagami-frontend/src/api/users/me.js";
+import * as _0_0 from "//Users/rbnflt/Documents/personal/pagami/pagami-frontend/src/api/groups/index.js";
+import * as _0_1 from "//Users/rbnflt/Documents/personal/pagami/pagami-frontend/src/api/groups/:id/index.js";
+import * as _0_2 from "//Users/rbnflt/Documents/personal/pagami/pagami-frontend/src/api/groups/:id/transactions/index.js";
+import * as _0_3 from "//Users/rbnflt/Documents/personal/pagami/pagami-frontend/src/api/login.js";
+import * as _0_4 from "//Users/rbnflt/Documents/personal/pagami/pagami-frontend/src/api/test.js";
+import * as _0_5 from "//Users/rbnflt/Documents/personal/pagami/pagami-frontend/src/api/transactions/index.js";
+import * as _0_6 from "//Users/rbnflt/Documents/personal/pagami/pagami-frontend/src/api/transactions/:id/index.js";
+import * as _0_7 from "//Users/rbnflt/Documents/personal/pagami/pagami-frontend/src/api/users/me.js";
 
 
 export const routeBase = "/api";
