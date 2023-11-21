@@ -1,34 +1,7 @@
 import { Box, Button, Card, CardContent, Container, Divider, Stack, TextField, Typography } from "@mui/material"
-import { Form, redirect, useActionData } from "react-router-dom"
-import { setUser } from "../components/user/user-slice";
-import { store } from "../app/store";
+import { Form, useActionData } from "react-router-dom"
 
-export async function loginAction({ request }: any) {
-  let formData: FormData = await request.formData();
-  new URLSearchParams()
-  const res = await fetch('/api/login/', {
-    method: 'POST',
-    body: JSON.stringify({
-      email: formData.get('email'),
-      password: formData.get('password')
-    }),
-    headers: {
-      'Content-Type': 'application/json;charset=UTF-8'
-    }
-  });
 
-  const data = await res.json();
-
-  if (!res.ok) {
-    return data;
-  }
-
-  const user = data.data;
-  
-  store.dispatch(setUser(user));
-
-  return redirect('/');
-}
 
 export default function LoginPage() {
   const { error } = ( useActionData() || {}) as { error?: string };

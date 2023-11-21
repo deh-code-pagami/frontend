@@ -7,20 +7,6 @@ import TransactionList from "../../components/transaction/transaction-list";
 import TransactionDialog from "../../components/transaction/transaction-dialog";
 
 
-export async function groupDetailLoader({ params }: any) {
-  let response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/groups/${params.groupId}/`);
-  let data = await response.json();
-
-  const group = data.data;
-
-  response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/groups/${params.groupId}/transactions/`);
-  data = await response.json();
-
-  const transactions = data.data;
-
-  return { group, transactions };
-}
-
 function TransactionsTabPanel(props: {transactions: Array<Transaction>}) {
   const { transactions } = props;
 

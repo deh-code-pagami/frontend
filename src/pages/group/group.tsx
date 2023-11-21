@@ -7,15 +7,6 @@ import GroupDialog from "../../components/group/group-dialog";
 import AddIcon from '@mui/icons-material/Add';
 import React from "react";
 
-export async function groupsLoader({ request }: any) {
-  const url = new URL(request.url);
-  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/groups/${url.search}`);
-  const data = await response.json();
-  const groups = data.data;
-
-  return { groups };
-}
-
 export default function GroupsPage() {
   const { groups } = useLoaderData() as { groups: Array<Group> };
   const navigate = useNavigate();
@@ -25,7 +16,7 @@ export default function GroupsPage() {
   const handleClickOpen = () => {
     setOpen(true);
   };
-  
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -35,26 +26,22 @@ export default function GroupsPage() {
       <Typography sx={visuallyHidden} variant="h1">
         Groups Page
       </Typography>
-      <Box mt={4}>
+      <Box mt={4} display='flex'>
         <Autocomplete
           disablePortal
           id="combo-box-demo"
           options={groups.map(group => ({ label: group.name, value: group.id }))}
           sx={{ width: 300 }}
           renderInput={(params) => <TextField {...params} label="Group" />}
-          onChange={(_e, newValue) => {const v = newValue?.value; navigate(routes.groups + (typeof v == 'undefined' ? '' : (v + '/')))}}
+          onChange={(_e, newValue) => { const v = newValue?.value; navigate(routes.groups + (typeof v == 'undefined' ? '' : (v + '/'))) }}
         />
-        <GroupDialog
-          open={open}
-          handleClose={handleClose}
-        >
-        <Button variant="outlined" onClick={handleClickOpen} sx={{ px: 1 }}>
+        <Button sx={{ml: 2, px: 1}} variant="outlined" onClick={handleClickOpen} >
           <AddIcon />
         </Button>
-        </GroupDialog>
+        <GroupDialog open={open} handleClose={handleClose}> </GroupDialog>
       </Box>
       <Box pt={4}>
-        <Outlet/>
+        <Outlet />
       </Box>
     </Container>
   )

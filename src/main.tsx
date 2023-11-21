@@ -12,19 +12,22 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import GroupsPage, { groupsLoader } from './pages/group/group';
+import GroupsPage from './pages/group/group';
 import ProfilePage from './pages/profile';
 import ErrorPage from './pages/error-page';
 import Root, { rootLoader } from './pages/root';
-import TransactionsPage, { transactionsLoader } from './pages/transaction/transaction';
-import TransactionDetailPage, { transactionDetailLoader } from './pages/transaction/transaction-detail';
+import TransactionsPage from './pages/transaction/transaction';
+import TransactionDetailPage from './pages/transaction/transaction-detail';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import GroupDetailPage, { groupDetailLoader } from './pages/group/group-detail';
-import LoginPage, { loginAction } from './pages/login';
+import GroupDetailPage from './pages/group/group-detail';
+import LoginPage from './pages/login';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Provider } from 'react-redux'
 import { store } from './app/store'
+import { loginAction } from './pages/actions';
+import { groupsLoader, groupDetailLoader } from './pages/group/loaders';
+import { transactionsLoader, transactionDetailLoader } from './pages/transaction/loaders';
 
 
 const router = createBrowserRouter([
