@@ -1,9 +1,34 @@
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider } from "@mui/material";
 import { NavLink } from "react-router-dom";
-import menus from "../../data/menus";
+import GroupsIcon from '@mui/icons-material/Groups';
+import SettingsIcon from '@mui/icons-material/Settings';
+import ImportExportIcon from '@mui/icons-material/ImportExport';
+import routes from "../../data/routes";
 
-export default function MainNavigation(props : { menu?: Menu }) {
-  const { menu = menus.mainNavigation } = props;
+export default function MainNavigation() {
+  const menu = {
+    'label': 'main navigation',
+    'items': [
+      {
+        label: 'Groups',
+        href: routes.groups,
+        icon: <GroupsIcon/>
+      },
+      {
+        label: 'Transactions',
+        href: routes.transactions,
+        icon: <ImportExportIcon/>
+      },
+      {
+        // divider
+      },
+      {
+        label: 'Settings',
+        href: routes.profile,
+        icon: <SettingsIcon/>
+      }
+    ]
+  }
 
   return (
     <nav aria-label="main navigation">

@@ -2,9 +2,10 @@ import { DialogTitle, DialogContent, TextField, Autocomplete, Checkbox, DialogAc
 import { Stack, Box } from "@mui/system";
 import { Form } from "react-router-dom";
 import Dialog from "../dialog/dialog";
-import React, { FormEventHandler } from "react";
+import React, { FormEventHandler, useContext } from "react";
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import { GlobalContext, GlobalContextInterface } from "../../main";
 
 
 // TODO get users from current group users
@@ -16,6 +17,7 @@ const groupUsers = [
 
 export default function GroupDialog({ children, open, handleClose }: { children: React.ReactNode, open: boolean, handleClose: () => void}) {
   const [loading, setLoading] = React.useState(false);
+  const { global, setGlobal } = useContext(GlobalContext) as GlobalContextInterface;
 
   const [name, setName] = React.useState('');
   const [users, setUsers] = React.useState([] as number[]);
@@ -42,9 +44,14 @@ export default function GroupDialog({ children, open, handleClose }: { children:
       })
 
       const data = await res.json();
-      console.log(data);
 
       setLoading(false)
+      setGlobal({
+        ...global,
+        currentGroup: data.data.id
+      })
+
+      handleClose();
     })()
   }
 

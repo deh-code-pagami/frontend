@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import {
   createBrowserRouter,
@@ -15,7 +15,7 @@ import '@fontsource/roboto/700.css';
 import GroupsPage from './pages/group/group';
 import ProfilePage from './pages/profile';
 import ErrorPage from './pages/error-page';
-import Root, { rootLoader } from './pages/root';
+import Root from './pages/root';
 import TransactionsPage from './pages/transaction/transaction';
 import TransactionDetailPage from './pages/transaction/transaction-detail';
 import { LocalizationProvider } from '@mui/x-date-pickers';
@@ -28,7 +28,7 @@ import { store } from './app/store'
 import { loginAction } from './pages/actions';
 import { groupsLoader, groupDetailLoader } from './pages/group/loaders';
 import { transactionsLoader, transactionDetailLoader } from './pages/transaction/loaders';
-
+import AuthenticationProvider from './components/auth/authentication-provider';
 
 const router = createBrowserRouter([
   {
@@ -41,7 +41,6 @@ const router = createBrowserRouter([
     path: "/",
     element: <Root />,
     errorElement: <ErrorPage />,
-    loader: rootLoader,
     children: [
       {
         path: 'transactions',
@@ -57,13 +56,11 @@ const router = createBrowserRouter([
         path: 'groups',
         element: <GroupsPage />,
         loader: groupsLoader,
-        children: [
-          {
-            path: ':groupId',
-            element: <GroupDetailPage />,
-            loader: groupDetailLoader
-          }
-        ]
+      },
+      {
+        path: 'groups/:groupId',
+        element: <GroupDetailPage />,
+        loader: groupDetailLoader
       },
       {
         path: 'profile',
@@ -85,17 +82,38 @@ const theme = createTheme({
   },
 });
 
+export interface GlobalContextInterface {
+  global: {
+    currentGroup?: number,
+    user?: User
+  },
+  setGlobal: React.Dispatch<React.SetStateAction<any>>
+}
+
+export const GlobalContext = createContext<GlobalContextInterface | null>(null);
+
+function Main() {
+  const [ global, setGlobal ] = useState({});
+
+  return(
+    <React.StrictMode>
+      <Provider store={store}>
+        <GlobalContext.Provider value={{global, setGlobal}}>
+          <AuthenticationProvider>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <CssBaseline>
+                <ThemeProvider theme={theme}>
+                  <RouterProvider router={router}></RouterProvider>
+                </ThemeProvider>
+              </CssBaseline>
+            </LocalizationProvider>
+          </AuthenticationProvider>
+        </GlobalContext.Provider>
+      </Provider>
+    </React.StrictMode>
+  )
+}
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <CssBaseline>
-          <ThemeProvider theme={theme}>
-            <RouterProvider router={router}></RouterProvider>
-          </ThemeProvider>
-        </CssBaseline>
-      </LocalizationProvider>
-    </Provider>
-  </React.StrictMode>
+  <Main></Main>
 )

@@ -1,10 +1,30 @@
 import { Box, Button, Card, CardContent, Container, Divider, Stack, TextField, Typography } from "@mui/material"
-import { Form, useActionData } from "react-router-dom"
+import { useContext } from "react";
+import { Form, useActionData, useNavigate } from "react-router-dom"
+import { GlobalContext, GlobalContextInterface } from "../main";
 
 
 
 export default function LoginPage() {
-  const { error } = ( useActionData() || {}) as { error?: string };
+  const data = ( useActionData() || {}) as { error?: string, data?: User };
+  const { error } = data;
+
+  const {global, setGlobal} = useContext(GlobalContext) as GlobalContextInterface;
+
+  const navigate = useNavigate();
+
+  if (global.user) {
+    navigate('/');
+  }
+
+  if (!error && data.data) {
+    setGlobal({
+      ...global,
+      user: data.data
+    });
+
+    navigate('/');
+  }
 
   return (
     <main>

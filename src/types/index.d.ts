@@ -8,7 +8,8 @@ declare global {
     amount: number,
     date: string,
     title?: string,
-    description?: string
+    description?: string,
+    group: number
   }
 
   interface Group {

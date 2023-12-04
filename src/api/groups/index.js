@@ -9,15 +9,22 @@ export const GET = async (req, res, next) => {
 
 export const POST = async (req, res, next) => {
   const groups = await db.load('group');
+  let maxId = 0;
 
-  groups.push({
+  for (const group of groups) {
+    maxId = Math.max(group.id, maxId);
+  }
+
+  const newGroup = {
     ...(req.body),
-    id: groups.length + 1
-  });
+    id: maxId + 1
+  }
+
+  groups.push(newGroup);
 
   db.save('group', groups);
 
   res.status(201).json({
-    data: groups
+    data: newGroup
   });
 }

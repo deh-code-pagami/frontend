@@ -1,4 +1,3 @@
-import { groups, transactions } from ".."
 import db from "../../../db/db";
 
 export const GET = async (req, res, next) => {
@@ -11,6 +10,27 @@ export const GET = async (req, res, next) => {
     });
     return;
   }
+
+  res.json({
+    data: group
+  });
+}
+
+export const DELETE = async(req, res, next) => {
+  /**@type {Array<any>} */
+  const groups = await db.load('group');
+  const groupId = groups.findIndex(el => (el.id == req.params.id))
+  
+  if (groupId < 0) {
+    res.status(401).json({
+      error: 'Invalid id'
+    })
+
+    return;
+  }
+
+  const [ group ] = groups.splice(groupId, 1);
+  db.save('group', groups);
 
   res.json({
     data: group

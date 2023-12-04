@@ -4,7 +4,6 @@ import { Form } from "react-router-dom";
 import Dialog from "../dialog/dialog";
 import React from "react";
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
 // TODO get users from current group users
@@ -16,12 +15,7 @@ const groupUsers = [
 const me = 3;
 
 
-export default function TransactionDialog() {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+export default function TransactionDialog({ open, handleClose }: { open: boolean, handleClose: () => void }) {
   const [description, setDescription] = React.useState('');
   const [amount, setAmount] = React.useState('0');
   const [users, setUsers] = React.useState([] as number[]);
@@ -33,15 +27,8 @@ export default function TransactionDialog() {
     handleClose();
   }
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   return (
     <>
-    <Button variant="outlined" onClick={handleClickOpen} sx={{ px: 1 }}>
-      <PlaylistAddIcon />
-    </Button>
     <Dialog open={open} handleClose={handleClose} >
       <Form>
         <DialogTitle id="transaction-dialog">Add new transaction</DialogTitle>
