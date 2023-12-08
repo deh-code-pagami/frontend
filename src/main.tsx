@@ -23,8 +23,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import GroupDetailPage from './pages/group/group-detail';
 import LoginPage from './pages/login';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Provider } from 'react-redux'
-import { store } from './app/store'
 import { loginAction } from './pages/actions';
 import { groupsLoader, groupDetailLoader } from './pages/group/loaders';
 import { transactionsLoader, transactionDetailLoader } from './pages/transaction/loaders';
@@ -97,7 +95,6 @@ function Main() {
 
   return(
     <React.StrictMode>
-      <Provider store={store}>
         <GlobalContext.Provider value={{global, setGlobal}}>
           <AuthenticationProvider>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -109,7 +106,6 @@ function Main() {
             </LocalizationProvider>
           </AuthenticationProvider>
         </GlobalContext.Provider>
-      </Provider>
     </React.StrictMode>
   )
 }
