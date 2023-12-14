@@ -4,6 +4,7 @@ import TransactionDialog from "../transaction/transaction-dialog";
 import TransactionFilters from "../transaction/transaction-filters";
 import TransactionList from "../transaction/transaction-list";
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
+import { Box } from "@mui/system";
 
 export default function TransactionsTabPanel({ transactions }: { transactions: Transaction[] }) {
   const [open, setOpen] = React.useState(false);
@@ -18,7 +19,7 @@ export default function TransactionsTabPanel({ transactions }: { transactions: T
 
   return (
     <>
-      <Grid mt={2} container spacing={2}>
+      <Box pt={2}>
         <Button variant="outlined" onClick={handleClickOpen} sx={{ px: 1 }}>
           <PlaylistAddIcon />
         </Button>
@@ -26,6 +27,8 @@ export default function TransactionsTabPanel({ transactions }: { transactions: T
           open={open}
           handleClose={handleClose}
         ></TransactionDialog>
+      </Box>
+      <Grid mt={2} container spacing={2}>
         <Grid item xs={12} md={4}>
           <Typography variant="h5" component="h2" sx={{ marginBottom: '1rem' }}>Filters</Typography>
           <TransactionFilters></TransactionFilters>

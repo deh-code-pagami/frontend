@@ -1,10 +1,8 @@
-import { useLoaderData, useNavigate, useParams } from "react-router-dom";
+import { useLoaderData, useNavigate, useOutletContext, useParams } from "react-router-dom";
 
-import GroupToolbar from "../../components/group/group-toolbar";
 import { GlobalContext, GlobalContextInterface } from "../../main";
 import routes from "../../data/routes";
-import { Tabs, Tab } from "@mui/material";
-import { Container, Box } from "@mui/system";
+import { Tabs, Tab, Box } from "@mui/material";
 import { useContext, useEffect } from "react";
 import SummaryTabPanel from "../../components/group/summary-tab-panel";
 import TransactionsTabPanel from "../../components/group/transactions-tab-panel";
@@ -17,10 +15,11 @@ export default function GroupDetailPage() {
   const navigate = useNavigate();
 
   const { groupId, tab } = useParams();
-  const { groups, transactions } = useLoaderData() as { groups: Group[], group: Group, transactions: Transaction[] };
+  const [groups] = useOutletContext() as [groups: Group[]];
+  const { transactions } = useLoaderData() as { transactions: Transaction[] };
 
   const id = parseInt(groupId || '-1');
-  const g = groups.find(el => el.id == id);
+  const matchedGroup = groups.find(el => el.id == id);
 
   useEffect(() => {
     // current group has just been unsetted, ignore groupId param
@@ -30,7 +29,7 @@ export default function GroupDetailPage() {
     }
 
     // group not found, unset current group and return to group page
-    if (!g) {
+    if (!matchedGroup) {
       if (currentGroup) {
         setGlobal({
           ...global,
@@ -57,7 +56,7 @@ export default function GroupDetailPage() {
 
       return;
     }
-  }, [currentGroup, g, global, groups, id, navigate, setGlobal]);
+  }, [currentGroup, matchedGroup, global, groups, id, navigate, setGlobal]);
 
   const tabPanels = [
     {
@@ -80,15 +79,14 @@ export default function GroupDetailPage() {
   const activeTab = Math.max(tabPanels.findIndex(el => el.path === tab), 0);
 
   return (
-    <Container>
-      <Box>
-        <GroupToolbar
-          groups={groups}
-        />
-      </Box>
-      <Box>
+      <Box py={3}>
         <Box>
-          <Tabs value={activeTab} onChange={(_e: any, v: number) => {navigate(`${routes.groups}${groupId}/${tabPanels[v].path}`)}} aria-label="basic tabs example">
+          <Tabs
+            sx={{
+              mb: 2
+            }}
+            value={activeTab} 
+            onChange={(_e: any, v: number) => {navigate(`${routes.groups}${groupId}/${tabPanels[v].path}`)}} aria-label="basic tabs example">
             {tabPanels.map((panel, index) => (
               <Tab label={panel.name} id={`tab-group-${index}`} aria-controls={`tabpanel-group-${index}`} />))
             }
@@ -110,6 +108,5 @@ export default function GroupDetailPage() {
           })}
         </Box>
       </Box>
-    </Container>
   )
 }

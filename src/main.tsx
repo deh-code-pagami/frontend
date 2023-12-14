@@ -54,11 +54,13 @@ const router = createBrowserRouter([
         path: 'groups',
         element: <GroupsPage />,
         loader: groupsLoader,
-      },
-      {
-        path: 'groups/:groupId/:tab?',
-        element: <GroupDetailPage />,
-        loader: groupDetailLoader,
+        children: [
+          {
+            path: ':groupId/:tab?',
+            element: <GroupDetailPage />,
+            loader: groupDetailLoader
+          }
+        ]
       },
       {
         path: 'profile',

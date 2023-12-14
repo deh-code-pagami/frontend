@@ -1,7 +1,7 @@
 import { visuallyHidden } from "@mui/utils";
-import { Navigate, useLoaderData } from "react-router-dom";
+import { Outlet, useLoaderData, useNavigate, useParams } from "react-router-dom";
 import routes from "../../data/routes";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { GlobalContext, GlobalContextInterface } from "../../main";
 import { Typography } from "@mui/material";
 import { Container } from "@mui/system";
@@ -11,11 +11,17 @@ export default function GroupsPage() {
   const { global } = useContext(GlobalContext) as GlobalContextInterface;
   const { currentGroup } = global;
 
+  const { groupId } = useParams();
+
   const { groups } = useLoaderData() as { groups: Group[] };
 
-  if (currentGroup && currentGroup != -1) {
-    return <Navigate to={routes.groups + `${currentGroup}/`} replace={true}></Navigate>
-  }
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (currentGroup && !groupId && currentGroup != -1) {
+      navigate(routes.groups + currentGroup);
+    }
+  }, [currentGroup, groupId, navigate])
 
   return (
     <Container>
@@ -25,6 +31,7 @@ export default function GroupsPage() {
       <GroupToolbar
         groups={groups}
       />
+      <Outlet context={[groups]} />
     </Container>
   )
 }
