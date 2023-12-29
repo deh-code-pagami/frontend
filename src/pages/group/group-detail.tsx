@@ -3,7 +3,7 @@ import { useLoaderData, useNavigate, useOutletContext, useParams } from "react-r
 import { GlobalContext, GlobalContextInterface } from "../../main";
 import routes from "../../data/routes";
 import { Tabs, Tab, Box } from "@mui/material";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import SummaryTabPanel from "../../components/group/summary-tab-panel";
 import TransactionsTabPanel from "../../components/group/transactions-tab-panel";
 import SettingsTabPanel from "../../components/group/settings-tab-panel";
@@ -14,12 +14,14 @@ export default function GroupDetailPage() {
 
   const navigate = useNavigate();
 
-  const { groupId, tab } = useParams();
+  const { groupId } = useParams();
   const [groups] = useOutletContext() as [groups: Group[]];
   const { transactions } = useLoaderData() as { transactions: Transaction[] };
 
   const id = parseInt(groupId || '-1');
   const matchedGroup = groups.find(el => el.id == id);
+
+  const [activeTab, setActiveTab] = useState(0);
 
   useEffect(() => {
     // current group has just been unsetted, ignore groupId param
@@ -75,8 +77,6 @@ export default function GroupDetailPage() {
       path: 'settings',
     },
   ]
-  
-  const activeTab = Math.max(tabPanels.findIndex(el => el.path === tab), 0);
 
   return (
       <Box py={3}>
@@ -86,20 +86,22 @@ export default function GroupDetailPage() {
               mb: 2
             }}
             value={activeTab} 
-            onChange={(_e: any, v: number) => {navigate(`${routes.groups}${groupId}/${tabPanels[v].path}`)}} aria-label="basic tabs example">
+            onChange={(_e: any, v: number) => {setActiveTab(v)}} aria-label="basic tabs example">
             {tabPanels.map((panel, index) => (
-              <Tab label={panel.name} id={`tab-group-${index}`} aria-controls={`tabpanel-group-${index}`} />))
+                <Tab key={index} label={panel.name} id={`tab-group-${index}`} aria-controls={`tabpanel-group-${index}`} />)
+              )
             }
           </Tabs>
           {tabPanels.map((panel, index) => {
             const CustomPanelComponent = panel.component;
-            const isActive = panel.path === tab;
+            const isActive = index === activeTab;
             return (
               <div
                 role="tabpanel"
                 hidden={!isActive}
                 id={`tabpanel-${index}`}
                 aria-labelledby={`tabpanel-group-${index}`}
+                key={index}
               >
                 {isActive && (
                   <CustomPanelComponent transactions={transactions} />

@@ -56,7 +56,7 @@ const router = createBrowserRouter([
         loader: groupsLoader,
         children: [
           {
-            path: ':groupId/:tab?',
+            path: ':groupId',
             element: <GroupDetailPage />,
             loader: groupDetailLoader
           }

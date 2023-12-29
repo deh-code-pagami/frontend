@@ -8,13 +8,8 @@ export async function groupsLoader({ request }: any) {
 }
 
 export async function groupDetailLoader({ params }: any) {
-  let response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/groups/`);
+  let response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/groups/${params.groupId}/`);
   let data = await response.json();
-
-  const groups = data.data;
-
-  response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/groups/${params.groupId}/`);
-  data = await response.json();
 
   const group = data.data;
 
@@ -23,5 +18,5 @@ export async function groupDetailLoader({ params }: any) {
 
   const transactions = data.data;
 
-  return { group, transactions, groups };
+  return { group, transactions };
 }

@@ -33,9 +33,9 @@ export default function MainNavigation() {
   return (
     <nav aria-label="main navigation">
       <List>
-        {menu.items.map(item => (
-          !item.label ? <Divider sx={{marginY: '8px'}}/>
-          : <ListItem key={item.label} disablePadding>
+        {menu.items.map((item, index) => (
+          !item.label ? <Divider key={index} sx={{marginY: '8px'}}/>
+          : <ListItem key={index} disablePadding>
           <NavLink to={(item.href || '#')} style={{width: '100%', color: 'inherit'}}>
             <ListItemButton>
               <ListItemIcon>
