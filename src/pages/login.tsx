@@ -14,7 +14,6 @@ export default function LoginPage() {
   const navigate = useNavigate();
 
   if (global.isAuthenticated) {
-    console.log(global.isAuthenticated)
     navigate('/');
   }
 
@@ -24,7 +23,6 @@ export default function LoginPage() {
     errorMessages = Array.isArray(error.details?.errors) ? error.details.errors.map((err: any) => err.message) : [error.message];
   }
   else if (data) {
-    console.log(data)
     setGlobal({
       ...global,
       user: data,

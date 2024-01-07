@@ -53,7 +53,7 @@ export default function GroupToolbar({ groups }: {groups: Array<Group> }) {
       closeDeleteDialog();
     })()
   }
-  console.log(groups)
+  
   return (
   <Box mt={4} display='flex'>
     <Autocomplete
@@ -71,7 +71,17 @@ export default function GroupToolbar({ groups }: {groups: Array<Group> }) {
       <AddIcon />
     </Button>
     <GroupDialog open={createDialog} handleClose={closeCreateDialog}> </GroupDialog>
-    <Button sx={{ml: 2, px: 1}} variant="outlined" color="error" onClick={() => {setDeleteDialog(true);}} >
+    <Button 
+      sx={{ml: 2, px: 1}} 
+      variant="outlined" 
+      color="error" 
+      onClick={() => { 
+        if (!selectedGroup) {
+          return;
+        } 
+        setDeleteDialog(true);}
+      } 
+    >
       <DeleteIcon />
     </Button>
     <ConfirmationDialog open={deleteDialog} title="Are you sure you want to delete this group?" onConfirm={deleteGroup} handleClose={closeDeleteDialog} ></ConfirmationDialog>
