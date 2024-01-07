@@ -1,5 +1,6 @@
 
 // Imports
+<<<<<<< HEAD
 import * as _0_0 from "//home/rbnflt/documents/pagami/pagami-frontend/src/api/groups/index.js";
 import * as _0_1 from "//home/rbnflt/documents/pagami/pagami-frontend/src/api/groups/:id/index.js";
 import * as _0_2 from "//home/rbnflt/documents/pagami/pagami-frontend/src/api/groups/:id/transactions/index.js";
@@ -8,6 +9,16 @@ import * as _0_4 from "//home/rbnflt/documents/pagami/pagami-frontend/src/api/te
 import * as _0_5 from "//home/rbnflt/documents/pagami/pagami-frontend/src/api/transactions/index.js";
 import * as _0_6 from "//home/rbnflt/documents/pagami/pagami-frontend/src/api/transactions/:id/index.js";
 import * as _0_7 from "//home/rbnflt/documents/pagami/pagami-frontend/src/api/users/me.js";
+=======
+import * as _0_0 from "//home/rbnflt/Documenti/Programmi/pagami-frontend/src/api/groups/index.js";
+import * as _0_1 from "//home/rbnflt/Documenti/Programmi/pagami-frontend/src/api/groups/:id/index.js";
+import * as _0_2 from "//home/rbnflt/Documenti/Programmi/pagami-frontend/src/api/groups/:id/transactions/index.js";
+import * as _0_3 from "//home/rbnflt/Documenti/Programmi/pagami-frontend/src/api/login.js";
+import * as _0_4 from "//home/rbnflt/Documenti/Programmi/pagami-frontend/src/api/test.js";
+import * as _0_5 from "//home/rbnflt/Documenti/Programmi/pagami-frontend/src/api/transactions/index.js";
+import * as _0_6 from "//home/rbnflt/Documenti/Programmi/pagami-frontend/src/api/transactions/:id/index.js";
+import * as _0_7 from "//home/rbnflt/Documenti/Programmi/pagami-frontend/src/api/users/me.js";
+>>>>>>> 6e624f43be372253dde413c5617128d866281fa4
 
 
 export const routeBase = "/api";

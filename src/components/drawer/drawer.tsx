@@ -26,7 +26,13 @@ export default function MainDrawer() {
       variant="permanent"
       sx={{
         display: { xs: 'none', xl: 'block' },
-        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, position: 'static', overflow: 'hidden'},
+        '& .MuiDrawer-paper': { 
+          boxSizing: 'border-box', 
+          width: drawerWidth, 
+          position: 'static', 
+          overflow: 'hidden',
+          boxShadow: '0px 2px 2px 2px #e6e6e6'
+        },
       }}
       open
     >
