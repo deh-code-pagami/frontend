@@ -1,18 +1,9 @@
-import { DialogTitle, DialogContent, TextField, Autocomplete, Checkbox, DialogActions, Button } from "@mui/material";
+import { DialogTitle, DialogContent, TextField, DialogActions, Button } from "@mui/material";
 import { Stack, Box } from "@mui/system";
 import { Form } from "react-router-dom";
 import Dialog from "../dialog/dialog";
 import React, { FormEventHandler, useContext } from "react";
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { GlobalContext, GlobalContextInterface } from "../../main";
-
-
-// TODO get users from current group users
-const groupUsers = [
-  { username: 'Paolo', id: 1 },
-  { username: 'Piero', id: 2 }
-]
 
 
 export default function GroupDialog({ children, open, handleClose }: { children: React.ReactNode, open: boolean, handleClose: () => void}) {
@@ -20,7 +11,6 @@ export default function GroupDialog({ children, open, handleClose }: { children:
   const { global, setGlobal } = useContext(GlobalContext) as GlobalContextInterface;
 
   const [name, setName] = React.useState('');
-  const [users, setUsers] = React.useState([] as number[]);
   
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
@@ -38,10 +28,15 @@ export default function GroupDialog({ children, open, handleClose }: { children:
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          name: name,
-          users: users
+          data: {
+            name: name,
+          }
         })
       })
+
+      if (!res.ok) {
+        return;
+      }
 
       const data = await res.json();
 
@@ -57,7 +52,6 @@ export default function GroupDialog({ children, open, handleClose }: { children:
 
   const reset = () => {
     setName('');
-    setUsers([]);
     handleClose();
   }
 
@@ -77,31 +71,6 @@ export default function GroupDialog({ children, open, handleClose }: { children:
                 variant="outlined"
                 value={name}
                 onChange={(e) => { setName(e.target.value) }} />
-            </Box>
-            <Box>
-              <Autocomplete
-                multiple
-                onChange={(_e, newValue) => { setUsers(newValue.map(el => el.id)) }}
-                id="checkboxes-tags-demo"
-                options={groupUsers}
-                disableCloseOnSelect
-                getOptionLabel={(option) => option.username}
-                renderOption={(props, option, { selected }) => (
-                  <li {...props}>
-                    <Checkbox
-                      icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
-                      checkedIcon={<CheckBoxIcon fontSize="small" />}
-                      style={{ marginRight: 8 }}
-                      checked={selected}
-                    />
-                    {option.username}
-                  </li>
-                )}
-                style={{ width: 500 }}
-                renderInput={(params) => (
-                  <TextField {...params} label="Users" placeholder="Add user" />
-                )}
-              />
             </Box>
           </Stack>
         </DialogContent>

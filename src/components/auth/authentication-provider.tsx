@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom";
 import { GlobalContext, GlobalContextInterface } from "../../main";
 
 export default function AuthenticationProvider({children}: {children: React.ReactNode}) {
@@ -10,15 +9,26 @@ export default function AuthenticationProvider({children}: {children: React.Reac
   useEffect(() => {
     if (!user && loading) {
       (async () => {
-        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/users/me/`);
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/users/me/`, {
+          credentials: 'include'
+        });
 
         setLoading(false);
+
+        if (!response.ok) {
+          setGlobal({
+            ...global,
+            isAuthenticated: false
+          })
+          return;
+        }
 
         const data = await response.json();
 
         setGlobal({
           ...global,
-          user: data.data
+          user: data,
+          isAuthenticated: true
         })
       })()
     }

@@ -85,7 +85,8 @@ const theme = createTheme({
 export interface GlobalContextInterface {
   global: {
     currentGroup?: number,
-    user?: User
+    user?: User,
+    isAuthenticated?: boolean 
   },
   setGlobal: React.Dispatch<React.SetStateAction<any>>
 }

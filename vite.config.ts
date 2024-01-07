@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { pluginAPI } from "vite-plugin-api";
 
 
 // https://vitejs.dev/config/
@@ -9,14 +9,15 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
     react()
   ]
 
-  if(mode == 'development') {
-    plugins.push([pluginAPI({})]);
-  }
-
   return {
-    plugins,
     server: {
-      port: 3000
+      port: 3000,
+      proxy: {
+        '/api': {
+          target: 'http://localhost:1337',
+          changeOrigin: true
+        }
+      }
     }
   }
 })

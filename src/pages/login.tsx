@@ -6,21 +6,29 @@ import { GlobalContext, GlobalContextInterface } from "../main";
 
 
 export default function LoginPage() {
-  const data = ( useActionData() || {}) as { error?: string, data?: User };
-  const { error } = data;
+  const data = ( useActionData()) as any;
+  const error = data?.error;
 
   const {global, setGlobal} = useContext(GlobalContext) as GlobalContextInterface;
 
   const navigate = useNavigate();
 
-  if (global.user) {
+  if (global.isAuthenticated) {
+    console.log(global.isAuthenticated)
     navigate('/');
   }
 
-  if (!error && data.data) {
+  let errorMessages = undefined;
+
+  if (error) {
+    errorMessages = Array.isArray(error.details?.errors) ? error.details.errors.map((err: any) => err.message) : [error.message];
+  }
+  else if (data) {
+    console.log(data)
     setGlobal({
       ...global,
-      user: data.data
+      user: data,
+      isAuthenticated: true
     });
 
     navigate('/');
@@ -61,7 +69,12 @@ export default function LoginPage() {
                       type="password"
                       fullWidth />
                   </Box>
-                  {error ? <Typography fontSize="1.125rem" color="error.main" mb={2}>{error}</Typography> : ''}
+
+                  { errorMessages ? 
+                    errorMessages.map((message: string) => <Typography fontSize="1.125rem" color="error.main" mb={2}>{message}</Typography>) 
+                    : ''
+                  }
+
                   <Box mt={2}>
                     <Button type="submit"
                       variant="outlined" >

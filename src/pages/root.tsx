@@ -1,15 +1,21 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import MainDrawer, { MainDrawerMobile } from "../components/drawer/drawer";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { GlobalContext, GlobalContextInterface } from "../main";
 
 export default function Root() {
   const { global } = useContext(GlobalContext) as GlobalContextInterface;
-  const { user } = global;
+  const { isAuthenticated } = global;
   const navigate = useNavigate();
 
-  if (!user) {
-    navigate('/login');
+  useEffect(() => {
+    if (isAuthenticated === false) {
+      navigate('/login');
+    }
+  }, [isAuthenticated, navigate]);
+
+  if (!isAuthenticated) {
+    return <div></div>
   }
 
   return (

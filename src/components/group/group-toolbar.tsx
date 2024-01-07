@@ -53,12 +53,12 @@ export default function GroupToolbar({ groups }: {groups: Array<Group> }) {
       closeDeleteDialog();
     })()
   }
-  
+  console.log(groups)
   return (
   <Box mt={4} display='flex'>
     <Autocomplete
       disablePortal
-      options={groups.map(group => ({ label: group.name, value: group.id }))}
+      options={groups.map(group => ({ label: group.name || ' ', value: group.id }))}
       sx={{ width: 300 }}
       renderInput={(params) => <TextField {...params} label="Group" />}
       value={selectedGroup}
