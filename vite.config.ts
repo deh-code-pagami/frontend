@@ -11,10 +11,11 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
 
   return {
     server: {
+      host: true,
       port: 3000,
       proxy: {
         '/api': {
-          target: 'http://localhost:1337',
+          target: 'http://strapi:1337',
           changeOrigin: true
         }
       }
