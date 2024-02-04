@@ -1,3 +1,5 @@
+import qs from 'qs'
+
 export async function groupsLoader() {
   const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/groups/`);
 
@@ -15,25 +17,25 @@ export async function groupsLoader() {
 }
 
 export async function groupDetailLoader({ params }: any) {
-  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/groups/${params.groupId}/`);
+  const query = qs.stringify({
+    populate: {
+      transactions: { populate: ['transaction'] },
+      users: { populate: ['user'] }
+    }
+  });
+
+  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/groups/${params.groupId}/?${query}`);
 
   if (!response.ok) {
     return {};
   }
 
-  const data = await response.json();
+  const json = await response.json();
 
   const group = {
-    id: data.id,
-    ...data.attributes
+    id: json.id,
+    ...json.attributes
   };
-
-  /*
-  response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/groups/${params.groupId}/transactions/`);
-  data = await response.json();
-
-  const transactions = data.data;
-  */
 
   return { group, transactions: [] };
 }
