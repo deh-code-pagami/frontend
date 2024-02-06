@@ -1,28 +1,18 @@
-import { Grid, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import { useLoaderData } from "react-router-dom";
-import TransactionFilters from "../../components/transaction/transaction-filters";
-import { visuallyHidden } from '@mui/utils';
 import TransactionList from "../../components/transaction/transaction-list";
+import { Typography } from "@mui/material";
 
 
 export default function TransactionsPage() {
   const { transactions } = useLoaderData() as { transactions: Array<Transaction> };
 
   return (
-    <Container>
-      <Typography sx={visuallyHidden} variant="h1">
-        Transactions Page
+    <Container sx={{py: '48px'}}>
+      <Typography component="h1" variant="h3" sx={{mb: '24px'}}>
+        Transactions
       </Typography>
-      <Grid mt={4} container spacing={2}>
-        <Grid item xs={12} md={4}>
-          <Typography variant="h5" component="h2" sx={{marginBottom: '1rem'}}>Filters</Typography>
-          <TransactionFilters></TransactionFilters>
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <TransactionList transactions={transactions} ></TransactionList>
-        </Grid>
-      </Grid>
+      <TransactionList transactions={transactions} ></TransactionList>
     </Container>
   )
 }

@@ -13,7 +13,7 @@ function valuetext(value: number) {
   return `$${value}`;
 }
 
-export default function TransactionFilters() {
+export default function TransactionFilters({ onApply }: {onApply?: (event: React.KeyboardEvent | React.MouseEvent) => void}) {
   const [description, setDescription] = useState<string>('');
   const [amount, setAmount] = useState<number[]>([minAmountValue, maxAmountValue]);
   const [date, setDate] = useState<string[]>(['', '']);
@@ -150,7 +150,8 @@ export default function TransactionFilters() {
                 <Button 
                   type="submit" 
                   variant="outlined"
-                  sx={{alignSelf: 'center', width: '100%' }}>Apply</Button>
+                  sx={{alignSelf: 'center', width: '100%' }}
+                  onClick={onApply}>Apply</Button>
               </Grid>
             </Grid>
           </Box>

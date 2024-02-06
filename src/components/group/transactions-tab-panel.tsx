@@ -1,7 +1,6 @@
-import { Grid, Button, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 import React from "react";
 import TransactionDialog from "../transaction/transaction-dialog";
-import TransactionFilters from "../transaction/transaction-filters";
 import TransactionList from "../transaction/transaction-list";
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import { Box } from "@mui/system";
@@ -28,15 +27,9 @@ export default function TransactionsTabPanel({ transactions }: { transactions: T
           handleClose={handleClose}
         ></TransactionDialog>
       </Box>
-      <Grid mt={2} container spacing={2}>
-        <Grid item xs={12} md={4}>
-          <Typography variant="h5" component="h2" sx={{ marginBottom: '1rem' }}>Filters</Typography>
-          <TransactionFilters></TransactionFilters>
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <TransactionList transactions={transactions}></TransactionList>
-        </Grid>
-      </Grid>
+      <Box>
+        <TransactionList transactions={transactions}></TransactionList>
+      </Box>
     </>
   )
 }

@@ -11,8 +11,8 @@ export default function TransactionCard({transaction}: { transaction: Transactio
   const { global } = useContext(GlobalContext) as GlobalContextInterface;
   const subject = (global.user?.email || '');
   const meta = transaction.transactionMetas[0];
-  const isDebtor = subject == meta.userDebtor.email;
-  const otherSubject = isDebtor ? 'userCreditor' : 'userDebtor';
+  const isCreditor = subject === meta.userCreditor.email;
+  const otherSubject = isCreditor ? 'userDebtor' : 'userCreditor';
 
   return (
     <Card sx={{ width: '100%' }}>
@@ -22,9 +22,10 @@ export default function TransactionCard({transaction}: { transaction: Transactio
             {transaction.date}
           </Typography>
           <Typography variant="h5" component="div" sx={{display: 'flex', alignItems: 'baseline'}}>
-            <Box component="span">{meta[otherSubject].username}</Box>
-            <Box component="span" sx={{marginX: '16px', fontSize: '1.25rem', color: 'text.secondary', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>{transaction.description || ''}</Box>
-            <Box sx={{marginRight: '16px', marginLeft: 'auto', color:(isDebtor ? 'success.main' : 'error.main'), fontWeight: "bold"}} component="span" >{isDebtor ? '' : '-'}${meta.amount}</Box>
+            <Box sx={{color:(isCreditor ? 'success.main' : 'error.main'), fontWeight: "bold"}} component="span" >{isCreditor ? '+' : '-'}${meta.amount}</Box>
+            <Box sx={{marginX: '8px'}}>{isCreditor ? '←' : '→'}</Box>
+            <Box component="span" sx={{fontWeight: '700'}}>{meta[otherSubject].username}</Box>
+            <Box component="span" sx={{marginX: '24px', fontSize: '1rem', color: 'text.secondary', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>{transaction.description || ''}</Box>
           </Typography>
         </CardContent>
       </Link>
