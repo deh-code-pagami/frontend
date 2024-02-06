@@ -3,13 +3,13 @@ export function prepareGroup(group: any | any[]): Group | Group[] {
     return group.map(el => prepareGroup(el) as Group);
   }
 
-  const { name, users = [], transactions = [] } = group.attributes;
+  const { name, users, transactions } = group.attributes;
 
   return {
     id: group.id,
     name,
-    transactions: prepareTransaction(transactions.data) as Transaction[],
-    users: prepareUser(users.data) as User[]
+    transactions: !transactions ? [] : prepareTransaction(transactions.data) as Transaction[],
+    users:  !users ? [] : prepareUser(users.data) as User[]
   };
 }
 
@@ -25,7 +25,7 @@ export function prepareTransaction(transaction: any | any[]): Transaction | Tran
     date: new Date(date).toLocaleString(),
     title,
     description,
-    transactionMetas: prepareTransactionMeta(transaction_metas.data) as TransactionMeta[]
+    transactionMetas: !transaction_metas ? [] : prepareTransactionMeta(transaction_metas.data) as TransactionMeta[]
   };
 
 }

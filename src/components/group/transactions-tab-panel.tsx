@@ -34,8 +34,7 @@ export default function TransactionsTabPanel({ transactions }: { transactions: T
           <TransactionFilters></TransactionFilters>
         </Grid>
         <Grid item xs={12} md={8}>
-          {/* TODO get subject from logged in username */}
-          <TransactionList transactions={transactions} subject="Piero"></TransactionList>
+          <TransactionList transactions={transactions}></TransactionList>
         </Grid>
       </Grid>
     </>
