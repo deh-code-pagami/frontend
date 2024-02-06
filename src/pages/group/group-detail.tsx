@@ -16,7 +16,7 @@ export default function GroupDetailPage() {
 
   const { groupId } = useParams();
   const [groups] = useOutletContext() as [groups: Group[]];
-  const { transactions } = useLoaderData() as { transactions: Transaction[] };
+  const { group } = useLoaderData() as { group: Group };
 
   const id = parseInt(groupId || '-1');
   const matchedGroup = groups.find(el => el.id == id);
@@ -104,7 +104,7 @@ export default function GroupDetailPage() {
                 key={index}
               >
                 {isActive && (
-                  <CustomPanelComponent transactions={transactions} />
+                  <CustomPanelComponent transactions={group.transactions || []} />
                 )}
               </div>)
           })}

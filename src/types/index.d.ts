@@ -3,18 +3,24 @@ export {}
 declare global {
   interface Transaction {
     id: number,
-    userDebtor: string,
-    userCreditor: string,
-    amount: number,
     date: string,
     title?: string,
     description?: string,
-    group: number
+    group?: number
+    transactionMetas: TransactionMeta[]
+  }
+
+  interface TransactionMeta {
+    userDebtor: User,
+    userCreditor: User,
+    amount: number,
   }
 
   interface Group {
     id: number,
     name: string,
+    users?: User[],
+    transactions?: Transaction[]
   }
 
   interface User {

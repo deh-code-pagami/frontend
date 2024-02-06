@@ -1,4 +1,5 @@
-import qs from 'qs'
+import qs from "qs";
+import { prepareGroup } from "../../utils/strapi";
 
 export async function groupsLoader() {
   const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/groups/`);
@@ -17,14 +18,22 @@ export async function groupsLoader() {
 }
 
 export async function groupDetailLoader({ params }: any) {
-  const query = qs.stringify({
+  const queryParams = qs.stringify({
     populate: {
-      transactions: { populate: ['transaction'] },
-      users: { populate: ['user'] }
+      transactions: {
+        populate: {
+          transaction_metas: {
+            populate: ['user_debtor', 'user_creditor']
+          }
+        }
+      },
+      users: {
+        populate: ['user']
+      }
     }
   });
 
-  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/groups/${params.groupId}/?${query}`);
+  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/groups/${params.groupId}/?${queryParams}`);
 
   if (!response.ok) {
     return {};
@@ -32,10 +41,7 @@ export async function groupDetailLoader({ params }: any) {
 
   const json = await response.json();
 
-  const group = {
-    id: json.id,
-    ...json.attributes
-  };
+  const group = prepareGroup(json.data);
 
-  return { group, transactions: [] };
+  return { group };
 }

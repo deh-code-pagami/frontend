@@ -20,7 +20,7 @@ export default function TransactionCard(props: { transaction: Transaction, subje
           <Typography variant="h5" component="div" sx={{display: 'flex', alignItems: 'baseline'}}>
             <Box component="span">{transaction[otherSubject]}</Box>
             <Box component="span" sx={{marginX: '16px', fontSize: '1.25rem', color: 'text.secondary', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>{transaction.description || ''}</Box>
-            <Box sx={{marginRight: '16px', marginLeft: 'auto', color:(isDebtor ? 'success.main' : 'error.main'), fontWeight: "bold"}} component="span" >{isDebtor ? '' : '-'}${transaction.amount}</Box>
+            <Box sx={{marginRight: '16px', marginLeft: 'auto', color:(isDebtor ? 'success.main' : 'error.main'), fontWeight: "bold"}} component="span" >{isDebtor ? '' : '-'}${transaction.transactionMetas[0].amount}</Box>
           </Typography>
         </CardContent>
       </Link>
