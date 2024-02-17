@@ -17,12 +17,40 @@ export async function transactionDetailLoader({params} : any) {
   return { transaction };
 }
 
-export async function transactionsLoader() {
+export async function transactionsLoader({request} : any) {
+  const searchParams = new URL(request.url).searchParams;
+
+  const dateFilters = {} as any;
+
+  if (searchParams.get('date_from') && searchParams.get('date_to')) {
+    dateFilters.createdAt = {
+      $between: [searchParams.get('date_from'), searchParams.get('date_to')]
+    } ;
+  }
+  else if (searchParams.get('date_from') || searchParams.get('date_to')) {
+    const operator = searchParams.get('date_from') ? 'gte' : 'lte';
+
+    dateFilters.createdAt = {
+      [operator]: searchParams.get('date_from') || searchParams.get('date_to')
+    }
+  }
+
   const queryParams = qs.stringify({
     populate: {
       transaction_metas: {
-        populate: ['user_creditor', 'user_debtor']
+        populate: ['user_creditor', 'user_debtor'],
       }
+    },
+    filters: {
+      description: {
+        $containsi: searchParams.get('description') || ''
+      },
+      transaction_metas: {
+        amount: {
+          $between: [(searchParams.get('amount_min') || 0), (searchParams.get('amount_max') || 5000)]
+        }
+      },
+      ...dateFilters
     }
   });
 

@@ -122,7 +122,7 @@ export default function TransactionFilters({ onApply }: {onApply?: (event: React
                   onChange={(v: any) => { setDate([v.format('YYYY-MM-DD'), date[1]]); setDateDisplay([v, dateDisplay[1]]) }} />
                 <input 
                   type="hidden" 
-                  name="from_date" 
+                  name="date_from" 
                   value={date[0]} />
               </Grid>
               <Grid item xs={12} md={6} >
@@ -131,7 +131,7 @@ export default function TransactionFilters({ onApply }: {onApply?: (event: React
                   onChange={(v: any) => { setDate([date[0], v.format('YYYY-MM-DD')]); setDateDisplay([dateDisplay[0], v]); }} />
                 <input 
                   type="hidden" 
-                  name="to_date" 
+                  name="date_to" 
                   value={date[1]} />
               </Grid>
             </Grid>
