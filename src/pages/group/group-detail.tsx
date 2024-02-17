@@ -7,6 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import SummaryTabPanel from "../../components/group/summary-tab-panel";
 import TransactionsTabPanel from "../../components/group/transactions-tab-panel";
 import SettingsTabPanel from "../../components/group/settings-tab-panel";
+import UsersTabPanel from "../../components/group/users-tab-panel";
 
 export default function GroupDetailPage() {
   const { global, setGlobal } = useContext(GlobalContext) as GlobalContextInterface;
@@ -72,6 +73,11 @@ export default function GroupDetailPage() {
       path: 'transactions',
     },
     {
+      name: 'Members',
+      component: UsersTabPanel,
+      path: 'members',
+    },
+    {
       name: 'Settings',
       component: SettingsTabPanel,
       path: 'settings',
@@ -104,7 +110,7 @@ export default function GroupDetailPage() {
                 key={index}
               >
                 {isActive && (
-                  <CustomPanelComponent transactions={group.transactions || []} />
+                  <CustomPanelComponent group={group} />
                 )}
               </div>)
           })}

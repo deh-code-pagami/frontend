@@ -14,7 +14,6 @@ export default function Root() {
     }
   }, [isAuthenticated, navigate]);
 
-  console.log(isAuthenticated)
   if (!isAuthenticated) {
     return <div></div>
   }

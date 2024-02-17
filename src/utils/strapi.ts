@@ -54,13 +54,17 @@ export function prepareUser(user: any | any[]): User | User[] {
     return prepareUser(user.attributes.user.data);
   }
 
-  const { name = '', surname = '', username, email, role = 'user' } = user.attributes;
+  const { name = '', surname = '', username, email, role } = user.attributes;
 
   return {
     name,
     surname,
     username,
     email,
-    role
+    role: prepareRole(role)
   } as User;
+}
+
+export function prepareRole(role: any): Role {
+  return role?.data?.attributes?.name?.toLowerCase() || 'user';
 }

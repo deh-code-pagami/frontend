@@ -5,7 +5,8 @@ import TransactionList from "../transaction/transaction-list";
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import { Box } from "@mui/system";
 
-export default function TransactionsTabPanel({ transactions }: { transactions: Transaction[] }) {
+export default function TransactionsTabPanel({ group }: { group: Group }) {
+  const { transactions = [] } = group;
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {

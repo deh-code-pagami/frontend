@@ -28,7 +28,11 @@ export async function groupDetailLoader({ params }: any) {
         }
       },
       users: {
-        populate: ['user']
+        populate: {
+          user: {
+            populate: ['role']
+          }
+        }
       }
     }
   });
