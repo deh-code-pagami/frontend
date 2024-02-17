@@ -1,9 +1,7 @@
 import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody, Box, Button } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 
-export default function UserTable({users}: {users: User[]}) {
-  console.log(users)
-  
+export default function UserTable({users}: {users: User[]}) {  
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
