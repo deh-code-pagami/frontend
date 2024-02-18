@@ -4,14 +4,18 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 import routes from "../../data/routes";
+import { useContext } from "react";
+import { GroupContext, GroupContextInterface } from "../../main";
 
 export default function MainNavigation() {
+  const { group } = useContext(GroupContext) as GroupContextInterface;
+
   const menu = {
     'label': 'main navigation',
     'items': [
       {
         label: 'Groups',
-        href: routes.groups,
+        href: routes.groups + (group?.id || ''),
         icon: <GroupsIcon/>
       },
       {

@@ -59,7 +59,7 @@ const router = createBrowserRouter([
             path: ':groupId',
             element: <GroupDetailPage />,
             loader: groupDetailLoader
-          }
+          },
         ]
       },
       {
@@ -84,21 +84,28 @@ const theme = createTheme({
 
 export interface GlobalContextInterface {
   global: {
-    currentGroup?: number,
     user?: User,
     isAuthenticated?: boolean 
   },
   setGlobal: React.Dispatch<React.SetStateAction<any>>
 }
 
+export interface GroupContextInterface {
+  group?: Group | null,
+  setGroup: React.Dispatch<React.SetStateAction<Group | undefined | null>>
+}
+
 export const GlobalContext = createContext<GlobalContextInterface | null>(null);
+export const GroupContext = createContext<GroupContextInterface | null>(null);
 
 function Main() {
   const [ global, setGlobal ] = useState({});
+  const [ group, setGroup ] = useState<Group | undefined | null>();
 
   return(
     <React.StrictMode>
         <GlobalContext.Provider value={{global, setGlobal}}>
+        <GroupContext.Provider value={{group, setGroup}}>
           <AuthenticationProvider>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <CssBaseline>
@@ -108,6 +115,7 @@ function Main() {
               </CssBaseline>
             </LocalizationProvider>
           </AuthenticationProvider>
+        </GroupContext.Provider>
         </GlobalContext.Provider>
     </React.StrictMode>
   )

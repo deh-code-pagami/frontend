@@ -1,90 +1,91 @@
 import { Autocomplete, Box, Button, TextField } from "@mui/material";
 import { useContext } from "react";
-import { GlobalContext, GlobalContextInterface } from "../../main";
+import { GroupContext, GroupContextInterface } from "../../main";
 import ConfirmationDialog from "../dialog/confirmation-dialog";
 import GroupDialog from "./group-dialog";
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import routes from "../../data/routes";
 
 export interface GroupOption {
-  label: string, 
+  label: string,
   value: number
 }
 
-export default function GroupToolbar({ groups }: {groups: Array<Group> }) {
+export default function GroupToolbar({ groups }: { groups: Group[] }) {
   const [createDialog, setCreateDialog] = React.useState(false);
   const [deleteDialog, setDeleteDialog] = React.useState(false);
-  const { global, setGlobal } = useContext(GlobalContext) as GlobalContextInterface;
-  const { currentGroup } = global;
+  const { group, setGroup } = useContext(GroupContext) as GroupContextInterface;
+  const navigate = useNavigate();
 
-  const g = groups.find(el => el.id === currentGroup);
-
-  const selectedGroup = g ? {
-    label: g.name || '',
-    value: g.id || -1
-  } : null;
+  const selectedGroup = !group ? null : groups.find(el => el.id === group?.id);
 
   const closeCreateDialog = () => {
     setCreateDialog(false);
-  };
+  }
 
   const closeDeleteDialog = () => {
     setDeleteDialog(false);
   }
 
-  const deleteGroup = () => {
-    (async () => {
-      const groupId = selectedGroup?.value;
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/groups/${groupId}`, {
-        method: 'DELETE'
-      });
+  const deleteGroup = async () => {
+    if (!group) {
+      return;
+    }
 
-      if (!response.ok) {
-        console.error(response);
-        return;
-      }
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/groups/${group.id}`, {
+      method: 'DELETE'
+    });
 
-      setGlobal({
-        ...global,
-        currentGroup: -1
-      });
+    if (!response.ok) {
+      console.error(response);
+      return;
+    }
 
-      closeDeleteDialog();
-    })()
+    setGroup(undefined);
+
+    closeDeleteDialog();
   }
-  
+
+  const changeGroup = (_e: any, newValue: any) => {
+    const selectedGroup = !newValue ? null : groups.find(el => el.id === newValue.value);
+
+    setGroup(selectedGroup);
+    navigate(routes.groups + (selectedGroup?.id || ''));
+  }
+
   return (
-  <Box mt={4} display='flex'>
-    <Autocomplete
-      disablePortal
-      options={groups.map(group => ({ label: group.name || ' ', value: group.id }))}
-      sx={{ width: 300 }}
-      renderInput={(params) => <TextField {...params} label="Group" />}
-      value={selectedGroup}
-      onChange={(_e, newValue) => { 
-        setGlobal({...global, currentGroup: (newValue?.value || -1)}) 
-      }}
-      isOptionEqualToValue={(opt, val) => opt.value == val.value}
-    />
-    <Button sx={{ml: 2, px: 1}} variant="outlined" onClick={() => {setCreateDialog(true);}} >
-      <AddIcon />
-    </Button>
-    <GroupDialog open={createDialog} handleClose={closeCreateDialog}> </GroupDialog>
-    <Button 
-      sx={{ml: 2, px: 1}} 
-      variant="outlined" 
-      color="error" 
-      onClick={() => { 
-        if (!selectedGroup) {
-          return;
-        } 
-        setDeleteDialog(true);}
-      } 
-    >
-      <DeleteIcon />
-    </Button>
-    <ConfirmationDialog open={deleteDialog} title="Are you sure you want to delete this group?" onConfirm={deleteGroup} handleClose={closeDeleteDialog} ></ConfirmationDialog>
-  </Box>
+    <Box mt={4} display='flex'>
+      <Autocomplete
+        disablePortal
+        options={groups.map(group => ({ label: group.name, value: group.id }))}
+        sx={{ width: 300 }}
+        renderInput={(params) => { return <TextField {...params} label="Group" />; }}
+        value={{ label: selectedGroup?.name || '', value: selectedGroup?.id }}
+        onChange={changeGroup}
+        isOptionEqualToValue={(a, b) => a.value === b.value}
+      />
+      <Button sx={{ ml: 2, px: 1 }} variant="outlined" onClick={() => { setCreateDialog(true); }} >
+        <AddIcon />
+      </Button>
+      <GroupDialog open={createDialog} handleClose={closeCreateDialog}> </GroupDialog>
+      <Button
+        sx={{ ml: 2, px: 1 }}
+        variant="outlined"
+        color="error"
+        onClick={() => {
+          if (!group) {
+            return;
+          }
+
+          setDeleteDialog(true);
+        }}
+      >
+        <DeleteIcon />
+      </Button>
+      <ConfirmationDialog open={deleteDialog} title="Are you sure you want to delete this group?" onConfirm={deleteGroup} handleClose={closeDeleteDialog} ></ConfirmationDialog>
+    </Box>
   )
 }

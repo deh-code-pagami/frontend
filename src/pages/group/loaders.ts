@@ -8,11 +8,8 @@ export async function groupsLoader() {
     return {};
   }
 
-  const data = await response.json();
-  const groups = data.data.map((group: any) => ({
-    id: group.id,
-    ...group.attributes
-  }));
+  const json = await response.json();
+  const groups = prepareGroup(json.data);
 
   return { groups };
 }

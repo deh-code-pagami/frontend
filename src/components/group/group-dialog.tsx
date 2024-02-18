@@ -3,12 +3,13 @@ import { Stack, Box } from "@mui/system";
 import { Form } from "react-router-dom";
 import Dialog from "../dialog/dialog";
 import React, { FormEventHandler, useContext } from "react";
-import { GlobalContext, GlobalContextInterface } from "../../main";
+import { GroupContext, GroupContextInterface } from "../../main";
+import { prepareGroup } from "../../utils/strapi";
 
 
 export default function GroupDialog({ children, open, handleClose }: { children: React.ReactNode, open: boolean, handleClose: () => void}) {
   const [loading, setLoading] = React.useState(false);
-  const { global, setGlobal } = useContext(GlobalContext) as GlobalContextInterface;
+  const { setGroup } = useContext(GroupContext) as GroupContextInterface;
 
   const [name, setName] = React.useState('');
   
@@ -38,13 +39,10 @@ export default function GroupDialog({ children, open, handleClose }: { children:
         return;
       }
 
-      const data = await res.json();
+      const json = await res.json();
 
       setLoading(false)
-      setGlobal({
-        ...global,
-        currentGroup: data.data.id
-      })
+      setGroup(prepareGroup(json.data) as Group);
 
       handleClose();
     })()

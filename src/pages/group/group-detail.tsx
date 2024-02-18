@@ -1,6 +1,6 @@
 import { useLoaderData, useNavigate, useOutletContext, useParams } from "react-router-dom";
 
-import { GlobalContext, GlobalContextInterface } from "../../main";
+import { GroupContext, GroupContextInterface } from "../../main";
 import routes from "../../data/routes";
 import { Tabs, Tab, Box } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
@@ -10,56 +10,42 @@ import SettingsTabPanel from "../../components/group/settings-tab-panel";
 import UsersTabPanel from "../../components/group/users-tab-panel";
 
 export default function GroupDetailPage() {
-  const { global, setGlobal } = useContext(GlobalContext) as GlobalContextInterface;
-  const { currentGroup } = global;
+  const { group, setGroup } = useContext(GroupContext) as GroupContextInterface;
 
   const navigate = useNavigate();
 
-  const { groupId } = useParams();
   const [groups] = useOutletContext() as [groups: Group[]];
-  const { group } = useLoaderData() as { group: Group };
-
-  const id = parseInt(groupId || '-1');
-  const matchedGroup = groups.find(el => el.id == id);
+  const {groupId} = useParams();
+  const { group: loadedGroup } = useLoaderData() as { group: Group | undefined };
 
   const [activeTab, setActiveTab] = useState(0);
 
   useEffect(() => {
-    // current group has just been unsetted, ignore groupId param
-    if (currentGroup == -1) {
-      navigate(routes.groups, {replace: true});
-      return;
-    }
+    const id = group === undefined ? loadedGroup?.id : group?.id;
+    const selectedGroup = groups.find(el => el.id === id);
 
     // group not found, unset current group and return to group page
-    if (!matchedGroup) {
-      if (currentGroup) {
-        setGlobal({
-          ...global,
-          currentGroup: undefined
-        })
+    if (!selectedGroup) {
+      if (group) {
+        setGroup(null)
       }
 
       navigate(routes.groups, {replace: true});
+
       return;
     }
     
     // current group has changed
-    if (currentGroup != id) {
-      // currentGroup takes priority over groupId param
-      if (currentGroup) {
-        navigate(routes.groups + currentGroup, {replace: true})
-      }
-      else {
-        setGlobal({
-          ...global,
-          currentGroup: id
-        })
-      }
+    if (group === undefined || group?.id === loadedGroup?.id) {
+      setGroup(loadedGroup);
 
       return;
     }
-  }, [currentGroup, matchedGroup, global, groups, id, navigate, setGlobal]);
+  }, [groups, navigate, group, setGroup, loadedGroup, groupId]);
+
+  if (!loadedGroup) {
+    return <></>
+  }
 
   const tabPanels = [
     {
@@ -110,7 +96,7 @@ export default function GroupDetailPage() {
                 key={index}
               >
                 {isActive && (
-                  <CustomPanelComponent group={group} />
+                  <CustomPanelComponent group={loadedGroup} />
                 )}
               </div>)
           })}

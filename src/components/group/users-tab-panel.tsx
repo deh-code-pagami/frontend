@@ -3,14 +3,21 @@ import UserTable from "../user/user-table";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { Button } from "@mui/material";
 import UserDialog from "../user/user-dialog";
-import React from "react";
+import React, { useContext } from "react";
 import qs from 'qs';
 import { prepareRole } from "../../utils/strapi";
+import { GroupContext, GroupContextInterface } from "../../main";
 
-export default function UsersTabPanel({group} : {group: Group}) {
-  const { users = [] } = group;
+export default function UsersTabPanel() {
+  const { group } = useContext(GroupContext) as GroupContextInterface;
   const [ allUsers, setAllUsers ] = React.useState<User[]>([]);
   const [open, setOpen] = React.useState(false);
+
+  if (!group) {
+    return <></>
+  }
+
+  const { users = [] } = group;
 
   const handleClickOpen = async () => {
     const queryParams = qs.stringify({
