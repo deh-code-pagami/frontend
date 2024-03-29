@@ -3,53 +3,21 @@ import { Stack, Box } from "@mui/system";
 import Dialog from "../dialog/dialog";
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import { useContext, useState } from "react";
-import { GroupContext, GroupContextInterface } from "../../main";
+import { useState } from "react";
 
-export default function UserDialog({ open, handleClose, allUsers }: { open: boolean, handleClose: () => void, allUsers: User[] }) {
-  const { group, setGroup } = useContext(GroupContext) as GroupContextInterface;
+export default function UserSelectionDialog({
+  open,
+  handleClose,
+  handleSubmit,
+  allUsers }:
+  {
+    open: boolean,
+    handleClose: () => void,
+    handleSubmit: (selectedUsers: User[], handleClose: () => void) => void,
+    allUsers: User[]
+  }) {
+
   const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
-
-  if (!group) {
-    return <></>
-  }
-
-  const handleSubmit = async () => {
-    const addUsers = selectedUsers
-      .filter(selectedUser => 
-        !group.users.some(user => user.id === selectedUser.id)
-      )
-      .map(async (selectedUser) => {
-          const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/user_group/`, {
-            method: 'POST',
-            body: JSON.stringify({
-              user: selectedUser.id,
-              group: group.id
-            }),
-          });
-        
-          if (!response.ok) {
-            console.error(response);
-            return undefined;
-          }
-    
-          return selectedUser;
-        }
-      )
-
-    let correctlyAddedUsers = await Promise.all(addUsers) as User[];
-    correctlyAddedUsers = correctlyAddedUsers.filter(user => !!user);
-
-    setGroup({
-      ...group,
-      users: [
-        ...group.users,
-        ...correctlyAddedUsers
-      ]
-    });
-
-    handleClose();
-  }
 
   return (<Dialog open={open} handleClose={handleClose}>
     <DialogTitle id="transaction-dialog">Add new transaction</DialogTitle>
@@ -84,7 +52,7 @@ export default function UserDialog({ open, handleClose, allUsers }: { open: bool
       </Stack>
     </DialogContent>
     <DialogActions>
-      <Button onClick={handleSubmit} type='submit'>Add</Button>
+      <Button onClick={() => handleSubmit(selectedUsers, handleClose)} type='submit'>Confirm</Button>
     </DialogActions>
   </Dialog>)
 }

@@ -36,7 +36,7 @@ export default function GroupDetailPage() {
     }
     
     // current group has changed
-    if (group === undefined || group?.id === loadedGroup?.id) {
+    if (group === undefined || group?.id !== loadedGroup?.id) {
       setGroup(loadedGroup);
 
       return;

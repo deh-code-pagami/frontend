@@ -6,7 +6,7 @@ declare global {
     date: string,
     title?: string,
     description?: string,
-    group?: number
+    group: Group
     transactionMetas: TransactionMeta[]
   }
 

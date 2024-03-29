@@ -4,7 +4,6 @@ import { Form } from "react-router-dom";
 import Dialog from "../dialog/dialog";
 import React, { FormEventHandler, useContext } from "react";
 import { GroupContext, GroupContextInterface } from "../../main";
-import { prepareGroup } from "../../utils/strapi";
 
 
 export default function GroupDialog({ children, open, handleClose }: { children: React.ReactNode, open: boolean, handleClose: () => void}) {
@@ -42,7 +41,7 @@ export default function GroupDialog({ children, open, handleClose }: { children:
       const json = await res.json();
 
       setLoading(false)
-      setGroup(prepareGroup(json.data) as Group);
+      setGroup(json.data as Group);
 
       handleClose();
     })()

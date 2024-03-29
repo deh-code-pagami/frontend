@@ -38,16 +38,16 @@ export default function MainNavigation() {
     <nav aria-label="main navigation">
       <List>
         {menu.items.map((item, index) => (
-          !item.label ? <Divider key={index} sx={{marginY: '8px'}}/>
-          : <ListItem key={index} disablePadding>
-          <NavLink to={(item.href || '#')} style={{width: '100%', color: 'inherit'}}>
+          <ListItem key={index} disablePadding>
+            { !item.label ? <Divider key={index} sx={{marginY: '8px'}}/>
+            : <NavLink to={(item.href || '#')} style={{width: '100%', color: 'inherit'}}>
             <ListItemButton>
               <ListItemIcon>
                 {item.icon}
               </ListItemIcon>
               <ListItemText primary={item.label} />
             </ListItemButton>
-          </NavLink>
+          </NavLink> }
         </ListItem>
         ))}
       </List>

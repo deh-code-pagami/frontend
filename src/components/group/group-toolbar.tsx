@@ -63,6 +63,7 @@ export default function GroupToolbar({ groups }: { groups: Group[] }) {
         options={groups.map(group => ({ label: group.name, value: group.id }))}
         sx={{ width: 300 }}
         renderInput={(params) => { return <TextField {...params} label="Group" />; }}
+        renderOption={(props, option) => <li {...props} key={option.value}>{option.label}</li>}
         value={{ label: selectedGroup?.name || '', value: selectedGroup?.id }}
         onChange={changeGroup}
         isOptionEqualToValue={(a, b) => a.value === b.value}

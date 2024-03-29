@@ -3,13 +3,13 @@ export function prepareGroup(group: any | any[]): Group | Group[] {
     return group.map(el => prepareGroup(el) as Group);
   }
 
-  const { name, users, transactions } = group.attributes;
+  const { name, users, transactions } = group;
 
   return {
     id: group.id,
     name,
-    transactions: !transactions ? [] : prepareTransaction(transactions.data) as Transaction[],
-    users:  !users ? [] : prepareUser(users.data) as User[]
+    transactions: !transactions ? [] : prepareTransaction(transactions) as Transaction[],
+    users:  !users ? [] : prepareUser(users) as User[]
   };
 }
 
@@ -57,6 +57,7 @@ export function prepareUser(user: any | any[]): User | User[] {
   const { name = '', surname = '', username, email, role } = user.attributes;
 
   return {
+    id: user.id,
     name,
     surname,
     username,
