@@ -22,15 +22,11 @@ export default function UserTable() {
       response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/group-users/${groupUser.id}`, {
         method: 'DELETE'
       });
-
-      console.log(await response.json());
     }
 
     if (!group) {
       return;
     }
-
-    console.log('deleted user')
 
     setGroup({
       ...group,
@@ -41,7 +37,7 @@ export default function UserTable() {
 
     setDeleteUserDialog(false);
   }
-console.log(group)
+
   return (
     <>
       <TableContainer component={Paper}>

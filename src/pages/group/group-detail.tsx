@@ -1,18 +1,20 @@
-import { useLoaderData, useNavigate, useOutletContext, useParams } from "react-router-dom";
+import { useLoaderData, useNavigate, useNavigation, useOutletContext, useParams } from "react-router-dom";
 
 import { GroupContext, GroupContextInterface } from "../../main";
 import routes from "../../data/routes";
 import { Tabs, Tab, Box } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { Suspense, useContext, useEffect, useState } from "react";
 import SummaryTabPanel from "../../components/group/summary-tab-panel";
 import TransactionsTabPanel from "../../components/group/transactions-tab-panel";
 import SettingsTabPanel from "../../components/group/settings-tab-panel";
 import UsersTabPanel from "../../components/group/users-tab-panel";
+import Spinner from "../../components/spinner/spinner";
 
 export default function GroupDetailPage() {
   const { group, setGroup } = useContext(GroupContext) as GroupContextInterface;
 
   const navigate = useNavigate();
+  const navigation = useNavigation();
 
   const [groups] = useOutletContext() as [groups: Group[]];
   const {groupId} = useParams();
@@ -42,10 +44,6 @@ export default function GroupDetailPage() {
       return;
     }
   }, [groups, navigate, group, setGroup, loadedGroup, groupId]);
-
-  if (!loadedGroup) {
-    return <></>
-  }
 
   const tabPanels = [
     {

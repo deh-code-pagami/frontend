@@ -15,7 +15,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
       port: 3000,
       proxy: {
         '/api': {
-          target: 'http://strapi:1337',
+          target: 'http://localhost:1337',
           changeOrigin: true
         }
       }

@@ -54,17 +54,19 @@ export default function GroupToolbar({ groups }: { groups: Group[] }) {
 
     setGroup(selectedGroup);
     navigate(routes.groups + (selectedGroup?.id || ''));
+
   }
 
   return (
-    <Box mt={4} display='flex'>
+    <Box mt={4} position={'relative'} display='flex'>
+      <div id="test"></div>
       <Autocomplete
         disablePortal
         options={groups.map(group => ({ label: group.name, value: group.id }))}
         sx={{ width: 300 }}
         renderInput={(params) => { return <TextField {...params} label="Group" />; }}
         renderOption={(props, option) => <li {...props} key={option.value}>{option.label}</li>}
-        value={{ label: selectedGroup?.name || '', value: selectedGroup?.id }}
+        value={selectedGroup ? { label: selectedGroup?.name || '', value: selectedGroup?.id } : null }
         onChange={changeGroup}
         isOptionEqualToValue={(a, b) => a.value === b.value}
       />
