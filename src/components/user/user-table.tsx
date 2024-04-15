@@ -11,28 +11,19 @@ export default function UserTable() {
   const { group, setGroup } = useContext(GroupContext) as GroupContextInterface;
 
   const deleteUser = async () => {
-    if (!selectedUser) {
+    if (!selectedUser || !group) {
       return;
     }
 
-    let response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/group-users/`);
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/groups/${group.id}/user/${selectedUser.id}`, {
+      method: 'DELETE'
+    });
+
     const json = await response.json();
-
-    for (const groupUser of json.data) {
-      response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/group-users/${groupUser.id}`, {
-        method: 'DELETE'
-      });
-    }
-
-    if (!group) {
-      return;
-    }
 
     setGroup({
       ...group,
-      users: group.users.filter(user =>
-        user.id != selectedUser.id
-      )
+      users: json.data
     })
 
     setDeleteUserDialog(false);
