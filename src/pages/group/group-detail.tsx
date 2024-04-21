@@ -43,14 +43,19 @@ export default function GroupDetailPage() {
   const [activeTab, setActiveTab] = useState(0);
 
   useEffect(() => {
+    if (!allGroups) {
+      return;
+    }
+
     const id = group === undefined ? loadedGroup?.id : group?.id;
-    const selectedGroup = allGroups?.find(el => el.id === id);
+    const selectedGroup = allGroups.find(el => el.id === id);
 
     // group not found, unset current group and return to group page
     if (!selectedGroup) {
       if (group) {
         setGroup(null)
       }
+
 
       navigate(routes.groups, {replace: true});
 
