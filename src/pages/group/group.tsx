@@ -18,16 +18,14 @@ export default function GroupsPage() {
     }
 
     setAllGroups(groups);
-  })
+  }, [groups, setAllGroups])
 
   return (
     <Container>
       <Typography sx={visuallyHidden} variant="h1">
         Groups Page
       </Typography>
-      <GroupToolbar
-        groups={groups}
-      />
+      <GroupToolbar/>
       { navigation.state === 'loading' ? 
         <Box sx={{
           position: 'relative',

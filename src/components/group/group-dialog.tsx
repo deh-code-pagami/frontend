@@ -8,44 +8,48 @@ import { GroupContext, GroupContextInterface } from "../../main";
 
 export default function GroupDialog({ children, open, handleClose }: { children: React.ReactNode, open: boolean, handleClose: () => void}) {
   const [loading, setLoading] = React.useState(false);
-  const { setGroup } = useContext(GroupContext) as GroupContextInterface;
+  const { setGroup, setAllGroups, allGroups } = useContext(GroupContext) as GroupContextInterface;
 
   const [name, setName] = React.useState('');
   
-  const handleSubmit = useCallback((e: { preventDefault: () => void; }) => {
+  const handleSubmit = useCallback(async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
     if (loading) {
       return;
     }
 
-    (async () => {
-      setLoading(true);
-      
-      const res = await fetch('/api/groups', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          data: {
-            name: name,
-          }
-        })
+    setLoading(true);
+    
+    const res = await fetch('/api/groups', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        data: {
+          name: name,
+        }
       })
+    })
 
-      if (!res.ok) {
-        return;
-      }
+    if (!res.ok) {
+      return;
+    }
 
-      const json = await res.json();
+    const json = await res.json();
 
-      setLoading(false)
-      setGroup(json.data as Group);
+    setLoading(false);
 
-      handleClose();
-    })()
-  }, [handleClose, loading, name, setGroup])
+    setAllGroups([
+      ...(allGroups || []),
+      json.data as Group
+    ])
+    setGroup(json.data as Group);
+
+    handleClose();
+
+  }, [allGroups, handleClose, loading, name, setAllGroups, setGroup])
 
   const reset = useCallback(() => {
     setName('');

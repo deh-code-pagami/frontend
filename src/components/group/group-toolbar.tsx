@@ -14,13 +14,13 @@ export interface GroupOption {
   value: number
 }
 
-export default function GroupToolbar({ groups }: { groups: Group[] }) {
+export default function GroupToolbar() {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = React.useState(false);
   const [deleteDialog, setDeleteDialog] = React.useState(false);
-  const { group, setGroup } = useContext(GroupContext) as GroupContextInterface;
+  const { group, setGroup, allGroups = [], setAllGroups } = useContext(GroupContext) as GroupContextInterface;
   const navigate = useNavigate();
 
-  const selectedGroup = !group ? null : groups.find(el => el.id === group?.id);
+  const selectedGroup = !group ? null : allGroups.find(el => el.id === group?.id);
 
   const deleteGroup = useCallback(async () => {
     if (!group) {
@@ -36,25 +36,28 @@ export default function GroupToolbar({ groups }: { groups: Group[] }) {
       return;
     }
 
+    const json = await response.json();
+
     setGroup(undefined);
+    setAllGroups(allGroups.filter(group => group.id != json.data.id))
 
     setDeleteDialog(false);
-  }, [group, setGroup])
+  }, [allGroups, group, setAllGroups, setGroup]);
 
   const changeGroup = useCallback((_e: any, newValue: any) => {
-    const selectedGroup = !newValue ? null : groups.find(el => el.id === newValue.value);
+    const selectedGroup = !newValue ? null : allGroups.find(el => el.id === newValue.value);
 
     setGroup(selectedGroup);
     navigate(routes.groups + (selectedGroup?.id || ''));
 
-  }, [groups, navigate, setGroup])
+  }, [allGroups, navigate, setGroup]);
 
   return (
     <Box mt={4} position={'relative'} display='flex'>
       <div id="test"></div>
       <Autocomplete
         disablePortal
-        options={groups.map(group => ({ label: group.name, value: group.id }))}
+        options={allGroups.map(group => ({ label: group.name, value: group.id })) || []}
         sx={{ width: 300 }}
         renderInput={(params) => { return <TextField {...params} label="Group" />; }}
         renderOption={(props, option) => <li {...props} key={option.value}>{option.label}</li>}
