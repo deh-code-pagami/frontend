@@ -7,22 +7,14 @@ import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 export default function SummaryTabPanel() {
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   return (
     <Box pt={2}>
-      <Button variant="outlined" onClick={handleClickOpen} sx={{ px: 1 }}>
+      <Button variant="outlined" onClick={() => setOpen(true)} sx={{ px: 1 }}>
           <PlaylistAddIcon />
         </Button>
         <TransactionDialog
           open={open}
-          handleClose={handleClose}
+          handleClose={() => setOpen(false)}
         ></TransactionDialog>
     </Box>
   )

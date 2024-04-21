@@ -1,7 +1,7 @@
 import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody, Box, Button } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useContext, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import ConfirmationDialog from "../dialog/confirmation-dialog";
 import { GroupContext, GroupContextInterface } from "../../main";
 
@@ -10,7 +10,7 @@ export default function UserTable() {
   const [deleteUserDialog, setDeleteUserDialog] = useState<boolean>(false);
   const { group, setGroup } = useContext(GroupContext) as GroupContextInterface;
 
-  const deleteUser = async () => {
+  const deleteUser = useCallback(async () => {
     if (!selectedUser || !group) {
       return;
     }
@@ -27,7 +27,7 @@ export default function UserTable() {
     })
 
     setDeleteUserDialog(false);
-  }
+  }, [group, selectedUser, setGroup])
 
   return (
     <>

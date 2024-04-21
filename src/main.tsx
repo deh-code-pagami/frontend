@@ -91,6 +91,8 @@ export interface GlobalContextInterface {
 }
 
 export interface GroupContextInterface {
+  allGroups?: Group[],
+  setAllGroups: React.Dispatch<React.SetStateAction<Group[] | undefined>>,
   group?: Group | null,
   setGroup: React.Dispatch<React.SetStateAction<Group | undefined | null>>
 }
@@ -101,11 +103,12 @@ export const GroupContext = createContext<GroupContextInterface | null>(null);
 function Main() {
   const [ global, setGlobal ] = useState({});
   const [ group, setGroup ] = useState<Group | undefined | null>();
+  const [ allGroups, setAllGroups ] = useState<Group[] | undefined>();
 
   return(
     <React.StrictMode>
         <GlobalContext.Provider value={{global, setGlobal}}>
-        <GroupContext.Provider value={{group, setGroup}}>
+        <GroupContext.Provider value={{group, setGroup, allGroups, setAllGroups}}>
           <AuthenticationProvider>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <CssBaseline>

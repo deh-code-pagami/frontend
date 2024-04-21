@@ -2,7 +2,7 @@ import { Box } from "@mui/system";
 import UserTable from "../user/user-table";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { Button } from "@mui/material";
-import React, { useContext } from "react";
+import React, { useCallback, useContext } from "react";
 import { GroupContext, GroupContextInterface } from "../../main";
 import UserSelectionDialog from "../user/user-selection-dialog";
 
@@ -11,11 +11,7 @@ export default function UsersTabPanel() {
   const [ allUsers, setAllUsers ] = React.useState<User[]>([]);
   const [ addUserDialog, setAddUserDialog ] = React.useState(false);
 
-  if (!group) {
-    return <></>
-  }
-
-  const handleClickOpen = async () => {
+  const handleClickOpen = useCallback(async () => {
     const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/users/`);
     
     if (!response.ok) {
@@ -28,15 +24,19 @@ export default function UsersTabPanel() {
     // remove users that are already inside the group
     const validUsers = json
       .filter(user1 => 
-        !group.users.some(user2 => 
+        !group?.users.some(user2 => 
           user1.id === user2.id))
     
     setAllUsers(validUsers);
 
     setAddUserDialog(true);
-  };
+  }, [group?.users]);
 
-  const addUsers = async (selectedUsers: User[], handleClose: () => void) => {
+  const addUsers = useCallback(async (selectedUsers: User[], handleClose: () => void) => {
+    if (!group) {
+      return;
+    }
+
     const addUserPromise = async (selectedUser: User) => {
       const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/group-users/`, {
         method: 'POST',
@@ -73,6 +73,10 @@ export default function UsersTabPanel() {
     });
 
     handleClose();
+  }, [group, setGroup]);
+
+  if (!group) {
+    return <></>
   }
 
   return <>

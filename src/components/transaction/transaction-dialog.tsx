@@ -2,30 +2,25 @@ import { DialogTitle, DialogContent, TextField, Autocomplete, Checkbox, DialogAc
 import { Stack, Box } from "@mui/system";
 import { Form } from "react-router-dom";
 import Dialog from "../dialog/dialog";
-import React from "react";
+import React, { useCallback, useContext } from "react";
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-
-// TODO get users from current group users
-const groupUsers = [
-  { username: 'Paolo', id: 1 },
-  { username: 'Piero', id: 2 }
-]
-
-const me = 3;
+import { GlobalContext, GlobalContextInterface, GroupContext, GroupContextInterface } from "../../main";
 
 
 export default function TransactionDialog({ open, handleClose }: { open: boolean, handleClose: () => void }) {
   const [description, setDescription] = React.useState('');
   const [amount, setAmount] = React.useState('0');
-  const [users, setUsers] = React.useState([] as number[]);
+  const [selectedUsers, setSelectedUsers] = React.useState<User[]>([]);
+  const { global } = useContext(GlobalContext) as GlobalContextInterface;
+  const { group } = useContext(GroupContext) as GroupContextInterface;
   
-  const reset = () => {
+  const reset = useCallback(() => {
     setDescription('');
     setAmount('');
-    setUsers([]);
+    setSelectedUsers([]);
     handleClose();
-  }
+  }, [handleClose]);
 
   return (
     <>
@@ -63,9 +58,11 @@ export default function TransactionDialog({ open, handleClose }: { open: boolean
             <Box>
               <Autocomplete
                 multiple
-                onChange={(_e, newValue) => { setUsers(newValue.map(el => el.id)) }}
+                onChange={(_e, newValue) => { setSelectedUsers(newValue) }}
+                value={selectedUsers}
+                options={group?.users || []}
                 id="checkboxes-tags-demo"
-                options={groupUsers}
+                isOptionEqualToValue={(u1, u2) => u1.id === u2.id}
                 disableCloseOnSelect
                 getOptionLabel={(option) => option.username}
                 renderOption={(props, option, { selected }) => (
@@ -92,8 +89,8 @@ export default function TransactionDialog({ open, handleClose }: { open: boolean
           <Button onClick={handleClose} type='submit'>Add</Button>
         </DialogActions>
 
-        <input type='hidden' name='userCreditor' value={parseFloat(amount) < 0 ? JSON.stringify(users) : me} />
-        <input type='hidden' name='userDebtor' value={parseFloat(amount) > 0 ? JSON.stringify(users) : me} />
+        <input type='hidden' name='userCreditor' value={parseFloat(amount) < 0 ? JSON.stringify(selectedUsers.map(user => user.id)) : global.user?.id } />
+        <input type='hidden' name='userDebtor' value={parseFloat(amount) > 0 ? JSON.stringify(selectedUsers.map(user => user.id)) : global.user?.id } />
       </Form>
     </Dialog>
     </>

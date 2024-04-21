@@ -2,7 +2,7 @@ import { DialogTitle, DialogContent, TextField, DialogActions, Button } from "@m
 import { Stack, Box } from "@mui/system";
 import { Form } from "react-router-dom";
 import Dialog from "../dialog/dialog";
-import React, { FormEventHandler, useContext } from "react";
+import React, { useCallback, useContext } from "react";
 import { GroupContext, GroupContextInterface } from "../../main";
 
 
@@ -12,7 +12,7 @@ export default function GroupDialog({ children, open, handleClose }: { children:
 
   const [name, setName] = React.useState('');
   
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+  const handleSubmit = useCallback((e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
     if (loading) {
@@ -45,12 +45,12 @@ export default function GroupDialog({ children, open, handleClose }: { children:
 
       handleClose();
     })()
-  }
+  }, [handleClose, loading, name, setGroup])
 
-  const reset = () => {
+  const reset = useCallback(() => {
     setName('');
     handleClose();
-  }
+  }, [handleClose])
 
   return (
     <>

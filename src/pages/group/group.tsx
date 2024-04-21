@@ -4,10 +4,21 @@ import { Box, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import GroupToolbar from "../../components/group/group-toolbar";
 import Spinner from "../../components/spinner/spinner";
+import { useContext, useEffect } from "react";
+import { GroupContext, GroupContextInterface } from "../../main";
 
 export default function GroupsPage() {
   const { groups } = useLoaderData() as { groups: Group[] };
   const navigation = useNavigation();
+  const {setAllGroups} = useContext(GroupContext) as GroupContextInterface;
+
+  useEffect(() => {
+    if (!groups) {
+      return;
+    }
+
+    setAllGroups(groups);
+  })
 
   return (
     <Container>
@@ -24,7 +35,7 @@ export default function GroupsPage() {
         }}>
           <Spinner></Spinner>
         </Box> :
-        <Outlet context={[groups]} />  
+        <Outlet />  
       }
     </Container>
   )

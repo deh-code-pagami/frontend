@@ -1,6 +1,6 @@
 import { Button, Grid, Slider, Stack, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Dayjs } from 'dayjs';
 import { Form } from "react-router-dom";
 import { DatePicker } from '@mui/x-date-pickers';
@@ -19,7 +19,7 @@ export default function TransactionFilters({ onApply }: {onApply?: (event: React
   const [date, setDate] = useState<string[]>(['', '']);
   const [dateDisplay, setDateDisplay] = useState<(Dayjs | null)[]>([null, null])
 
-  const onAmountSliderChange = (_event: Event, newValue: number | number[], activeThumb: number) => {
+  const onAmountSliderChange = useCallback((_event: Event, newValue: number | number[], activeThumb: number) => {
     if (!Array.isArray(newValue)) {
       return;
     }
@@ -29,26 +29,25 @@ export default function TransactionFilters({ onApply }: {onApply?: (event: React
     } else {
       setAmount([amount[0], Math.max(newValue[1], amount[0] + minDistance)]);
     }
-  };
+  }, [amount]);
 
-  const onAmountMinChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onAmountMinChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     let newValue = event.target.value === '' ? 0 : Number(event.target.value);
     newValue = isNaN(newValue) ? maxAmountValue : newValue;
     setAmount([Math.min(newValue, amount[1] - minDistance), amount[1]]);
-  };
-
-  const onAmountMaxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  }, [amount])
+  const onAmountMaxChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     let newValue = event.target.value === '' ? minAmountValue : Number(event.target.value);
     newValue = isNaN(newValue) ? maxAmountValue : newValue;
     setAmount([amount[0], Math.max(newValue, amount[0] + minDistance)]);
-  }
+  }, [amount])
 
-  const resetFilters = () => {
+  const resetFilters = useCallback(() => {
     setDescription('');
     setAmount([minAmountValue, maxAmountValue]);
     setDateDisplay([null, null]);
     setDate(['', '']);
-  }
+  }, [])
 
   return (
     <Box>

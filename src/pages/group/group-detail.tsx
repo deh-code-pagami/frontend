@@ -1,22 +1,42 @@
-import { useLoaderData, useNavigate, useNavigation, useOutletContext, useParams } from "react-router-dom";
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 
 import { GroupContext, GroupContextInterface } from "../../main";
 import routes from "../../data/routes";
 import { Tabs, Tab, Box } from "@mui/material";
-import { Suspense, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import SummaryTabPanel from "../../components/group/summary-tab-panel";
 import TransactionsTabPanel from "../../components/group/transactions-tab-panel";
 import SettingsTabPanel from "../../components/group/settings-tab-panel";
 import UsersTabPanel from "../../components/group/users-tab-panel";
-import Spinner from "../../components/spinner/spinner";
+
+const tabPanels = [
+  {
+    name: 'Summary',
+    component: SummaryTabPanel,
+    path: '',
+  },
+  {
+    name: 'Transactions',
+    component: TransactionsTabPanel,
+    path: 'transactions',
+  },
+  {
+    name: 'Members',
+    component: UsersTabPanel,
+    path: 'members',
+  },
+  {
+    name: 'Settings',
+    component: SettingsTabPanel,
+    path: 'settings',
+  },
+]
 
 export default function GroupDetailPage() {
-  const { group, setGroup } = useContext(GroupContext) as GroupContextInterface;
+  const { group, setGroup, allGroups} = useContext(GroupContext) as GroupContextInterface;
 
   const navigate = useNavigate();
-  const navigation = useNavigation();
 
-  const [groups] = useOutletContext() as [groups: Group[]];
   const {groupId} = useParams();
   const { group: loadedGroup } = useLoaderData() as { group: Group | undefined };
 
@@ -24,7 +44,7 @@ export default function GroupDetailPage() {
 
   useEffect(() => {
     const id = group === undefined ? loadedGroup?.id : group?.id;
-    const selectedGroup = groups.find(el => el.id === id);
+    const selectedGroup = allGroups?.find(el => el.id === id);
 
     // group not found, unset current group and return to group page
     if (!selectedGroup) {
@@ -43,30 +63,7 @@ export default function GroupDetailPage() {
 
       return;
     }
-  }, [groups, navigate, group, setGroup, loadedGroup, groupId]);
-
-  const tabPanels = [
-    {
-      name: 'Summary',
-      component: SummaryTabPanel,
-      path: '',
-    },
-    {
-      name: 'Transactions',
-      component: TransactionsTabPanel,
-      path: 'transactions',
-    },
-    {
-      name: 'Members',
-      component: UsersTabPanel,
-      path: 'members',
-    },
-    {
-      name: 'Settings',
-      component: SettingsTabPanel,
-      path: 'settings',
-    },
-  ]
+  }, [allGroups, navigate, group, setGroup, loadedGroup, groupId]);
 
   return (
       <Box py={3}>
@@ -94,7 +91,7 @@ export default function GroupDetailPage() {
                 key={index}
               >
                 {isActive && (
-                  <CustomPanelComponent group={loadedGroup} />
+                  <CustomPanelComponent />
                 )}
               </div>)
           })}

@@ -1,5 +1,5 @@
 import { Autocomplete, Box, Button, TextField } from "@mui/material";
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 import { GroupContext, GroupContextInterface } from "../../main";
 import ConfirmationDialog from "../dialog/confirmation-dialog";
 import GroupDialog from "./group-dialog";
@@ -15,22 +15,14 @@ export interface GroupOption {
 }
 
 export default function GroupToolbar({ groups }: { groups: Group[] }) {
-  const [createDialog, setCreateDialog] = React.useState(false);
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = React.useState(false);
   const [deleteDialog, setDeleteDialog] = React.useState(false);
   const { group, setGroup } = useContext(GroupContext) as GroupContextInterface;
   const navigate = useNavigate();
 
   const selectedGroup = !group ? null : groups.find(el => el.id === group?.id);
 
-  const closeCreateDialog = () => {
-    setCreateDialog(false);
-  }
-
-  const closeDeleteDialog = () => {
-    setDeleteDialog(false);
-  }
-
-  const deleteGroup = async () => {
+  const deleteGroup = useCallback(async () => {
     if (!group) {
       return;
     }
@@ -46,16 +38,16 @@ export default function GroupToolbar({ groups }: { groups: Group[] }) {
 
     setGroup(undefined);
 
-    closeDeleteDialog();
-  }
+    setDeleteDialog(false);
+  }, [group, setGroup])
 
-  const changeGroup = (_e: any, newValue: any) => {
+  const changeGroup = useCallback((_e: any, newValue: any) => {
     const selectedGroup = !newValue ? null : groups.find(el => el.id === newValue.value);
 
     setGroup(selectedGroup);
     navigate(routes.groups + (selectedGroup?.id || ''));
 
-  }
+  }, [groups, navigate, setGroup])
 
   return (
     <Box mt={4} position={'relative'} display='flex'>
@@ -70,10 +62,10 @@ export default function GroupToolbar({ groups }: { groups: Group[] }) {
         onChange={changeGroup}
         isOptionEqualToValue={(a, b) => a.value === b.value}
       />
-      <Button sx={{ ml: 2, px: 1 }} variant="outlined" onClick={() => { setCreateDialog(true); }} >
+      <Button sx={{ ml: 2, px: 1 }} variant="outlined" onClick={() => setIsCreateDialogOpen(true)} >
         <AddIcon />
       </Button>
-      <GroupDialog open={createDialog} handleClose={closeCreateDialog}> </GroupDialog>
+      <GroupDialog open={isCreateDialogOpen} handleClose={() => setIsCreateDialogOpen(false)}> </GroupDialog>
       <Button
         sx={{ ml: 2, px: 1 }}
         variant="outlined"
@@ -88,7 +80,7 @@ export default function GroupToolbar({ groups }: { groups: Group[] }) {
       >
         <DeleteIcon />
       </Button>
-      <ConfirmationDialog open={deleteDialog} title="Are you sure you want to delete this group?" onConfirm={deleteGroup} handleClose={closeDeleteDialog} ></ConfirmationDialog>
+      <ConfirmationDialog open={deleteDialog} title="Are you sure you want to delete this group?" onConfirm={deleteGroup} handleClose={() => { setDeleteDialog(false); }} ></ConfirmationDialog>
     </Box>
   )
 }

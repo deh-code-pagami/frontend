@@ -2,14 +2,13 @@ import { List, ListItem, Box, SwipeableDrawer, Typography, Button } from "@mui/m
 import TransactionCard from "./transaction-card";
 import TransactionFilters from "./transaction-filters";
 import TuneIcon from '@mui/icons-material/Tune';
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export default function TransactionList(props: { transactions: Array<Transaction> }) {
   const { transactions } = props;
   const [ filtersOpen, setFiltersOpen ] = useState(false);
 
-  const toggleDrawer =
-    (open: boolean) =>
+  const toggleDrawer = useCallback((open: boolean) =>
       (event: React.KeyboardEvent | React.MouseEvent) => {
         if (
           event &&
@@ -21,7 +20,7 @@ export default function TransactionList(props: { transactions: Array<Transaction
         }
 
       setFiltersOpen(open);
-    };
+    }, [])
 
   return (
     <>

@@ -4,13 +4,13 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 import routes from "../../data/routes";
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { GroupContext, GroupContextInterface } from "../../main";
 
 export default function MainNavigation() {
   const { group } = useContext(GroupContext) as GroupContextInterface;
 
-  const menu = {
+  const menu = useMemo(() => ({
     'label': 'main navigation',
     'items': [
       {
@@ -32,7 +32,7 @@ export default function MainNavigation() {
         icon: <SettingsIcon/>
       }
     ]
-  }
+  }), [group?.id])
 
   return (
     <nav aria-label="main navigation">
