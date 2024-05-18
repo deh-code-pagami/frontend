@@ -9,10 +9,20 @@ import { GlobalContext, GlobalContextInterface } from '../../main';
 
 export default function TransactionCard({transaction}: { transaction: Transaction }) {
   const { global } = useContext(GlobalContext) as GlobalContextInterface;
-  const subject = (global.user?.email || '');
+  const subject = global.user?.email;
+  
+  if (!transaction.transactionMetas || !subject) {
+    return <></>;
+  }
+
   const meta = transaction.transactionMetas[0];
   const isCreditor = subject === meta.userCreditor.email;
-  const otherSubject = isCreditor ? 'userDebtor' : 'userCreditor';
+  const otherSubjects = isCreditor ? 
+    meta.userDebtors
+      .filter(user => user.email != subject)
+      .map(user => user.username)
+      .join(', ') 
+    : meta.userCreditor.username;
 
   return (
     <Card sx={{ width: '100%' }}>
@@ -24,7 +34,7 @@ export default function TransactionCard({transaction}: { transaction: Transactio
           <Typography variant="h5" component="div" sx={{display: 'flex', alignItems: 'baseline'}}>
             <Box sx={{color:(isCreditor ? 'success.main' : 'error.main'), fontWeight: "bold"}} component="span" >{isCreditor ? '+' : '-'}${meta.amount}</Box>
             <Box sx={{marginX: '8px'}}>{isCreditor ? '←' : '→'}</Box>
-            <Box component="span" sx={{fontWeight: '700'}}>{meta[otherSubject].username}</Box>
+            <Box component="span" sx={{fontWeight: '700'}}>{otherSubjects}</Box>
             <Box component="span" sx={{marginX: '24px', fontSize: '1rem', color: 'text.secondary', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>{transaction.description || ''}</Box>
           </Typography>
         </CardContent>

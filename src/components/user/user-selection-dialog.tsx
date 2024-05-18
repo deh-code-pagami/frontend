@@ -30,7 +30,7 @@ export default function UserSelectionDialog({
           <Box>
             <Autocomplete
               multiple
-              componentName="users"
+              componentname="users"
               id="checkboxes-tags-demo"
               options={allUsers}
               disableCloseOnSelect
