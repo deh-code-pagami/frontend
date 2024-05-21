@@ -6,7 +6,7 @@ import { useLoaderData } from "react-router-dom";
 
 export default function TransactionDetailPage() {
   const { transaction } = useLoaderData() as { transaction: Transaction };
-
+  // TODO: detail crashes
   return (
     <Container>
       <h1>{transaction.title || ''}</h1>

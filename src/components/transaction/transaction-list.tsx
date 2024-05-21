@@ -3,7 +3,7 @@ import TransactionCard from "./transaction-card";
 
 export default function TransactionList(props: { transactions: Transaction[] }) {
   const { transactions } = props;
-
+  // TODO: transactions list sometimes is not refreshed 
   return (
     <>
       <List>

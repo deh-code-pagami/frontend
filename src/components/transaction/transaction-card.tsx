@@ -11,7 +11,7 @@ export default function TransactionCard({transaction}: { transaction: Transactio
   const { global } = useContext(GlobalContext) as GlobalContextInterface;
   const subject = global.user?.email;
   
-  if (!transaction.transactionMetas || !subject) {
+  if (!transaction.transactionMetas?.length || !subject) {
     return <></>;
   }
 
@@ -24,6 +24,8 @@ export default function TransactionCard({transaction}: { transaction: Transactio
       .join(', ') 
     : meta.userCreditor.username;
 
+  const amount = meta.amount / meta.userDebtors.length;
+
   return (
     <Card sx={{ width: '100%' }}>
       <Link to={`${routes.transactions}${transaction.id}`}>
@@ -32,7 +34,7 @@ export default function TransactionCard({transaction}: { transaction: Transactio
             {transaction.date}
           </Typography>
           <Typography variant="h5" component="div" sx={{display: 'flex', alignItems: 'baseline'}}>
-            <Box sx={{color:(isCreditor ? 'success.main' : 'error.main'), fontWeight: "bold"}} component="span" >{isCreditor ? '+' : '-'}${meta.amount}</Box>
+            <Box sx={{color:(isCreditor ? 'success.main' : 'error.main'), fontWeight: "bold"}} component="span" >{isCreditor ? '+' : '-'}${amount.toFixed(2)}</Box>
             <Box sx={{marginX: '8px'}}>{isCreditor ? '←' : '→'}</Box>
             <Box component="span" sx={{fontWeight: '700'}}>{otherSubjects}</Box>
             <Box component="span" sx={{marginX: '24px', fontSize: '1rem', color: 'text.secondary', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>{transaction.description || ''}</Box>
