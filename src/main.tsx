@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import {
   createBrowserRouter,
@@ -70,23 +70,14 @@ const router = createBrowserRouter([
   }
 ]);
 
-const theme = createTheme({
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          padding: '12px 38px'
-        }
-      },
-    },
-  },
-});
+type GlobalOptions = {
+  user?: User,
+  isAuthenticated?: boolean,
+  palette: 'light' | 'dark'
+}
 
 export interface GlobalContextInterface {
-  global: {
-    user?: User,
-    isAuthenticated?: boolean 
-  },
+  global: GlobalOptions,
   setGlobal: React.Dispatch<React.SetStateAction<any>>
 }
 
@@ -101,9 +92,24 @@ export const GlobalContext = createContext<GlobalContextInterface | null>(null);
 export const GroupContext = createContext<GroupContextInterface | null>(null);
 
 function Main() {
-  const [ global, setGlobal ] = useState({});
+  const [ global, setGlobal ] = useState<GlobalOptions>({ palette: 'light' });
   const [ group, setGroup ] = useState<Group | undefined | null>();
   const [ allGroups, setAllGroups ] = useState<Group[] | undefined>();
+
+  const theme = useMemo(() => createTheme({
+    palette: {
+      mode: global.palette
+    },
+    components: {
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            padding: '12px 38px'
+          }
+        },
+      },
+    },
+  }), [global]);
 
   return(
     <React.StrictMode>

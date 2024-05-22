@@ -1,5 +1,6 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import MainDrawer, { MainDrawerMobile } from "../components/drawer/drawer";
+import MainDrawer from "../components/drawer/drawer";
+import MainDrawerMobile from "../components/drawer/drawer-mobile";
 import { useContext, useEffect } from "react";
 import { GlobalContext, GlobalContextInterface } from "../main";
 
