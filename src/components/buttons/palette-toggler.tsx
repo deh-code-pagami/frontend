@@ -1,7 +1,7 @@
 import React from "react";
 import { GlobalContext, GlobalContextInterface } from "../../main";
 import { IconButton } from "@mui/material";
-import { Box, padding, palette } from "@mui/system";
+import { Box } from "@mui/system";
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 
@@ -22,7 +22,6 @@ export default function PaletteToggler() {
         bgcolor: 'background.default',
         color: 'text.primary',
         borderRadius: 1,
-        
       }}
     >
       <IconButton onClick={togglePalette} color="inherit">

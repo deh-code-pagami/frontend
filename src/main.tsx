@@ -27,6 +27,7 @@ import { loginAction } from './pages/actions';
 import { groupsLoader, groupDetailLoader } from './pages/group/loaders';
 import { transactionsLoader, transactionDetailLoader } from './pages/transaction/loaders';
 import AuthenticationProvider from './components/auth/authentication-provider';
+import { Box } from '@mui/system';
 
 const router = createBrowserRouter([
   {
@@ -117,11 +118,15 @@ function Main() {
         <GroupContext.Provider value={{group, setGroup, allGroups, setAllGroups}}>
           <AuthenticationProvider>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <CssBaseline>
+              <CssBaseline/>
+              <style>{`
+                body {
+                  background-color: ${theme.palette.background.default}
+                }
+              `}</style>
                 <ThemeProvider theme={theme}>
                   <RouterProvider router={router}></RouterProvider>
                 </ThemeProvider>
-              </CssBaseline>
             </LocalizationProvider>
           </AuthenticationProvider>
         </GroupContext.Provider>
