@@ -25,7 +25,7 @@ export default function TransactionCard({transaction}: { transaction: Transactio
     : meta.userCreditor.username;
 
   const amount = meta.amount / meta.userDebtors.length;
-
+console.log(transaction)
   return (
     <Card sx={{ width: '100%' }}>
       <Link to={`${routes.transactions}${transaction.id}`}>
@@ -33,12 +33,14 @@ export default function TransactionCard({transaction}: { transaction: Transactio
           <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
             {transaction.date}
           </Typography>
-          <Typography variant="h5" component="div" sx={{display: 'flex', alignItems: 'baseline'}}>
-            <Box sx={{color:(isCreditor ? 'success.main' : 'error.main'), fontWeight: "bold"}} component="span" >{isCreditor ? '+' : '-'}${amount.toFixed(2)}</Box>
-            <Box sx={{marginX: '8px'}}>{isCreditor ? '←' : '→'}</Box>
-            <Box component="span" sx={{fontWeight: '700'}}>{otherSubjects}</Box>
-            <Box component="span" sx={{marginX: '24px', fontSize: '1rem', color: 'text.secondary', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>{transaction.description || ''}</Box>
-          </Typography>
+          <Box>
+              <Typography variant="h5" component="div" display={'flex'} alignItems={'baseline'}>
+                <Box whiteSpace={'nowrap'} sx={{color:(isCreditor ? 'success.main' : 'error.main'), fontWeight: "bold"}} component="span" >{isCreditor ? '+' : '-'}${amount.toFixed(2)}</Box>
+                <Box sx={{marginX: '8px'}}>{isCreditor ? '←' : '→'}</Box>
+                <Box component="span" overflow={'hidden'} textOverflow={'ellipsis'} whiteSpace={'nowrap'} fontWeight={'700'}>{otherSubjects}</Box>
+                <Box overflow={'hidden'} ml={4} whiteSpace={'nowrap'} textOverflow={'ellipsis'} flex={'1 1 0'}>{transaction.title}</Box>
+              </Typography>
+            </Box>
         </CardContent>
       </Link>
     </Card>
