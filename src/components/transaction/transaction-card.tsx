@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import routes from '../../data/routes';
 import { useContext } from 'react';
-import { GlobalContext, GlobalContextInterface } from '../../main';
+import { GlobalContext, GlobalContextInterface } from '../../contexts/global';
 
 export default function TransactionCard({transaction}: { transaction: Transaction }) {
   const { global } = useContext(GlobalContext) as GlobalContextInterface;
@@ -25,7 +25,7 @@ export default function TransactionCard({transaction}: { transaction: Transactio
     : meta.userCreditor.username;
 
   const amount = meta.amount / meta.userDebtors.length;
-console.log(transaction)
+  
   return (
     <Card sx={{ width: '100%' }}>
       <Link to={`${routes.transactions}${transaction.id}`}>

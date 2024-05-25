@@ -5,7 +5,7 @@ import TransactionList from "../transaction/transaction-list";
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import TuneIcon from '@mui/icons-material/Tune';
 import { Box } from "@mui/system";
-import { GroupContext, GroupContextInterface } from "../../main";
+import { GroupContext, GroupContextInterface } from "../../contexts/group";
 import TransactionFilters from "../transaction/transaction-filters";
 
 export default function TransactionsTabPanel() {

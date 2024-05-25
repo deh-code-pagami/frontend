@@ -4,7 +4,7 @@ import Dialog from "../dialog/dialog";
 import React, { useCallback, useContext } from "react";
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import { GlobalContext, GlobalContextInterface, GroupContext, GroupContextInterface } from "../../main";
+import { GroupContext, GroupContextInterface } from '../../contexts/group';
 
 
 export default function TransactionDialog({ open, handleClose }: { open: boolean, handleClose: () => void }) {

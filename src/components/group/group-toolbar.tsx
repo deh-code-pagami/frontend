@@ -1,6 +1,6 @@
 import { Autocomplete, Box, Button, TextField } from "@mui/material";
 import { useCallback, useContext } from "react";
-import { GroupContext, GroupContextInterface } from "../../main";
+import { GroupContext, GroupContextInterface } from "../../contexts/group";
 import ConfirmationDialog from "../dialog/confirmation-dialog";
 import GroupDialog from "./group-dialog";
 import AddIcon from '@mui/icons-material/Add';

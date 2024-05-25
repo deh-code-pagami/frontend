@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { GlobalContext, GlobalContextInterface } from "../../main";
+import { GlobalContext, GlobalContextInterface } from "../../contexts/global";
 
 export default function AuthenticationProvider({children}: {children: React.ReactNode}) {
   const { global, setGlobal } = useContext(GlobalContext) as GlobalContextInterface;

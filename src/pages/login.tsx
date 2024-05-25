@@ -1,7 +1,7 @@
 import { Box, Button, Card, CardContent, Container, Divider, Stack, TextField, Typography } from "@mui/material"
 import { useContext } from "react";
 import { Form, useActionData, useNavigate } from "react-router-dom"
-import { GlobalContext, GlobalContextInterface } from "../main";
+import { GlobalContext, GlobalContextInterface } from "../contexts/global";
 
 
 

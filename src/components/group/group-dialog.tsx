@@ -3,7 +3,7 @@ import { Stack, Box } from "@mui/system";
 import { Form } from "react-router-dom";
 import Dialog from "../dialog/dialog";
 import React, { useCallback, useContext } from "react";
-import { GroupContext, GroupContextInterface } from "../../main";
+import { GroupContext, GroupContextInterface } from "../../contexts/group";
 
 
 export default function GroupDialog({ children, open, handleClose }: { children: React.ReactNode, open: boolean, handleClose: () => void}) {

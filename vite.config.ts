@@ -19,6 +19,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
           changeOrigin: true
         }
       }
-    }
+    },
+    plugins
   }
 })

@@ -3,7 +3,7 @@ import UserTable from "../user/user-table";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { Button } from "@mui/material";
 import React, { useCallback, useContext } from "react";
-import { GroupContext, GroupContextInterface } from "../../main";
+import { GroupContext, GroupContextInterface } from "../../contexts/group";
 import UserSelectionDialog from "../user/user-selection-dialog";
 
 export default function UsersTabPanel() {

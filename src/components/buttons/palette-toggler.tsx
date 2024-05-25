@@ -1,5 +1,5 @@
 import React from "react";
-import { GlobalContext, GlobalContextInterface } from "../../main";
+import { GlobalContext, GlobalContextInterface } from "../../contexts/global";
 import { IconButton } from "@mui/material";
 import { Box } from "@mui/system";
 import Brightness7Icon from '@mui/icons-material/Brightness7';

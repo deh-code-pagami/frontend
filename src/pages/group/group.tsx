@@ -5,7 +5,7 @@ import { Container } from "@mui/system";
 import GroupToolbar from "../../components/group/group-toolbar";
 import Spinner from "../../components/spinner/spinner";
 import { useContext, useEffect } from "react";
-import { GroupContext, GroupContextInterface } from "../../main";
+import { GroupContext, GroupContextInterface } from "../../contexts/group";
 
 export default function GroupsPage() {
   const { groups } = useLoaderData() as { groups: Group[] };

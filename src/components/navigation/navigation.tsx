@@ -5,7 +5,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 import routes from "../../data/routes";
 import { useContext, useMemo } from "react";
-import { GroupContext, GroupContextInterface } from "../../main";
+import { GroupContext, GroupContextInterface } from "../../contexts/group";
 
 export default function MainNavigation() {
   const { group } = useContext(GroupContext) as GroupContextInterface;

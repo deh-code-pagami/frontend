@@ -1,6 +1,6 @@
 import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 
-import { GroupContext, GroupContextInterface } from "../../main";
+import { GroupContext, GroupContextInterface } from "../../contexts/group";
 import routes from "../../data/routes";
 import { Tabs, Tab, Box } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
