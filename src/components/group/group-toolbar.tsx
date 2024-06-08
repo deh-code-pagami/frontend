@@ -53,7 +53,7 @@ export default function GroupToolbar() {
   }, [allGroups, navigate, setGroup]);
 
   return (
-    <Box mt={4} position={'relative'} display='flex'>
+    <Box position={'relative'} display='flex'>
       <div id="test"></div>
       <Autocomplete
         disablePortal

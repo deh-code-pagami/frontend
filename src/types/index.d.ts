@@ -11,7 +11,7 @@ declare global {
   }
 
   interface TransactionMeta {
-    userDebtors: User[],
+    userDebtor: User,
     userCreditor: User,
     amount: number,
   }

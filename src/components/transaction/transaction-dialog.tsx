@@ -33,11 +33,11 @@ export default function TransactionDialog({ open, handleClose }: { open: boolean
           title: description,
           description: '',
           group: group.id,
-          transactionMetas: [{
-            amount,
+          transactionMetas: userDebtors.map(userDebtor => ({
+            amount: parseInt(amount) / userDebtors.length,
             userCreditor,
-            userDebtors
-          }]
+            userDebtor
+          }))
         }
       }),
       headers: {

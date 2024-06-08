@@ -8,7 +8,7 @@ export default function TransactionsPage() {
   const { transactions } = useLoaderData() as { transactions: Array<Transaction> };
 
   return (
-    <Container sx={{py: '48px'}}>
+    <Container>
       <Typography component="h1" variant="h3" sx={{mb: '24px'}}>
         Transactions
       </Typography>
