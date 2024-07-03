@@ -47,7 +47,7 @@ export default function GroupDetailPage() {
       return;
     }
 
-    const id = group === undefined ? loadedGroup?.id : group?.id;
+    const id = typeof group === 'undefined' ? loadedGroup?.id : group?.id;
     const selectedGroup = allGroups.find(el => el.id === id);
 
     // group not found, unset current group and return to group page
@@ -62,12 +62,8 @@ export default function GroupDetailPage() {
       return;
     }
     
-    // current group has changed
-    if (group === undefined || group?.id !== loadedGroup?.id) {
-      setGroup(loadedGroup);
-
-      return;
-    }
+    // update current group with server response
+    setGroup(loadedGroup);
   }, [allGroups, navigate, group, setGroup, loadedGroup, groupId]);
 
   return (
