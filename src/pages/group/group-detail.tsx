@@ -56,14 +56,16 @@ export default function GroupDetailPage() {
         setGroup(null)
       }
 
-
       navigate(routes.groups, {replace: true});
 
       return;
     }
-    
+
     // update current group with server response
-    setGroup(loadedGroup);
+    if (loadedGroup?.id != group?.id) {
+      setGroup(loadedGroup);
+    }
+    
   }, [allGroups, navigate, group, setGroup, loadedGroup, groupId]);
 
   return (
