@@ -8,25 +8,25 @@ import UserSelectionDialog from "../user/user-selection-dialog";
 
 export default function UsersTabPanel() {
   const { group, setGroup } = useContext(GroupContext) as GroupContextInterface;
-  const [ allUsers, setAllUsers ] = React.useState<User[]>([]);
-  const [ addUserDialog, setAddUserDialog ] = React.useState(false);
+  const [allUsers, setAllUsers] = React.useState<User[]>([]);
+  const [addUserDialog, setAddUserDialog] = React.useState(false);
 
   const handleClickOpen = useCallback(async () => {
     const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/users/`);
-    
+
     if (!response.ok) {
       console.error(response);
       return;
     }
-    
+
     const json = await response.json() as User[];
 
     // remove users that are already inside the group
     const validUsers = json
-      .filter(user1 => 
-        !group?.users.some(user2 => 
+      .filter(user1 =>
+        !group?.users.some(user2 =>
           user1.id === user2.id))
-    
+
     setAllUsers(validUsers);
 
     setAddUserDialog(true);
@@ -50,7 +50,7 @@ export default function UsersTabPanel() {
           }
         }),
       });
-    
+
       if (!response.ok) {
         console.error(response);
         return undefined;
@@ -59,11 +59,11 @@ export default function UsersTabPanel() {
       return selectedUser;
     };
 
-    const addUserPromises = selectedUsers.map( selectedUser => addUserPromise(selectedUser) );
+    const addUserPromises = selectedUsers.map(selectedUser => addUserPromise(selectedUser));
 
     const correctlyAddedUsers = (await Promise.all(addUserPromises))
-      .filter(addedUser => !!addedUser) as User[];
-
+      .filter(user => !!user) as User[];
+    
     setGroup({
       ...group,
       users: [
@@ -80,17 +80,17 @@ export default function UsersTabPanel() {
   }
 
   return <>
-    <Box sx={{marginBottom: 4}}>
-      <Button variant="outlined"  sx={{ px: 1 }} onClick={handleClickOpen}>
+    <Box sx={{ marginBottom: 4 }}>
+      <Button variant="outlined" sx={{ px: 1 }} onClick={handleClickOpen}>
         <PersonAddIcon></PersonAddIcon>
       </Button>
     </Box>
     <UserTable ></UserTable>
-    <UserSelectionDialog 
-      handleClose={ () => { setAddUserDialog(false); } } 
-      open={addUserDialog} 
-      allUsers={allUsers} 
-      handleSubmit={ addUsers }
+    <UserSelectionDialog
+      handleClose={() => { setAddUserDialog(false); }}
+      open={addUserDialog}
+      allUsers={allUsers}
+      handleSubmit={addUsers}
     />
   </>
 }

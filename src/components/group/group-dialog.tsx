@@ -1,16 +1,14 @@
 import { DialogTitle, DialogContent, TextField, DialogActions, Button } from "@mui/material";
 import { Stack, Box } from "@mui/system";
-import { Form, useNavigate } from "react-router-dom";
+import { Form } from "react-router-dom";
 import Dialog from "../dialog/dialog";
 import React, { useCallback, useContext } from "react";
 import { GroupContext, GroupContextInterface } from "../../contexts/group";
-import routes from "../../data/routes";
 
 
 export default function GroupDialog({ children, open, handleClose }: { children: React.ReactNode, open: boolean, handleClose: () => void}) {
   const [loading, setLoading] = React.useState(false);
   const { setGroup, setAllGroups, allGroups } = useContext(GroupContext) as GroupContextInterface;
-  const navigate = useNavigate();
 
   const [name, setName] = React.useState('');
 
@@ -54,10 +52,9 @@ export default function GroupDialog({ children, open, handleClose }: { children:
     ])
 
     setGroup(json);
-    navigate(routes.groups + (json.id || ''));
 
     reset();
-  }, [allGroups, loading, name, navigate, reset, setAllGroups, setGroup])
+  }, [allGroups, loading, name, reset, setAllGroups, setGroup])
 
   return (
     <>
