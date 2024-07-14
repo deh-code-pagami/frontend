@@ -1,6 +1,6 @@
 import { DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
 import React from "react";
-import Dialog from "./dialog";
+import Dialog from "./Dialog";
 
 export default function ConfirmationDialog({ children, title, open, handleClose, onConfirm }: { children?: React.ReactNode, title: string, open: boolean, handleClose: () => void, onConfirm: () => void }) {
   return (

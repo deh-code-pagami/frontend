@@ -1,5 +1,5 @@
 import { Drawer } from '@mui/material';
-import DrawerContent from './drawer-content';
+import DrawerContent from './DrawerContent';
 
 export default function MainDrawer() {
   return (

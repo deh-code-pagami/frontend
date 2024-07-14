@@ -1,10 +1,10 @@
 
 import { Tabs, Tab, Box } from "@mui/material";
 import { useState } from "react";
-import SummaryTabPanel from "../../components/group/summary-tab-panel";
-import TransactionsTabPanel from "../../components/group/transactions-tab-panel";
-import SettingsTabPanel from "../../components/group/settings-tab-panel";
-import UsersTabPanel from "../../components/group/users-tab-panel";
+import SummaryTabPanel from "../../components/group/SummaryTabPanel";
+import TransactionsTabPanel from "../../components/group/TransactionsTabPanel";
+import SettingsTabPanel from "../../components/group/SettingsTabPanel";
+import UsersTabPanel from "../../components/group/UsersTabPanel";
 
 const tabPanels = [
   {

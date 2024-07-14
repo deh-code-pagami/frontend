@@ -1,5 +1,5 @@
 import { List, ListItem } from "@mui/material";
-import TransactionCard from "./transaction-card";
+import TransactionCard from "./TransactionCard";
 
 export default function TransactionList(props: { transactions: Transaction[] }) {
   const { transactions } = props;

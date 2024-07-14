@@ -1,6 +1,6 @@
 import { DialogTitle, DialogContent, TextField, Autocomplete, Checkbox, DialogActions, Button } from "@mui/material";
 import { Stack, Box } from "@mui/system";
-import Dialog from "../dialog/dialog";
+import Dialog from "../dialog/Dialog";
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { useState } from "react";

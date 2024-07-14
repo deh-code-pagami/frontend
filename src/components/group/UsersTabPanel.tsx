@@ -1,10 +1,10 @@
 import { Box } from "@mui/system";
-import UserTable from "../user/user-table";
+import UserTable from "../user/UserTable";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { Button } from "@mui/material";
 import React, { useCallback, useContext } from "react";
 import { GroupContext, GroupContextInterface } from "../../contexts/group";
-import UserSelectionDialog from "../user/user-selection-dialog";
+import UserSelectionDialog from "../user/UserSelectionDialog";
 
 export default function UsersTabPanel() {
   const { group, setGroup } = useContext(GroupContext) as GroupContextInterface;

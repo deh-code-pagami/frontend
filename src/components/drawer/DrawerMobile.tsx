@@ -2,7 +2,7 @@ import { Button, SwipeableDrawer } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import { Box, Container } from "@mui/system";
 import React from "react";
-import DrawerContent from "./drawer-content";
+import DrawerContent from "./DrawerContent";
 
 export default function MainDrawerMobile(props: { window?: () => Window }) {
   const { window } = props;

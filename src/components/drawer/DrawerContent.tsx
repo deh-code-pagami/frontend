@@ -1,6 +1,6 @@
 import { Box } from "@mui/system";
-import MainNavigation from "../navigation/navigation";
-import PaletteToggler from "../buttons/palette-toggler";
+import MainNavigation from "../navigation/MainNavigation";
+import PaletteToggler from "../buttons/PaletteToggler";
 
 export default function DrawerContent() {
   return (

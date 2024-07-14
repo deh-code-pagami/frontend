@@ -2,7 +2,7 @@ import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useCallback, useContext, useState } from "react";
-import ConfirmationDialog from "../dialog/confirmation-dialog";
+import ConfirmationDialog from "../dialog/ConfirmationDialog";
 import { GroupContext, GroupContextInterface } from "../../contexts/group";
 
 export default function UserTable() {

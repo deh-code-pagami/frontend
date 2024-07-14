@@ -1,6 +1,6 @@
 import { Container } from "@mui/system";
 import { useLoaderData } from "react-router-dom";
-import TransactionList from "../../components/transaction/transaction-list";
+import TransactionList from "../../components/transaction/TransactionList";
 import { Typography } from "@mui/material";
 
 

@@ -1,15 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
 import { loginAction } from "../pages/actions";
 import ErrorPage from "../pages/error-page";
-import GroupsPage from "../pages/group/group";
-import GroupDetailPage from "../pages/group/group-detail";
+import GroupsPage from "../pages/group/GroupPage";
+import GroupDetailPage from "../pages/group/GroupDetailPage";
 import { groupsLoader, groupDetailLoader } from "../pages/group/loaders";
-import LoginPage from "../pages/login";
-import ProfilePage from "../pages/profile";
-import Root from "../pages/root";
+import LoginPage from "../pages/LoginPage";
+import ProfilePage from "../pages/ProfilePage";
+import Root from "../pages/Root";
 import { transactionsLoader, transactionDetailLoader } from "../pages/transaction/loaders";
-import TransactionsPage from "../pages/transaction/transaction";
-import TransactionDetailPage from "../pages/transaction/transaction-detail";
+import TransactionsPage from "../pages/transaction/TransactionPage";
+import TransactionDetailPage from "../pages/transaction/TransactionDetailPage";
 
 export default {
   root: '/',

@@ -1,7 +1,7 @@
 import { DialogTitle, DialogContent, TextField, DialogActions, Button } from "@mui/material";
 import { Stack, Box } from "@mui/system";
 import { Form } from "react-router-dom";
-import Dialog from "../dialog/dialog";
+import Dialog from "../dialog/Dialog";
 import React, { useCallback, useContext } from "react";
 import { GroupContext, GroupContextInterface } from "../../contexts/group";
 

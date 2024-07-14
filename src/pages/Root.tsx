@@ -1,9 +1,9 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import MainDrawer from "../components/drawer/drawer";
-import MainDrawerMobile from "../components/drawer/drawer-mobile";
+import MainDrawer from "../components/drawer/Drawer";
+import MainDrawerMobile from "../components/drawer/DrawerMobile";
 import { useContext, useEffect } from "react";
 import { GlobalContext, GlobalContextInterface } from "../contexts/global";
-import { Box, Container } from "@mui/material";
+import { Box } from "@mui/material";
 
 export default function Root() {
   const { global } = useContext(GlobalContext) as GlobalContextInterface;

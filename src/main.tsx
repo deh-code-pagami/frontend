@@ -14,7 +14,7 @@ import '@fontsource/roboto/700.css';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import AuthenticationProvider from './components/auth/authentication-provider';
+import AuthenticationProvider from './components/auth/AuthenticationProvider';
 import { GlobalContext, GlobalOptions } from './contexts/global';
 import { GroupContext } from './contexts/group';
 import { router } from './data/routes';

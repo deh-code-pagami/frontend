@@ -1,12 +1,12 @@
 import { Button, SwipeableDrawer, Typography } from "@mui/material";
 import React, { useCallback, useContext, useState } from "react";
-import TransactionDialog from "../transaction/transaction-dialog";
-import TransactionList from "../transaction/transaction-list";
+import TransactionDialog from "../transaction/TransactionDialog";
+import TransactionList from "../transaction/TransactionList";
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import TuneIcon from '@mui/icons-material/Tune';
 import { Box } from "@mui/system";
 import { GroupContext, GroupContextInterface } from "../../contexts/group";
-import TransactionFilters from "../transaction/transaction-filters";
+import TransactionFilters from "../transaction/TransactionFilters";
 
 export default function TransactionsTabPanel() {
   const { group } = useContext(GroupContext) as GroupContextInterface;
