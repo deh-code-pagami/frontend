@@ -1,6 +1,6 @@
 export async function loginAction({ request }: any) {
   const formData: FormData = await request.formData();
-  new URLSearchParams()
+
   const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/local`, {
     method: 'POST',
     body: JSON.stringify({

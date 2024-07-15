@@ -12,18 +12,18 @@ export default function TransactionsTabPanel() {
   const { group } = useContext(GroupContext) as GroupContextInterface;
   const [open, setOpen] = React.useState(false);
 
-  const [ filtersOpen, setFiltersOpen ] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const toggleDrawer = useCallback((open: boolean) =>
-      (event: React.KeyboardEvent | React.MouseEvent) => {
-        if (
-          event &&
-          event.type === 'keydown' &&
-          ((event as React.KeyboardEvent).key === 'Tab' ||
-            (event as React.KeyboardEvent).key === 'Shift')
-        ) {
-          return;
-        }
+    (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event &&
+        event.type === 'keydown' &&
+        ((event as React.KeyboardEvent).key === 'Tab' ||
+          (event as React.KeyboardEvent).key === 'Shift')
+      ) {
+        return;
+      }
 
       setFiltersOpen(open);
     }, [])
@@ -45,8 +45,8 @@ export default function TransactionsTabPanel() {
         </Box>
         <Box>
           <Button variant="outlined" onClick={toggleDrawer(true)} sx={{ px: 1 }}>
-              <TuneIcon />
-            </Button>
+            <TuneIcon />
+          </Button>
         </Box>
       </Box>
       <SwipeableDrawer
@@ -55,13 +55,12 @@ export default function TransactionsTabPanel() {
         onClose={toggleDrawer(false)}
         onOpen={toggleDrawer(true)}
       >
-        <Box sx={{padding: "48px"}}>
-          <Typography variant="h5" component="h2" sx={{marginBottom: '1rem'}}>Filters</Typography>
+        <Box sx={{ padding: "48px" }}>
+          <Typography variant="h5" component="h2" sx={{ marginBottom: '1rem' }}>Filters</Typography>
           <TransactionFilters onApply={toggleDrawer(false)}></TransactionFilters>
         </Box>
       </SwipeableDrawer>
 
-      
       <Box>
         <TransactionList transactions={group?.transactions || []}></TransactionList>
       </Box>
