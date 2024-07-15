@@ -15,7 +15,11 @@ export default function TransactionDetailPage() {
         <Typography variant="h4">${total}</Typography>
         <Divider sx={{my: 2}}/>
       </Box>
-      <Typography marginBottom={6}>
+      <Typography 
+        marginBottom={6}
+        color="text.secondary"
+        fontSize="1.25rem"
+      >
         {transaction.description || ''}
       </Typography>
       <Box>

@@ -32,7 +32,8 @@ export default function TransactionCard({ transaction }: { transaction: Transact
                 whiteSpace={'nowrap'}
                 pr={2}
                 mr={2}
-                borderRight='1px solid #aaa'
+                borderRight='1px solid'
+                borderColor='border.main'
                 sx={{ color: isCreditor ? 'success.main' : 'error.main', fontWeight: "bold" }}
                 component="span" >
                 { !isCreditor && '-' } ${metas.map(meta => meta.amount).reduce((a, b) => a + b).toFixed(2)}

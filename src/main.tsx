@@ -26,7 +26,16 @@ function Main() {
 
   const theme = useMemo(() => createTheme({
     palette: {
-      mode: global.palette
+      mode: global.palette,
+      text: {
+        secondary: '#444'
+      },
+      //@ts-expect-error This is supposed to extend MUI color palette
+      border: {
+        main: '#aaa',
+        light: '#ddd',
+        dark: '#333',
+      }
     },
     components: {
       MuiButton: {
