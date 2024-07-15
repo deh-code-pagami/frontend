@@ -1,27 +1,72 @@
-import { useState } from 'react'
-import './App.css'
+import './index.css';
+import React, { useMemo, useState } from 'react';
+import {
+  RouterProvider,
+} from "react-router-dom";
+
+import CssBaseline from '@mui/material/CssBaseline';
+
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import AuthenticationProvider from './components/auth/AuthenticationProvider';
+import { GlobalContext, GlobalOptions } from './contexts/global';
+import { GroupContext } from './contexts/group';
+import { router } from './data/routes';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [ global, setGlobal ] = useState<GlobalOptions>({ palette: 'light' });
+  const [ group, setGroup ] = useState<Group | undefined | null>();
+  const [ allGroups, setAllGroups ] = useState<Group[] | undefined>();
 
-  return (
-    <>
-      <div>
-       kjklj
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+  const theme = useMemo(() => createTheme({
+    palette: {
+      mode: global.palette,
+      text: {
+        secondary: '#444'
+      },
+      //@ts-expect-error This is supposed to extend MUI color palette
+      border: {
+        main: '#aaa',
+        light: '#ddd',
+        dark: '#333',
+      }
+    },
+    components: {
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            padding: '12px 38px'
+          }
+        },
+      },
+    },
+  }), [global]);
+
+  return(
+    <React.StrictMode>
+        <GlobalContext.Provider value={{global, setGlobal}}>
+        <GroupContext.Provider value={{group, setGroup, allGroups, setAllGroups}}>
+          <AuthenticationProvider>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <CssBaseline/>
+              <style>{`
+                body {
+                  background-color: ${theme.palette.background.default}
+                }
+              `}</style>
+                <ThemeProvider theme={theme}>
+                  <RouterProvider router={router}></RouterProvider>
+                </ThemeProvider>
+            </LocalizationProvider>
+          </AuthenticationProvider>
+        </GroupContext.Provider>
+        </GlobalContext.Provider>
+    </React.StrictMode>
   )
 }
 
