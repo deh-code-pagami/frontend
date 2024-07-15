@@ -25,6 +25,29 @@ export default function TransactionDialog({ open, handleClose }: { open: boolean
     if (!group) {
       return;
     }
+    
+    const total = parseInt(amount);
+
+    if (!total) {
+      return;
+    }
+
+    let splittedAmount = (total / userDebtors.length);
+    splittedAmount = Math.floor(splittedAmount * 100) / 100;
+    
+    const transactionMetas = userDebtors.map(userDebtor => ({
+      amount: splittedAmount,
+      userCreditor,
+      userDebtor
+    }));
+    
+    // if amount can't be slpitted evenly, choose a random user to pay the remaining
+    const rest = total - (splittedAmount * userDebtors.length);
+
+    if (rest > 0) {
+      const choice = Math.floor(Math.random() * transactionMetas.length);
+      transactionMetas[choice].amount += rest;
+    }
 
     const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/transactions/`, {
       method: 'post',
@@ -33,11 +56,7 @@ export default function TransactionDialog({ open, handleClose }: { open: boolean
           title: description,
           description: '',
           group: group.id,
-          transactionMetas: userDebtors.map(userDebtor => ({
-            amount: parseInt(amount) / userDebtors.length,
-            userCreditor,
-            userDebtor
-          }))
+          transactionMetas: transactionMetas
         }
       }),
       headers: {
@@ -54,7 +73,7 @@ export default function TransactionDialog({ open, handleClose }: { open: boolean
     setGroup({
       ...group,
       transactions: [
-        ...group.transactions,
+        ...(group.transactions || []),
         json
       ]
     });

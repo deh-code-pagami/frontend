@@ -16,9 +16,7 @@ export default function TransactionCard({ transaction }: { transaction: Transact
   }
 
   const isCreditor = !!transaction.transactionMetas.find(meta => meta.userCreditor.id === me);
-  const metas = isCreditor ?
-    transaction.transactionMetas :
-    transaction.transactionMetas.filter(meta => meta.userDebtor.id === me)
+  const metas = transaction.transactionMetas.filter(meta => meta.userDebtor.id === me);
 
   return (
     <Card sx={{ width: '100%' }}>
