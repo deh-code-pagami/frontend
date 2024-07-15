@@ -8,6 +8,7 @@ import { GroupContext, GroupContextInterface } from '../../contexts/group';
 
 
 export default function TransactionCreationDialog({ open, handleClose }: { open: boolean, handleClose: () => void }) {
+  const [title, setTitle] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [amount, setAmount] = React.useState('0');
   const [userDebtors, setUserDebtors] = React.useState<User[]>([]);
@@ -15,6 +16,7 @@ export default function TransactionCreationDialog({ open, handleClose }: { open:
   const { group, setGroup } = useContext(GroupContext) as GroupContextInterface;
   
   const reset = useCallback(() => {
+    setTitle('');
     setDescription('');
     setAmount('');
     setUserDebtors([]);
@@ -53,10 +55,10 @@ export default function TransactionCreationDialog({ open, handleClose }: { open:
       method: 'post',
       body: JSON.stringify({
         data: {
-          title: description,
-          description: '',
+          title,
+          description,
           group: group.id,
-          transactionMetas: transactionMetas
+          transactionMetas
         }
       }),
       headers: {
@@ -89,15 +91,29 @@ export default function TransactionCreationDialog({ open, handleClose }: { open:
           <Stack spacing={4}>
             <Box>
               <TextField
+                fullWidth
+                id="title"
+                name="title"
+                label="Title"
+                variant="outlined"
+                value={title}
+                onChange={(e) => { setTitle(e.target.value) }} />
+            </Box>
+            <Box>
+              <TextField
+                fullWidth
                 id="description"
                 name="description"
+                value={description}
                 label="Description"
                 variant="outlined"
-                value={description}
+                multiline
+                rows={4}
                 onChange={(e) => { setDescription(e.target.value) }} />
             </Box>
             <Box>
               <TextField
+                fullWidth
                 label="Amount"
                 name="amount"
                 type='number'

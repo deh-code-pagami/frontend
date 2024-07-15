@@ -6,21 +6,26 @@ import { useLoaderData } from "react-router-dom";
 
 export default function TransactionDetailPage() {
   const { transaction } = useLoaderData() as { transaction: Transaction };
+  const total = transaction.transactionMetas.map(meta => meta.amount).reduce((a,b) => a+b);
 
   return (
     <Container>
       <Box>
         <Typography mb={2} component='h1' variant="h3">{transaction.title || ''}</Typography>
-        <Typography variant="h4">${transaction.transactionMetas.map(meta => meta.amount).reduce((a,b) => a+b)}</Typography>
+        <Typography variant="h4">${total}</Typography>
         <Divider sx={{my: 2}}/>
       </Box>
-      <Typography>
+      <Typography marginBottom={6}>
         {transaction.description || ''}
       </Typography>
       <Box>
-        {transaction.transactionMetas.map((meta, i) => <Box key={i}>
-        
-        </Box>)}
+        {transaction.transactionMetas.map((meta, i) => 
+          <Box 
+            key={i}
+            marginBottom={2}>
+            ${meta.amount} - {meta.userDebtor.username} ({meta.userDebtor.email})
+          </Box>)
+        }
       </Box>
     </Container>
   )

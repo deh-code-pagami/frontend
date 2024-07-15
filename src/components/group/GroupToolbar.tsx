@@ -2,7 +2,7 @@ import { Autocomplete, Box, Button, TextField } from "@mui/material";
 import { useCallback, useContext } from "react";
 import { GroupContext, GroupContextInterface } from "../../contexts/group";
 import ConfirmationDialog from "../dialog/ConfirmationDialog";
-import GroupDialog from "./GroupDialog";
+import GroupDialog from "./GroupCreationDialog";
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import React from "react";

@@ -20,7 +20,10 @@ export default function LoginPage() {
   let errorMessages = undefined;
 
   if (error) {
-    errorMessages = Array.isArray(error.details?.errors) ? error.details.errors.map((err: any) => err.message) : [error.message];
+    errorMessages = Array.isArray(error.details?.errors) ? 
+      error.details.errors
+        .map((err: any) => err.message) : 
+      [error.message];
   }
   else if (data) {
     setGlobal({
@@ -69,7 +72,8 @@ export default function LoginPage() {
                   </Box>
 
                   { errorMessages ? 
-                    errorMessages.map((message: string) => <Typography fontSize="1.125rem" color="error.main" mb={2}>{message}</Typography>) 
+                    errorMessages
+                      .map((message: string, index: number) => <Typography key={index} fontSize="1.125rem" color="error.main" mb={2}>{message}</Typography>) 
                     : ''
                   }
 
