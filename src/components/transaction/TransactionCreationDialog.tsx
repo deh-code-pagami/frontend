@@ -7,7 +7,7 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { GroupContext, GroupContextInterface } from '../../contexts/group';
 
 
-export default function TransactionDialog({ open, handleClose }: { open: boolean, handleClose: () => void }) {
+export default function TransactionCreationDialog({ open, handleClose }: { open: boolean, handleClose: () => void }) {
   const [description, setDescription] = React.useState('');
   const [amount, setAmount] = React.useState('0');
   const [userDebtors, setUserDebtors] = React.useState<User[]>([]);

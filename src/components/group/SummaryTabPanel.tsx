@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
-import TransactionDialog from "../transaction/TransactionDialog";
+import TransactionDialog from "../transaction/TransactionCreationDialog";
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 
 export default function SummaryTabPanel() {

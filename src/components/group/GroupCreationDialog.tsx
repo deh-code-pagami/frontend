@@ -6,7 +6,7 @@ import React, { useCallback, useContext } from "react";
 import { GroupContext, GroupContextInterface } from "../../contexts/group";
 
 
-export default function GroupDialog({ children, open, handleClose }: { children: React.ReactNode, open: boolean, handleClose: () => void}) {
+export default function GroupCreationDialog({ children, open, handleClose }: { children: React.ReactNode, open: boolean, handleClose: () => void}) {
   const [loading, setLoading] = React.useState(false);
   const { setGroup, setAllGroups, allGroups } = useContext(GroupContext) as GroupContextInterface;
 
