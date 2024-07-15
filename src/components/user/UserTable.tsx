@@ -42,7 +42,7 @@ export default function UserTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {group?.users.map((user) => (
+            {group?.users?.map((user) => (
               <TableRow
                 key={user.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

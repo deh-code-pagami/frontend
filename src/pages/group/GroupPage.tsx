@@ -11,29 +11,23 @@ import routes from "../../data/routes";
 export default function GroupsPage() {
   const { groups: loaderGroups } = useLoaderData() as { groups: Group[] };
   const navigation = useNavigation();
-  const { group, setGroup, allGroups, setAllGroups } = useContext(GroupContext) as GroupContextInterface;
-
+  const { group, setAllGroups } = useContext(GroupContext) as GroupContextInterface;
+  
   const navigate = useNavigate();
   const groupId = parseInt(useParams().groupId || '') || undefined;
 
   useEffect(() => {
-    if (!allGroups) {
+    if (loaderGroups) {
       setAllGroups(loaderGroups);
-      
-      return;
     }
+  }, [loaderGroups, setAllGroups]);
 
-    // if current group has not been defined yet, change current group to match path
-    if (typeof group === 'undefined') {
-      const currentGroup = allGroups.find(group => group.id === groupId) || null;
-      setGroup(currentGroup);
-    }
-    else if (groupId !== group?.id ) {
+  useEffect(() => {
+    if (groupId !== group?.id ) {
       // change path to match current group
       navigate(routes.groups + (group?.id || ''));
     }
-
-  }, [group, groupId, navigate, setAllGroups, setGroup, allGroups, loaderGroups])
+  }, [group, groupId, navigate]);
 
   return (
     <Container>

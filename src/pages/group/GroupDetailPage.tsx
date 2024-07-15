@@ -1,10 +1,13 @@
 
 import { Tabs, Tab, Box } from "@mui/material";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import SummaryTabPanel from "../../components/group/SummaryTabPanel";
 import TransactionsTabPanel from "../../components/group/TransactionsTabPanel";
 import SettingsTabPanel from "../../components/group/SettingsTabPanel";
 import UsersTabPanel from "../../components/group/UsersTabPanel";
+import { useLoaderData, useNavigation } from "react-router-dom";
+import { GroupContext, GroupContextInterface } from "../../contexts/group";
+import Spinner from "../../components/spinner/Spinner";
 
 const tabPanels = [
   {
@@ -31,6 +34,20 @@ const tabPanels = [
 
 export default function GroupDetailPage() {
   const [activeTab, setActiveTab] = useState(0);
+  const { setGroup } = useContext(GroupContext) as GroupContextInterface;
+
+  const navigation = useNavigation();
+  const { group: loaderGroup } = useLoaderData() as { group: Group };
+
+  useEffect(() => {
+    if (loaderGroup) {
+      setGroup(loaderGroup);
+    }
+  }, [loaderGroup, setGroup]);
+
+  if (navigation.state === 'loading') {
+    return <Spinner></Spinner>
+  }
 
   return (
       <Box py={3}>

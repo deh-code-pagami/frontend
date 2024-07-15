@@ -19,8 +19,8 @@ declare global {
   interface Group {
     id: number,
     name: string,
-    users: User[],
-    transactions: Transaction[]
+    users?: User[],
+    transactions?: Transaction[]
   }
 
   interface User {
