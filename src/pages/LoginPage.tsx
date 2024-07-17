@@ -14,7 +14,7 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const errorMessages = Array.isArray(error?.details?.errors) ? 
     error.details.errors
-      .map((err: any) => err.message) : 
+      .map((err: any) => err.message || '') : 
     [error?.message];
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function LoginPage() {
       navigate('/');
     }
   
-    if (data) {
+    if (data && !error) {
       setGlobal({
         ...global,
         user: data.user,
@@ -32,7 +32,7 @@ export default function LoginPage() {
       navigate('/');
     }
 
-  }, [data, global, navigate, setGlobal]);
+  }, [data, error, global, navigate, setGlobal]);
 
   return (
     <main>
