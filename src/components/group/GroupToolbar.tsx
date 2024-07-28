@@ -6,11 +6,14 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import React from "react";
 import { GroupContext } from "../../providers/GroupProvider";
+import { useNavigate } from "react-router-dom";
+import routes from "../../data/routes";
 
 export default function GroupToolbar({ availableGroups } : { availableGroups: Group[] }) {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = React.useState(false);
   const [deleteDialog, setDeleteDialog] = React.useState(false);
   const { state, dispatch } = useContext(GroupContext);
+  const navigate = useNavigate();
   
   const { group } = state; 
 
@@ -38,13 +41,14 @@ export default function GroupToolbar({ availableGroups } : { availableGroups: Gr
     const selectedGroup = !newValue ? null : availableGroups.find(el => el.id === newValue.value);
 
     if (!selectedGroup) {
-      dispatch({type: 'unsetGroup'})
+      dispatch({type: 'unsetGroup'});
+      navigate(routes.groups);
     }
     else {
       dispatch({type: 'setGroup', group: selectedGroup})
     }
 
-  }, [availableGroups, dispatch]);
+  }, [availableGroups, dispatch, navigate]);
 
   return (
     <Box position={'relative'} display='flex'>

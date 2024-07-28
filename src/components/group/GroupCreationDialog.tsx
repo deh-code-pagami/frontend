@@ -49,7 +49,7 @@ export default function GroupCreationDialog({ children, open, handleClose }: { c
     setLoading(false);
 
     dispatch({type: 'setGroup', group});
-    navigate(`${routes.groups}`);
+    navigate(routes.groups);
 
     reset();
   }, [dispatch, loading, name, navigate, reset])
