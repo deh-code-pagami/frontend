@@ -45,7 +45,7 @@ function App() {
         },
       },
     },
-  }), []);
+  }), [themeState.mode]);
 
   return(
     <React.StrictMode>

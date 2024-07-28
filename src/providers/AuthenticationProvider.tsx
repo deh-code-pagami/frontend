@@ -67,9 +67,7 @@ export default function AuthenticationProvider({children} : {children: React.Rea
         dispatch({ type: 'login', user: data })
       })()
     }
-  }, [loading])
-
-  const content = loading ? <div>Loading</div> : ( state.isAuthenticated && children )
+  }, [loading, state.user])
   
-  return <AuthenticationContext.Provider value={{state, dispatch}}>{content}</AuthenticationContext.Provider>
+  return <AuthenticationContext.Provider value={{state, dispatch}}>{loading ? <></> : children}</AuthenticationContext.Provider>
 }
