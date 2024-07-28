@@ -4,7 +4,7 @@ import Dialog from "../dialog/Dialog";
 import React, { useCallback, useContext } from "react";
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import { GroupContext, GroupContextInterface } from '../../contexts/group';
+import { GroupContext } from "../../providers/GroupProvider";
 
 
 export default function TransactionCreationDialog({ open, handleClose }: { open: boolean, handleClose: () => void }) {
@@ -13,7 +13,8 @@ export default function TransactionCreationDialog({ open, handleClose }: { open:
   const [amount, setAmount] = React.useState('0');
   const [userDebtors, setUserDebtors] = React.useState<User[]>([]);
   const [userCreditor, setUserCreditor] = React.useState<User | null>(null);
-  const { group, setGroup } = useContext(GroupContext) as GroupContextInterface;
+  const { state, dispatch } = useContext(GroupContext);
+  const { group } = state;
   
   const reset = useCallback(() => {
     setTitle('');
@@ -70,15 +71,9 @@ export default function TransactionCreationDialog({ open, handleClose }: { open:
       reset();
     }
 
-    const json = (await response.json()).data as Transaction;
+    const transaction = (await response.json()).data as Transaction;
 
-    setGroup({
-      ...group,
-      transactions: [
-        ...(group.transactions || []),
-        json
-      ]
-    });
+    dispatch({ type: 'addTransaction', transaction });
   }
 
   return (

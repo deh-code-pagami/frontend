@@ -6,8 +6,8 @@ import TransactionsTabPanel from "../../components/group/TransactionsTabPanel";
 import SettingsTabPanel from "../../components/group/SettingsTabPanel";
 import UsersTabPanel from "../../components/group/UsersTabPanel";
 import { useLoaderData, useNavigation } from "react-router-dom";
-import { GroupContext, GroupContextInterface } from "../../contexts/group";
 import Spinner from "../../components/spinner/Spinner";
+import { GroupContext } from "../../providers/GroupProvider";
 
 const tabPanels = [
   {
@@ -34,16 +34,16 @@ const tabPanels = [
 
 export default function GroupDetailPage() {
   const [activeTab, setActiveTab] = useState(0);
-  const { setGroup } = useContext(GroupContext) as GroupContextInterface;
+  const { dispatch } = useContext(GroupContext);
 
   const navigation = useNavigation();
-  const { group: loaderGroup } = useLoaderData() as { group: Group };
+  const { group } = useLoaderData() as { group: Group };
 
   useEffect(() => {
-    if (loaderGroup) {
-      setGroup(loaderGroup);
+    if (group) {
+      dispatch({type: 'setGroup', group});
     }
-  }, [loaderGroup, setGroup]);
+  }, [dispatch, group]);
 
   if (navigation.state === 'loading') {
     return <Spinner></Spinner>

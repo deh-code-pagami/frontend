@@ -5,36 +5,31 @@ import { Container } from "@mui/system";
 import GroupToolbar from "../../components/group/GroupToolbar";
 import Spinner from "../../components/spinner/Spinner";
 import { useContext, useEffect } from "react";
-import { GroupContext, GroupContextInterface } from "../../contexts/group";
 import routes from "../../data/routes";
+import { GroupContext } from "../../providers/GroupProvider";
 
 export default function GroupsPage() {
-  const { groups: loaderGroups } = useLoaderData() as { groups: Group[] };
+  const { groups } = useLoaderData() as { groups: Group[] };
   const navigation = useNavigation();
-  const { group, setAllGroups } = useContext(GroupContext) as GroupContextInterface;
+  const { state } = useContext(GroupContext);
+  const { group } = state;
   
   const navigate = useNavigate();
   const groupId = parseInt(useParams().groupId || '') || undefined;
 
   useEffect(() => {
-    if (loaderGroups) {
-      setAllGroups(loaderGroups);
-    }
-  }, [loaderGroups, setAllGroups]);
-
-  useEffect(() => {
-    if (groupId !== group?.id ) {
+    if (groupId !== group?.id && groups.find(g => group?.id === g.id)) {
       // change path to match current group
       navigate(routes.groups + (group?.id || ''));
     }
-  }, [group, groupId, navigate]);
+  }, [group, groupId, groups, navigate]);
 
   return (
     <Container>
       <Typography sx={visuallyHidden} variant="h1">
         Groups Page
       </Typography>
-      <GroupToolbar/>
+      <GroupToolbar availableGroups={groups} />
       { navigation.state === 'loading' ? 
         <Box sx={{
           position: 'relative',

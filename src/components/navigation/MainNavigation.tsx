@@ -5,10 +5,11 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 import routes from "../../data/routes";
 import { useContext, useMemo } from "react";
-import { GroupContext, GroupContextInterface } from "../../contexts/group";
+import { GroupContext } from "../../providers/GroupProvider";
 
 export default function MainNavigation() {
-  const { group } = useContext(GroupContext) as GroupContextInterface;
+  const { state } = useContext(GroupContext);
+  const { group } = state;
 
   const menu = useMemo(() => ({
     'label': 'main navigation',

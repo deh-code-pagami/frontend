@@ -12,7 +12,7 @@ type SetModeAction = { type: 'setMode', mode: ThemeMode }
 
 type ThemeAction = ToggleModeAction | SetModeAction
 
-export interface ThemeContext {
+interface ThemeContext {
   state: ThemeState,
   dispatch: React.Dispatch<ThemeAction>
 }

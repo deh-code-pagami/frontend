@@ -3,12 +3,14 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useCallback, useContext, useState } from "react";
 import ConfirmationDialog from "../dialog/ConfirmationDialog";
-import { GroupContext, GroupContextInterface } from "../../contexts/group";
+import { GroupContext } from "../../providers/GroupProvider";
 
 export default function UserTable() {
   const [selectedUser, setSelectedUser] = useState<User>();
   const [deleteUserDialog, setDeleteUserDialog] = useState<boolean>(false);
-  const { group, setGroup } = useContext(GroupContext) as GroupContextInterface;
+  const { state, dispatch } = useContext(GroupContext);
+
+  const { group } = state;
 
   const deleteUser = useCallback(async () => {
     if (!selectedUser || !group) {
@@ -19,15 +21,12 @@ export default function UserTable() {
       method: 'DELETE'
     });
 
-    const json = await response.json();
+    const users = (await response.json()).data as User[];
 
-    setGroup({
-      ...group,
-      users: json.data
-    })
+    dispatch({type: 'setUsers', users});
 
     setDeleteUserDialog(false);
-  }, [group, selectedUser, setGroup])
+  }, [dispatch, group, selectedUser])
 
   return (
     <>

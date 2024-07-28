@@ -1,14 +1,16 @@
 import { DialogTitle, DialogContent, TextField, DialogActions, Button } from "@mui/material";
 import { Stack, Box } from "@mui/system";
-import { Form } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import Dialog from "../dialog/Dialog";
 import React, { useCallback, useContext } from "react";
-import { GroupContext, GroupContextInterface } from "../../contexts/group";
+import { GroupContext } from "../../providers/GroupProvider";
+import routes from "../../data/routes";
 
 
 export default function GroupCreationDialog({ children, open, handleClose }: { children: React.ReactNode, open: boolean, handleClose: () => void}) {
   const [loading, setLoading] = React.useState(false);
-  const { setGroup, setAllGroups, allGroups } = useContext(GroupContext) as GroupContextInterface;
+  const { dispatch } = useContext(GroupContext);
+  const navigate = useNavigate();
 
   const [name, setName] = React.useState('');
 
@@ -42,19 +44,15 @@ export default function GroupCreationDialog({ children, open, handleClose }: { c
       return;
     }
 
-    const json = (await res.json()).data as Group;
+    const group = (await res.json()).data as Group;
 
     setLoading(false);
 
-    setAllGroups([
-      ...(allGroups || []),
-      json
-    ])
-
-    setGroup(json);
+    dispatch({type: 'setGroup', group});
+    navigate(`${routes.groups}`);
 
     reset();
-  }, [allGroups, loading, name, reset, setAllGroups, setGroup])
+  }, [dispatch, loading, name, navigate, reset])
 
   return (
     <>

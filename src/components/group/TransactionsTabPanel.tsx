@@ -5,14 +5,15 @@ import TransactionList from "../transaction/TransactionList";
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import TuneIcon from '@mui/icons-material/Tune';
 import { Box } from "@mui/system";
-import { GroupContext, GroupContextInterface } from "../../contexts/group";
 import TransactionFilters from "../transaction/TransactionFilters";
+import { GroupContext } from "../../providers/GroupProvider";
 
 export default function TransactionsTabPanel() {
-  const { group } = useContext(GroupContext) as GroupContextInterface;
   const [open, setOpen] = React.useState(false);
-
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const { state } = useContext(GroupContext);
+  
+  const { group } = state;
 
   const toggleDrawer = useCallback((open: boolean) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {

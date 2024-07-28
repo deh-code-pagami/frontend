@@ -3,13 +3,15 @@ import UserTable from "../user/UserTable";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { Button } from "@mui/material";
 import React, { useCallback, useContext } from "react";
-import { GroupContext, GroupContextInterface } from "../../contexts/group";
 import UserSelectionDialog from "../user/UserSelectionDialog";
+import { GroupContext } from "../../providers/GroupProvider";
 
 export default function UsersTabPanel() {
-  const { group, setGroup } = useContext(GroupContext) as GroupContextInterface;
   const [allUsers, setAllUsers] = React.useState<User[]>([]);
   const [addUserDialog, setAddUserDialog] = React.useState(false);
+  const { state, dispatch } = useContext(GroupContext);
+
+  const { group } = state;
 
   const handleClickOpen = useCallback(async () => {
     const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/users/`);
@@ -21,10 +23,10 @@ export default function UsersTabPanel() {
 
     const json = await response.json() as User[];
 
-    // remove users that are already inside the group
+    // filter users that are already inside the group
     const validUsers = json
       .filter(user1 =>
-        !group?.users.some(user2 =>
+        !group?.users?.some(user2 =>
           user1.id === user2.id))
 
     setAllUsers(validUsers);
@@ -64,16 +66,10 @@ export default function UsersTabPanel() {
     const correctlyAddedUsers = (await Promise.all(addUserPromises))
       .filter(user => !!user) as User[];
     
-    setGroup({
-      ...group,
-      users: [
-        ...group.users,
-        ...correctlyAddedUsers
-      ]
-    });
+    dispatch({type: 'addUser', user: correctlyAddedUsers});
 
     handleClose();
-  }, [group, setGroup]);
+  }, [dispatch, group]);
 
   if (!group) {
     return <></>

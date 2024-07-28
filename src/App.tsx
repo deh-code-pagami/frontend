@@ -1,5 +1,5 @@
 import './index.css';
-import React, { useContext, useMemo, useState } from 'react';
+import React, { useContext, useMemo } from 'react';
 import {
   RouterProvider,
 } from "react-router-dom";
@@ -15,13 +15,10 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ThemeContext } from './providers/ThemeProvider';
-import { GroupContext } from './contexts/group';
 import { router } from './data/routes';
 
 function App() {
   const { state: themeState } = useContext(ThemeContext);
-  const [ group, setGroup ] = useState<Group | undefined | null>();
-  const [ allGroups, setAllGroups ] = useState<Group[] | undefined>();
 
   const theme = useMemo(() => createTheme({
     palette: {
@@ -49,7 +46,6 @@ function App() {
 
   return(
     <React.StrictMode>
-        <GroupContext.Provider value={{group, setGroup, allGroups, setAllGroups}}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <CssBaseline/>
               <style>{`
@@ -61,7 +57,6 @@ function App() {
                   <RouterProvider router={router}></RouterProvider>
                 </ThemeProvider>
             </LocalizationProvider>
-        </GroupContext.Provider>
     </React.StrictMode>
   )
 }

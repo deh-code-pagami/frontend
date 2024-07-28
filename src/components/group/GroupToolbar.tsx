@@ -1,23 +1,20 @@
 import { Autocomplete, Box, Button, TextField } from "@mui/material";
 import { useCallback, useContext } from "react";
-import { GroupContext, GroupContextInterface } from "../../contexts/group";
 import ConfirmationDialog from "../dialog/ConfirmationDialog";
 import GroupDialog from "./GroupCreationDialog";
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import React from "react";
+import { GroupContext } from "../../providers/GroupProvider";
 
-export interface GroupOption {
-  label: string,
-  value: number
-}
-
-export default function GroupToolbar() {
+export default function GroupToolbar({ availableGroups } : { availableGroups: Group[] }) {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = React.useState(false);
   const [deleteDialog, setDeleteDialog] = React.useState(false);
-  const { group, setGroup, allGroups = [], setAllGroups } = useContext(GroupContext) as GroupContextInterface;
+  const { state, dispatch } = useContext(GroupContext);
+  
+  const { group } = state; 
 
-  const selectedGroup = !group ? null : allGroups.find(el => el.id === group?.id);
+  const selectedGroup = !group ? null : availableGroups.find(el => el.id === group?.id);
 
   const deleteGroup = useCallback(async () => {
     if (!group) {
@@ -33,27 +30,28 @@ export default function GroupToolbar() {
       return;
     }
 
-    const json = await response.json();
-
-    setGroup(undefined);
-    setAllGroups(allGroups.filter(group => group.id != json.data.id))
-
+    dispatch({type: 'unsetGroup'});
     setDeleteDialog(false);
-  }, [allGroups, group, setAllGroups, setGroup]);
+  }, [group, dispatch]);
 
   const changeGroup = useCallback((_e: any, newValue: any) => {
-    const selectedGroup = !newValue ? null : allGroups.find(el => el.id === newValue.value);
+    const selectedGroup = !newValue ? null : availableGroups.find(el => el.id === newValue.value);
 
-    setGroup(selectedGroup);
+    if (!selectedGroup) {
+      dispatch({type: 'unsetGroup'})
+    }
+    else {
+      dispatch({type: 'setGroup', group: selectedGroup})
+    }
 
-  }, [allGroups, setGroup]);
+  }, [availableGroups, dispatch]);
 
   return (
     <Box position={'relative'} display='flex'>
       <div id="test"></div>
       <Autocomplete
         disablePortal
-        options={allGroups.map(group => ({ label: group.name, value: group.id })) || []}
+        options={availableGroups.map(group => ({ label: group.name, value: group.id })) || []}
         sx={{ width: 300 }}
         renderInput={(params) => { return <TextField {...params} label="Group" />; }}
         renderOption={(props, option) => <li {...props} key={option.value}>{option.label}</li>}

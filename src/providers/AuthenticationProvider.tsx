@@ -10,7 +10,7 @@ type LogoutAction = { type: 'logout' }
 
 type AuthenticationAction = LogoutAction | LoginAction
 
-export interface AuthenticationContext {
+interface AuthenticationContext {
   state: AuthenticationState,
   dispatch: React.Dispatch<AuthenticationAction>
 }
@@ -23,7 +23,7 @@ const defaultContext: AuthenticationContext = {
   dispatch: () => { }
 }
 
-export const AuthenticationContext = createContext<AuthenticationContext>(defaultContext);
+export const AuthenticationContext = createContext(defaultContext);
 
 function reducer (state: AuthenticationState, action: AuthenticationAction): AuthenticationState {
   const { type } = action;
