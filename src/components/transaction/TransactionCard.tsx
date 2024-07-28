@@ -5,11 +5,11 @@ import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import routes from '../../data/routes';
 import { useContext } from 'react';
-import { GlobalContext, GlobalContextInterface } from '../../contexts/global';
+import { AuthenticationContext } from '../../providers/AuthenticationProvider';
 
 export default function TransactionCard({ transaction }: { transaction: Transaction }) {
-  const { global } = useContext(GlobalContext) as GlobalContextInterface;
-  const me = global.user?.id;
+  const { state } = useContext(AuthenticationContext);
+  const me = state.user?.id;
 
   if (!transaction.transactionMetas?.length || !me) {
     return <></>;

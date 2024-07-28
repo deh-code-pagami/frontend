@@ -1,15 +1,13 @@
 import { Box, Button, Card, CardContent, Container, Divider, Stack, TextField, Typography } from "@mui/material"
 import { useContext, useEffect } from "react";
 import { Form, useActionData, useNavigate } from "react-router-dom"
-import { GlobalContext, GlobalContextInterface } from "../contexts/global";
-
-
+import { AuthenticationContext } from "../providers/AuthenticationProvider";
 
 export default function LoginPage() {
   const data = useActionData() as any;
   const error = data?.error;
 
-  const {global, setGlobal} = useContext(GlobalContext) as GlobalContextInterface;
+  const {state, dispatch} = useContext(AuthenticationContext);
 
   const navigate = useNavigate();
   const errorMessages = Array.isArray(error?.details?.errors) ? 
@@ -18,21 +16,16 @@ export default function LoginPage() {
     [error?.message];
 
   useEffect(() => {
-    if (global.isAuthenticated) {
+    if (state.isAuthenticated) {
       navigate('/');
     }
   
     if (data && !error) {
-      setGlobal({
-        ...global,
-        user: data.user,
-        isAuthenticated: true
-      });
-  
+      dispatch({ type: 'login', user: data.user })
       navigate('/');
     }
 
-  }, [data, error, global, navigate, setGlobal]);
+  }, [data, error, navigate]);
 
   return (
     <main>
