@@ -4,20 +4,21 @@ import MainDrawerMobile from "../components/drawer/DrawerMobile";
 import { useContext, useEffect } from "react";
 import { Box } from "@mui/material";
 import { AuthenticationContext } from "../providers/AuthenticationProvider";
+import Spinner from "../components/spinner/Spinner";
 
 export default function Root() {
   const { state } = useContext(AuthenticationContext);
-  const { isAuthenticated } = state;
+  const { user } = state;
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuthenticated === false) {
+    if (user === null) {
       navigate("/login");
     }
-  }, [isAuthenticated, navigate]);
+  }, [navigate, user]);
 
-  if (!isAuthenticated) {
-    return <div></div>;
+  if (!user) {
+    return <Spinner></Spinner>;
   }
 
   return (

@@ -1,8 +1,7 @@
 import { createContext, useEffect, useReducer, useState } from "react";
 
 interface AuthenticationState {
-  user?: User;
-  isAuthenticated?: boolean;
+  user?: User | null;
 }
 
 type LoginAction = { type: "login"; user: User };
@@ -18,7 +17,6 @@ interface AuthenticationContext {
 const defaultContext: AuthenticationContext = {
   state: {
     user: undefined,
-    isAuthenticated: false,
   },
   dispatch: () => {},
 };
@@ -35,12 +33,10 @@ function reducer(
     case "login":
       return {
         user: action.user,
-        isAuthenticated: true,
       };
     case "logout":
       return {
-        user: undefined,
-        isAuthenticated: false,
+        user: null,
       };
   }
 
