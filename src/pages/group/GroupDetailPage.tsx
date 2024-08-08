@@ -2,7 +2,6 @@ import { Tabs, Tab, Box } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import SummaryTabPanel from "../../components/group/SummaryTabPanel";
 import TransactionsTabPanel from "../../components/group/TransactionsTabPanel";
-import SettingsTabPanel from "../../components/group/SettingsTabPanel";
 import UsersTabPanel from "../../components/group/UsersTabPanel";
 import { useLoaderData, useNavigation } from "react-router-dom";
 import Spinner from "../../components/spinner/Spinner";
@@ -23,11 +22,6 @@ const tabPanels = [
     name: "Members",
     component: UsersTabPanel,
     path: "members",
-  },
-  {
-    name: "Settings",
-    component: SettingsTabPanel,
-    path: "settings",
   },
 ];
 
