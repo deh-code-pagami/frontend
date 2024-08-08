@@ -20,7 +20,7 @@ type GroupAction =
   | AddTransactionAction
   | AddUserAction
   | RemoveUserAction
-  | SetUsersAction
+  | SetUsersAction;
 
 interface GroupContext {
   state: GroupState;
@@ -53,7 +53,7 @@ function reducer(state: GroupState, action: GroupAction): GroupState {
 
       if (!group) {
         throw new Error(
-          "Adding transaction on undefined group is not supported"
+          "Adding transaction on undefined group is not supported",
         );
       }
 
@@ -103,12 +103,12 @@ function reducer(state: GroupState, action: GroupAction): GroupState {
           users: (group.users ?? []).filter((user) =>
             Array.isArray(userId)
               ? !userId.includes(user.id)
-              : userId !== user.id
+              : userId !== user.id,
           ),
         },
       };
     }
-    case 'setUsers': {
+    case "setUsers": {
       const { group } = state;
 
       if (!group) {
@@ -118,9 +118,9 @@ function reducer(state: GroupState, action: GroupAction): GroupState {
       return {
         group: {
           ...group,
-          users: action.users
-        }
-      }
+          users: action.users,
+        },
+      };
     }
   }
 

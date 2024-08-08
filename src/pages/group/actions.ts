@@ -1,3 +1,1 @@
-export async function addUserToGroup() {
-  
-}
+export async function addUserToGroup() {}

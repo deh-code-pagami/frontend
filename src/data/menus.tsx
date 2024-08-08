@@ -1,30 +1,30 @@
 import routes from "./routes";
-import GroupsIcon from '@mui/icons-material/Groups';
-import SettingsIcon from '@mui/icons-material/Settings';
-import ImportExportIcon from '@mui/icons-material/ImportExport';
+import GroupsIcon from "@mui/icons-material/Groups";
+import SettingsIcon from "@mui/icons-material/Settings";
+import ImportExportIcon from "@mui/icons-material/ImportExport";
 
 export default {
   mainNavigation: {
-    'label': 'main navigation',
-    'items': [
+    label: "main navigation",
+    items: [
       {
-        label: 'Groups',
+        label: "Groups",
         href: routes.groups,
-        icon: <GroupsIcon/>
+        icon: <GroupsIcon />,
       },
       {
-        label: 'Transactions',
+        label: "Transactions",
         href: routes.transactions,
-        icon: <ImportExportIcon/>
+        icon: <ImportExportIcon />,
       },
       {
         // divider
       },
       {
-        label: 'Settings',
+        label: "Settings",
         href: routes.profile,
-        icon: <SettingsIcon/>
-      }
-    ]
-  }
-}
+        icon: <SettingsIcon />,
+      },
+    ],
+  },
+};

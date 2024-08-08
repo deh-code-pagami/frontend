@@ -1,5 +1,7 @@
 export async function groupsLoader() {
-  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/groups/`);
+  const response = await fetch(
+    `${import.meta.env.VITE_API_BASE_URL}/api/groups/`,
+  );
 
   if (!response.ok) {
     return {};
@@ -12,7 +14,9 @@ export async function groupsLoader() {
 }
 
 export async function groupDetailLoader({ params }: any) {
-  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/groups/${params.groupId}/`);
+  const response = await fetch(
+    `${import.meta.env.VITE_API_BASE_URL}/api/groups/${params.groupId}/`,
+  );
 
   if (!response.ok) {
     return {};

@@ -2,29 +2,29 @@ import db from "../../db/db";
 
 export const GET = async (req, res, next) => {
   /**@type {Array} */
-  let transactions = await db.load('transaction');
+  let transactions = await db.load("transaction");
 
   if (req.body.group) {
-    transactions = transactions.filter(el => el.id == req.body.group);
+    transactions = transactions.filter((el) => el.id == req.body.group);
   }
 
   res.json({
-    data: transactions
+    data: transactions,
   });
-}
+};
 
 export const POST = async (req, res, next) => {
-  const transactions = await db.load('transaction');
-  
+  const transactions = await db.load("transaction");
+
   transactions.push({
-    ...(req.body),
+    ...req.body,
     id: transactions.length + 1,
-    group: req.body.group
+    group: req.body.group,
   });
 
-  db.save('transaction', transactions);
+  db.save("transaction", transactions);
 
   res.status(201).json({
-    data: transactions
+    data: transactions,
   });
-}
+};

@@ -1,6 +1,16 @@
-import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody, Box, Button } from "@mui/material";
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import {
+  TableContainer,
+  Paper,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Box,
+  Button,
+} from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { useCallback, useContext, useState } from "react";
 import ConfirmationDialog from "../dialog/ConfirmationDialog";
 import { GroupContext } from "../../providers/GroupProvider";
@@ -17,16 +27,19 @@ export default function UserTable() {
       return;
     }
 
-    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/groups/${group.id}/user/${selectedUser.id}`, {
-      method: 'DELETE'
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/api/groups/${group.id}/user/${selectedUser.id}`,
+      {
+        method: "DELETE",
+      },
+    );
 
     const users = (await response.json()).data as User[];
 
-    dispatch({type: 'setUsers', users});
+    dispatch({ type: "setUsers", users });
 
     setDeleteUserDialog(false);
-  }, [dispatch, group, selectedUser])
+  }, [dispatch, group, selectedUser]);
 
   return (
     <>
@@ -35,16 +48,16 @@ export default function UserTable() {
           <TableHead>
             <TableRow>
               <TableCell>Username</TableCell>
-              <TableCell >Email</TableCell>
-              <TableCell >Role</TableCell>
-              <TableCell >Actions</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Role</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {group?.users?.map((user) => (
               <TableRow
                 key={user.id}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
                   {user.username}
@@ -56,13 +69,27 @@ export default function UserTable() {
                   {user.role}
                 </TableCell>
                 <TableCell component="th" scope="row">
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Button sx={{ minWidth: 0, width: 40, height: 40, padding: 0, borderRadius: '50%' }}>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Button
+                      sx={{
+                        minWidth: 0,
+                        width: 40,
+                        height: 40,
+                        padding: 0,
+                        borderRadius: "50%",
+                      }}
+                    >
                       <EditIcon></EditIcon>
                     </Button>
-                    <Button 
-                      sx={{ minWidth: 0, width: 40, height: 40, padding: 0, borderRadius: '50%' }} 
-                      onClick={ () => {
+                    <Button
+                      sx={{
+                        minWidth: 0,
+                        width: 40,
+                        height: 40,
+                        padding: 0,
+                        borderRadius: "50%",
+                      }}
+                      onClick={() => {
                         setSelectedUser(user);
                         setDeleteUserDialog(true);
                       }}
@@ -78,10 +105,10 @@ export default function UserTable() {
       </TableContainer>
       <ConfirmationDialog
         title="Are you sure you want to remove this user from the group?"
-        open={ deleteUserDialog }
-        handleClose={ () => setDeleteUserDialog(false) }
+        open={deleteUserDialog}
+        handleClose={() => setDeleteUserDialog(false)}
         onConfirm={deleteUser}
       />
     </>
-  )
+  );
 }

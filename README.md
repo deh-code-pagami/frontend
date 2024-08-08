@@ -1,6 +1,7 @@
 # Pagami Frontend
 
 ## Getting Started
+
 This project utilizes the pnpm package manager, it can be installed by running `npm i -g pnpm`, once pnpm is installed run:
 
 `pnpm install`
@@ -10,6 +11,7 @@ This project utilizes the pnpm package manager, it can be installed by running `
 to start a development server.
 
 ## Typing
+
 Global types and interfaces are available in `src/types/index.d.ts`.
 
 ## Expanding the ESLint configuration

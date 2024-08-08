@@ -1,49 +1,49 @@
-export {}
+export {};
 
 declare global {
   interface Transaction {
-    id: number,
-    date: string,
-    title?: string,
-    description?: string,
-    group: Group
-    transactionMetas: TransactionMeta[]
+    id: number;
+    date: string;
+    title?: string;
+    description?: string;
+    group: Group;
+    transactionMetas: TransactionMeta[];
   }
 
   interface TransactionMeta {
-    userDebtor: User,
-    userCreditor: User,
-    amount: number,
+    userDebtor: User;
+    userCreditor: User;
+    amount: number;
   }
 
   interface Group {
-    id: number,
-    name: string,
-    users?: User[],
-    transactions?: Transaction[]
+    id: number;
+    name: string;
+    users?: User[];
+    transactions?: Transaction[];
   }
 
   interface User {
-    id: number,
-    name: string,
-    surname: string,
-    username: string,
-    email: string,
-    password?: string,
-    enabled?: boolean,
-    role: Role,
+    id: number;
+    name: string;
+    surname: string;
+    username: string;
+    email: string;
+    password?: string;
+    enabled?: boolean;
+    role: Role;
   }
 
-  type Role = 'user' | 'admin'
+  type Role = "user" | "admin";
 
   interface Menu {
-    label: string,
-    items: Array<MenuItem>
+    label: string;
+    items: Array<MenuItem>;
   }
 
   interface MenuItem {
-    label?: string,
-    href?: string,
-    icon?: string
+    label?: string;
+    href?: string;
+    icon?: string;
   }
 }

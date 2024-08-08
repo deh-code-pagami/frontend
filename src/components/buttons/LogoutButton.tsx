@@ -8,11 +8,11 @@ export default function LogoutButton() {
 
   const logout = async () => {
     await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/logout`, {
-      method: 'POST'
+      method: "POST",
     });
 
-    dispatch({ type: 'logout' });
-  }
+    dispatch({ type: "logout" });
+  };
 
   return (
     <Button

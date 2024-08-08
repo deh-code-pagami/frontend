@@ -1,32 +1,32 @@
-import { createContext, useReducer } from "react"
+import { createContext, useReducer } from "react";
 
-type ThemeMode = 'dark' | 'light'
+type ThemeMode = "dark" | "light";
 
 interface ThemeState {
-  mode: ThemeMode
+  mode: ThemeMode;
 }
 
-type ToggleModeAction = { type: 'toggleMode' }
+type ToggleModeAction = { type: "toggleMode" };
 
-type SetModeAction = { type: 'setMode', mode: ThemeMode }
+type SetModeAction = { type: "setMode"; mode: ThemeMode };
 
-type ThemeAction = ToggleModeAction | SetModeAction
+type ThemeAction = ToggleModeAction | SetModeAction;
 
 interface ThemeContext {
-  state: ThemeState,
-  dispatch: React.Dispatch<ThemeAction>
+  state: ThemeState;
+  dispatch: React.Dispatch<ThemeAction>;
 }
 
-function reducer(state: ThemeState, action: ThemeAction) : ThemeState {
+function reducer(state: ThemeState, action: ThemeAction): ThemeState {
   switch (action.type) {
-    case 'toggleMode': 
+    case "toggleMode":
       return {
-        mode: state.mode === 'light' ? 'dark' : 'light'
-      }
-    case 'setMode':
+        mode: state.mode === "light" ? "dark" : "light",
+      };
+    case "setMode":
       return {
-        mode: action.mode
-      }
+        mode: action.mode,
+      };
   }
 
   return state;
@@ -34,15 +34,23 @@ function reducer(state: ThemeState, action: ThemeAction) : ThemeState {
 
 const defaultContext: ThemeContext = {
   state: {
-    mode: 'light'
+    mode: "light",
   },
-  dispatch: () => {}
-}
+  dispatch: () => {},
+};
 
 export const ThemeContext = createContext(defaultContext);
 
-export default function ThemeProvider({children} : {children: React.ReactNode}) {
+export default function ThemeProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [state, dispatch] = useReducer(reducer, defaultContext.state);
 
-  return <ThemeContext.Provider value={{state, dispatch}}>{children}</ThemeContext.Provider>
+  return (
+    <ThemeContext.Provider value={{ state, dispatch }}>
+      {children}
+    </ThemeContext.Provider>
+  );
 }

@@ -1,28 +1,37 @@
-import { DialogTitle, DialogContent, TextField, Autocomplete, Checkbox, DialogActions, Button } from "@mui/material";
+import {
+  DialogTitle,
+  DialogContent,
+  TextField,
+  Autocomplete,
+  Checkbox,
+  DialogActions,
+  Button,
+} from "@mui/material";
 import { Stack, Box } from "@mui/system";
 import Dialog from "../dialog/Dialog";
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { useState } from "react";
 
 export default function UserSelectionDialog({
   open,
   handleClose,
   handleSubmit,
-  allUsers }:
-  {
-    open: boolean,
-    handleClose: () => void,
-    handleSubmit: (selectedUsers: User[], handleClose: () => void) => void,
-    allUsers: User[]
-  }) {
-
+  allUsers,
+}: {
+  open: boolean;
+  handleClose: () => void;
+  handleSubmit: (selectedUsers: User[], handleClose: () => void) => void;
+  allUsers: User[];
+}) {
   const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
 
   return (
-    <Dialog 
-      open={open} 
-      handleClose={() => { handleClose(); }}
+    <Dialog
+      open={open}
+      handleClose={() => {
+        handleClose();
+      }}
     >
       <DialogTitle id="transaction-dialog">Add new transaction</DialogTitle>
       <DialogContent>
@@ -58,7 +67,16 @@ export default function UserSelectionDialog({
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Button onClick={async () => { await handleSubmit(selectedUsers, handleClose); setSelectedUsers([]); } } type='submit'>Confirm</Button>
+        <Button
+          onClick={async () => {
+            await handleSubmit(selectedUsers, handleClose);
+            setSelectedUsers([]);
+          }}
+          type="submit"
+        >
+          Confirm
+        </Button>
       </DialogActions>
-    </Dialog>)
+    </Dialog>
+  );
 }

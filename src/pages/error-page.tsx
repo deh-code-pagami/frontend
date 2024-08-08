@@ -2,8 +2,8 @@ import { Container } from "@mui/system";
 import { useRouteError } from "react-router-dom";
 
 interface RouterError {
-  statusText: string,
-  message: string
+  statusText: string;
+  message: string;
 }
 
 export default function ErrorPage() {

@@ -12,26 +12,26 @@ export default function Root() {
 
   useEffect(() => {
     if (isAuthenticated === false) {
-      navigate('/login');
+      navigate("/login");
     }
   }, [isAuthenticated, navigate]);
 
   if (!isAuthenticated) {
-    return <div></div>
+    return <div></div>;
   }
 
   return (
     <>
       <header id="main-header">
-        <MainDrawerMobile/>
+        <MainDrawerMobile />
       </header>
       <main id="main-content">
-        <MainDrawer/>
-        <Box px={4} py={8} width={'100%'}>
+        <MainDrawer />
+        <Box px={4} py={8} width={"100%"}>
           <Outlet />
         </Box>
       </main>
       <footer id="main-footer"></footer>
     </>
-  )
+  );
 }

@@ -1,5 +1,11 @@
 import { visuallyHidden } from "@mui/utils";
-import { Outlet, useLoaderData, useNavigate, useNavigation, useParams } from "react-router-dom";
+import {
+  Outlet,
+  useLoaderData,
+  useNavigate,
+  useNavigation,
+  useParams,
+} from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import GroupToolbar from "../../components/group/GroupToolbar";
@@ -13,14 +19,14 @@ export default function GroupsPage() {
   const navigation = useNavigation();
   const { state } = useContext(GroupContext);
   const { group } = state;
-  
+
   const navigate = useNavigate();
-  const groupId = parseInt(useParams().groupId || '') || undefined;
+  const groupId = parseInt(useParams().groupId || "") || undefined;
 
   useEffect(() => {
-    if (groupId !== group?.id && groups.find(g => group?.id === g.id)) {
+    if (groupId !== group?.id && groups.find((g) => group?.id === g.id)) {
       // change path to match current group
-      navigate(routes.groups + (group?.id || ''));
+      navigate(routes.groups + (group?.id || ""));
     }
   }, [group, groupId, groups, navigate]);
 
@@ -30,15 +36,18 @@ export default function GroupsPage() {
         Groups Page
       </Typography>
       <GroupToolbar availableGroups={groups} />
-      { navigation.state === 'loading' ? 
-        <Box sx={{
-          position: 'relative',
-          height: '200px'
-        }}>
+      {navigation.state === "loading" ? (
+        <Box
+          sx={{
+            position: "relative",
+            height: "200px",
+          }}
+        >
           <Spinner></Spinner>
-        </Box> :
-        <Outlet />  
-      }
+        </Box>
+      ) : (
+        <Outlet />
+      )}
     </Container>
-  )
+  );
 }
