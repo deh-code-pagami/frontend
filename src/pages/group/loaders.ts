@@ -1,30 +1,25 @@
-export async function groupsLoader() {
-  const response = await fetch(
-    `${import.meta.env.VITE_API_BASE_URL}/api/groups/`,
-  );
+import { find, findOne } from "../../lib/group";
 
-  if (!response.ok) {
-    return {};
+export async function groupsLoader() {
+  let groups;
+
+  try {
+    groups = await find();
+  } catch (ex) {
+    console.error(ex);
   }
 
-  const json = await response.json();
-  const groups = json.data;
-
-  return { groups };
+  return { groups: groups ?? {} };
 }
 
 export async function groupDetailLoader({ params }: any) {
-  const response = await fetch(
-    `${import.meta.env.VITE_API_BASE_URL}/api/groups/${params.groupId}/`,
-  );
+  let group;
 
-  if (!response.ok) {
-    return {};
+  try {
+    group = await findOne({ id: params.groupId });
+  } catch (ex) {
+    console.error(ex);
   }
 
-  const json = await response.json();
-
-  const group = json.data;
-
-  return { group };
+  return { group: group ?? {} };
 }

@@ -13,6 +13,7 @@ import React, { useCallback, useContext } from "react";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { GroupContext } from "../../providers/GroupProvider";
+import { create } from "../../lib/transaction";
 
 export default function TransactionCreationDialog({
   open,
@@ -38,7 +39,7 @@ export default function TransactionCreationDialog({
   }, [handleClose]);
 
   const createTransaction = async () => {
-    if (!group) {
+    if (!group || !userCreditor || !userDebtors.length) {
       return;
     }
 
@@ -65,31 +66,25 @@ export default function TransactionCreationDialog({
       transactionMetas[choice].amount += rest;
     }
 
-    const response = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL}/api/transactions/`,
-      {
-        method: "post",
-        body: JSON.stringify({
-          data: {
-            title,
-            description,
-            group: group.id,
-            transactionMetas,
-          },
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
-    );
+    let transaction;
 
-    if (response.ok) {
-      reset();
+    try {
+      transaction = await create({
+        title,
+        description,
+        groupId: group.id,
+        transactionMetas,
+      });
+    } catch (ex) {
+      console.error(ex);
     }
 
-    const transaction = (await response.json()).data as Transaction;
+    if (!transaction) {
+      return;
+    }
 
     dispatch({ type: "addTransaction", transaction });
+    reset();
   };
 
   return (

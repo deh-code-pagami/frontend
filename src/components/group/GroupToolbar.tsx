@@ -8,6 +8,7 @@ import React from "react";
 import { GroupContext } from "../../providers/GroupProvider";
 import { useNavigate } from "react-router-dom";
 import routes from "../../data/routes";
+import { remove } from "../../lib/group";
 
 export default function GroupToolbar({
   availableGroups,
@@ -30,21 +31,16 @@ export default function GroupToolbar({
       return;
     }
 
-    const response = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL}/api/groups/${group.id}`,
-      {
-        method: "DELETE",
-      },
-    );
-
-    if (!response.ok) {
-      console.error(response);
-      return;
+    try {
+      await remove({ groupId: group.id });
+    } catch (ex) {
+      console.error(ex);
     }
 
     dispatch({ type: "unsetGroup" });
     setDeleteDialog(false);
-  }, [group, dispatch]);
+    navigate(routes.groups);
+  }, [group, dispatch, navigate]);
 
   const changeGroup = useCallback(
     (_e: any, newValue: any) => {

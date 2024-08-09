@@ -11,6 +11,7 @@ import Dialog from "../dialog/Dialog";
 import React, { useCallback, useContext } from "react";
 import { GroupContext } from "../../providers/GroupProvider";
 import routes from "../../data/routes";
+import { create } from "../../lib/group";
 
 export default function GroupCreationDialog({
   children,
@@ -41,28 +42,22 @@ export default function GroupCreationDialog({
       }
 
       setLoading(true);
+      let group;
 
-      const res = await fetch("/api/groups", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          data: {
-            name: name,
-          },
-        }),
-      });
-
-      if (!res.ok) {
-        return;
+      try {
+        group = await create({ name });
+      } catch (ex) {
+        console.error(ex);
+      } finally {
+        setLoading(false);
       }
 
-      const group = (await res.json()).data as Group;
+      if (!group) {
+        dispatch({ type: "unsetGroup" });
+      } else {
+        dispatch({ type: "setGroup", group });
+      }
 
-      setLoading(false);
-
-      dispatch({ type: "setGroup", group });
       navigate(routes.groups);
 
       reset();

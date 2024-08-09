@@ -5,6 +5,8 @@ import { Button } from "@mui/material";
 import React, { useCallback, useContext } from "react";
 import UserSelectionDialog from "../user/UserSelectionDialog";
 import { GroupContext } from "../../providers/GroupProvider";
+import { addUsers } from "../../lib/group";
+import { get } from "../../lib/user";
 
 export default function UsersTabPanel() {
   const [allUsers, setAllUsers] = React.useState<User[]>([]);
@@ -14,19 +16,20 @@ export default function UsersTabPanel() {
   const { group } = state;
 
   const handleClickOpen = useCallback(async () => {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL}/api/users/`,
-    );
+    let users;
 
-    if (!response.ok) {
-      console.error(response);
+    try {
+      users = await get();
+    } catch (ex) {
+      console.error(ex);
+    }
+
+    if (!users) {
       return;
     }
 
-    const json = (await response.json()) as User[];
-
     // filter users that are already inside the group
-    const validUsers = json.filter(
+    const validUsers = users.filter(
       (user1) => !group?.users?.some((user2) => user1.id === user2.id),
     );
 
@@ -35,46 +38,15 @@ export default function UsersTabPanel() {
     setAddUserDialog(true);
   }, [group?.users]);
 
-  const addUsers = useCallback(
+  const handleSubmit = useCallback(
     async (selectedUsers: User[], handleClose: () => void) => {
       if (!group) {
         return;
       }
 
-      const addUserPromise = async (selectedUser: User) => {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/api/group-users/`,
-          {
-            method: "POST",
-            headers: {
-              "content-type": "application/json",
-            },
-            body: JSON.stringify({
-              data: {
-                user: selectedUser.id,
-                group: group.id,
-              },
-            }),
-          },
-        );
+      const users = await addUsers({ users: selectedUsers, groupId: group.id });
 
-        if (!response.ok) {
-          console.error(response);
-          return undefined;
-        }
-
-        return selectedUser;
-      };
-
-      const addUserPromises = selectedUsers.map((selectedUser) =>
-        addUserPromise(selectedUser),
-      );
-
-      const correctlyAddedUsers = (await Promise.all(addUserPromises)).filter(
-        (user) => !!user,
-      ) as User[];
-
-      dispatch({ type: "addUser", user: correctlyAddedUsers });
+      dispatch({ type: "addUser", user: users });
 
       handleClose();
     },
@@ -99,7 +71,7 @@ export default function UsersTabPanel() {
         }}
         open={addUserDialog}
         allUsers={allUsers}
-        handleSubmit={addUsers}
+        handleSubmit={handleSubmit}
       />
     </>
   );

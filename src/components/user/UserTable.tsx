@@ -14,6 +14,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useCallback, useContext, useState } from "react";
 import ConfirmationDialog from "../dialog/ConfirmationDialog";
 import { GroupContext } from "../../providers/GroupProvider";
+import { removeUser } from "../../lib/group";
 
 export default function UserTable() {
   const [selectedUser, setSelectedUser] = useState<User>();
@@ -22,21 +23,27 @@ export default function UserTable() {
 
   const { group } = state;
 
-  const deleteUser = useCallback(async () => {
+  const handleSubmit = useCallback(async () => {
     if (!selectedUser || !group) {
       return;
     }
 
-    const response = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL}/api/groups/${group.id}/user/${selectedUser.id}`,
-      {
-        method: "DELETE",
-      },
-    );
+    let remainingUsers;
 
-    const users = (await response.json()).data as User[];
+    try {
+      remainingUsers = await removeUser({
+        userId: selectedUser.id,
+        groupId: group.id,
+      });
+    } catch (ex) {
+      console.error(ex);
+    }
 
-    dispatch({ type: "setUsers", users });
+    if (!remainingUsers) {
+      return;
+    }
+
+    dispatch({ type: "setUsers", users: remainingUsers });
 
     setDeleteUserDialog(false);
   }, [dispatch, group, selectedUser]);
@@ -107,7 +114,7 @@ export default function UserTable() {
         title="Are you sure you want to remove this user from the group?"
         open={deleteUserDialog}
         handleClose={() => setDeleteUserDialog(false)}
-        onConfirm={deleteUser}
+        onConfirm={handleSubmit}
       />
     </>
   );

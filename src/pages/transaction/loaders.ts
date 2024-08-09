@@ -1,14 +1,19 @@
-export async function transactionDetailLoader({ params }: any) {
-  const response = await fetch(
-    `${import.meta.env.VITE_API_BASE_URL}/api/transactions/${params.transactionId}/?`,
-  );
-  const json = await response.json();
-  const transaction = json.data;
+import { findOne } from "../../lib/transaction";
 
-  return { transaction };
+export async function transactionDetailLoader({ params }: any) {
+  let transaction;
+
+  try {
+    transaction = await findOne({ id: params.transactionId });
+  } catch (ex) {
+    console.error(ex);
+  }
+
+  return { transaction: transaction ?? {} };
 }
 
 export async function transactionsLoader({ request }: any) {
+  // TO DO: implement filters logic inside lib/transaction.ts
   const searchParams = new URL(request.url).searchParams;
 
   const dateFilters = {} as any;
